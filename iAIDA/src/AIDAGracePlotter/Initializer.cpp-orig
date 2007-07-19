@@ -1,0 +1,66 @@
+// -*- C++ -*-
+
+/////////////////////////////////////////////////////////////////////////
+//                                                                     //
+//  This library is free software; you can redistribute it and/or      //
+//  modify it under the terms of the GNU Lesser General Public         //
+//  License as published by the Free Software Foundation; either       //
+//  version 2.1 of the License, or (at your option) any later version. //
+//                                                                     //
+//  This library is distributed in the hope that it will be useful,    //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of     //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU   //
+//  Lesser General Public License for more details.                    //
+//                                                                     //
+//  You should have received a copy of the GNU Lesser General Public   //
+//  License along with this library (see file COPYING); if not, write  //
+//  to the Free Software Foundation, Inc., 59 Temple Place, Suite      //
+//  330, Boston, MA 02111-1307 USA, or contact the author.             //
+//                                                                     //
+/////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ * \file Implementation of class Initializer
+ *
+ * (c) Copyright CERN, Geneva
+ *
+ */
+
+
+
+#include "Initializer.h"
+#include "AIDA_Dev/IDevAnalysisFactory.h"
+#include "AIDA_Dev/IPlotterFactoryProvider.h"
+#include "AIDA_PlotterFactoryProvider.h"
+#include <iostream>
+
+
+
+namespace AidaNative {
+namespace AIDA_Plotter_Grace {
+
+
+
+Initializer::Initializer(AIDA_PlotterFactoryProvider* provider) 
+{
+  if (provider != 0) {
+    AIDA::IAnalysisFactory* af = AIDA_createAnalysisFactory();
+    if (af) {
+      AIDA::Dev::IDevAnalysisFactory* daf = 
+	dynamic_cast<AIDA::Dev::IDevAnalysisFactory*>(af);
+      AIDA::Dev::IPlotterFactoryProvider* dprov = 
+	dynamic_cast<AIDA::Dev::IPlotterFactoryProvider*>(provider);
+      if (daf != 0 && dprov != 0) {
+	daf->registerPlotterFactoryProvider(dprov);
+      }
+      delete af;
+    }
+  }
+}
+
+
+
+
+} // end of namespace AIDA_Plotter_Grace
+} // end of namespace AidaNative

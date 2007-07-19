@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>Creating Clouds and plotting in HippoDraw</title>
+    <style type="text/CSS">
+      <!--
+      h1 {color: darkgreen}
+      h2 {color: darkgreen}
+      h3 {color: darkblue}
+      h4 {color: darkred}
+      -->
+    </style>
+  </head>
+
+  <body	bgcolor="#ffffff">
+      <h2>Creating and filling AIDA histograms and plotting them in HippoDraw</h2>
+      
+      <h3>Description</h3>
+      <p>Unbinned Histograms (AIDA Clouds), are created ("booked"), and filled with different random number distributions and then plotted using HippoDraw. 
+
+      <h3>Python program</h3>
+      <p>Click to retrieve <a href="hippoDemo.py">the Python script</a> of the example.</p>
+
+      <p>After having <a href="howtosetup.html">setup</a> correctly your environment, you can run the example typing :<br />
+	<kbd>python -i hippoDemo.py
+	</kbd> </p>
+
+      <h3>Program flow</h3>
+      <ol>
+        <li>The Python module <em>AidaProxy</em> is imported. This module loads the dictionary for the PI classes, making them available in the Python environment in the global namespace.</li> 
+        <li>1D and 2D Clouds are booked </li>
+	<li>The clouds are filled with random data. The random data are generated with gaussian, exponential, log normal, gamma distributions using functions available from the Python random package</li>
+	<li>The Python module <em>hippoPlotter</em> is imported, which imports the hippo module, python bindings to HippoDraw. The hippoPlotter module  defines a python class, <em>HippoPlotter</em>, which copies the AIDA histograms in HippoDraw objects (tuples) and shows them in the Hippo canvas </li>
+	<li>An instance of the HippoPlotter class is created. This class creates a HippoDraw canvas and the HippoDraw Inspector</li>
+	<li> The histograms are plotted in the Hippodraw canvas. The user can then fit
+	  them, change the binning of the histograms, etc.... using the Inspector</li>
+	<li> An AIDA 2 dim. DataPointSet is created from vector of x,y and error values. The DataPointSet is plotted as a X-Y Plot in the HippoDraw page. </li>
+	<li> Binned 1D and 2D  histogram obtained filled from the clouds contents are plotted in Hippodraw</li>    
+      </ol>
+
+  </body>
+</html>
+
