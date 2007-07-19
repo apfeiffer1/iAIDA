@@ -1,0 +1,123 @@
+
+AIDA_INC  = -I@AIDA_INC_DIR@ 
+BOOST_INC = -I@BOOST_INC_DIR@ -I../@BOOST_INC_DIR@
+
+EXPAT_DIR = @EXPAT_DIR@
+EXPAT_INC = -I${EXPAT_DIR}/include -I../${EXPAT_DIR}/include
+
+ZLIB_DIR = @ZLIB_DIR@
+ZLIB_INC = -I${ZLIB_DIR}/include -I../${ZLIB_DIR}/include
+
+UUID_DIR = @UUID_DIR@
+UUID_INC = -I${UUID_DIR}/include -I../${UUID_DIR}/include
+
+HAVE_GRACE = @HAVE_GRACE@
+GRACE_DIR = @GRACE_DIR@
+GRACE_INC = -I${GRACE_DIR}/include -I../${GRACE_DIR}/include
+
+HAVE_CERN = @HAVE_CERN@
+CERN_DIR = @CERN_DIR@
+CERN_ROOT = @CERN_DIR@
+CERN_INC = -I${CERN_DIR}/include -I../${CERN_DIR}/include
+
+HAVEF77 = @HAVEF77@
+HAVEGFOR = @HAVEGFOR@
+
+INCLUDES = ${AIDA_INC} ${BOOST_INC} ${EXPAT_INC} ${ZLIB_INC} ${UUID_INC} -I../include -I.. -I.
+
+# set-up OS specific items
+OS=$(shell uname)
+ifeq (${OS}, Linux)
+  ARCH=$(shell uname -m)
+  GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
+  CERN_LIB = `${CERN_DIR}/bin/cernlib`
+  CXX = g++
+  OBJEXT =o
+  SHLIB=${CXX} -o 
+  SHLIBEXT =so
+  CXXFLAGS = -fPIC -pthread -g -DBADENDS
+  LDFLAGS = ${LIB64} -pthread -dld # -rdynamic
+  SHLIBFLAGS = -shared
+  ifeq (${ARCH}, x86_64)
+    LIB64 = -L/usr/lib64
+    LIBS = -L${EXPAT_DIR}/lib64  -L${ZLIB_DIR}/lib64 ${LIB64} -lexpat -lz
+  else
+    LIBS = -L${EXPAT_DIR}/lib  -L${ZLIB_DIR}/lib ${LIB64} -lexpat -lz
+  endif
+  INSTALL_CMD=cp
+endif
+ifeq (${OS}, Darwin)
+  GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
+  CERN_LIB = `${CERN_DIR}/bin/cernlib`
+  CXX = g++
+  OBJEXT =o
+  SHLIB=${CXX} -o 
+  SHLIBEXT =dylib
+  CXXFLAGS = -fPIC -g 
+  LDFLAGS = -lm -lc
+  SHLIBFLAGS = -dynamiclib -single_module
+  LIBS = -L${EXPAT_DIR}/lib  -lexpat -L${ZLIB_DIR}/lib -lz 
+  INSTALL_CMD=mv
+endif
+ifeq (${OS}, CYGWIN_NT-5.1)
+  GRACE_LIB = -L${GRACE_DIR}/lib/libgrace_np.lib
+  CERN_LIB = `${CERN_DIR}/bin/cernlib`
+  INCLUDES += -Ic:/Program\ Files/Microsoft\ Visual\ Studio\ .NET\ 2003/Vc7/PlatformSDK/Include
+  CXX = cl
+  CPP=cl
+  CC=cl
+  OBJEXT =obj
+  SHLIBEXT =lib
+  SHLIB=lib /nologo /OUT:
+  CXXFLAGS = -EHsc -GR -GX -MD -nologo
+  SHLIBFLAGS = 
+  LDFLAGS = 
+  LIBS = ${ZLIB_DIR}/lib/zlib.lib ${EXPAT_DIR}/Libs/libexpat.lib ${UUID_DIR}/lib/uuid.lib
+  INSTALL_CMD=copy
+endif
+
+SRCS := $(wildcard *.cpp)
+OBJS = ${SRCS:.cpp=.${OBJEXT}}
+
+# now all the vars are prepared, now check if we have Grace ...
+
+ifdef HAVE_GRACE
+CXXFLAGS += -DHAVE_GRACE
+SRCS     += $(wildcard AIDAGracePlotter/*.cpp)
+INCLUDES += ${GRACE_INC}
+LIBS     += ${GRACE_LIB} 
+endif
+
+ifdef HAVE_CERN
+CXXFLAGS += -DHAVE_CERN
+SRCS     += $(wildcard AIDA_HBook/*.cpp)
+SRCS     += $(wildcard AIDA_HBook/*.F)
+LIBS     += ${CERN_LIB} 
+ ifdef HAVEF77
+   LIBS += -lg2c
+  else
+   ifdef HAVEGFOR 
+    LIBS += -lgfortran 
+   endif
+  endif
+  # on Mac, the cernlib from fink needs lg2c ...
+  ifeq (${OS}, Darwin)
+    LIBS += -lg2c  
+  endif
+endif
+
+all: lib
+
+clean:
+	@echo "Cleaning in src"
+	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT}
+
+lib: ${OBJS}
+	${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
+
+install: lib
+	test -e @PREFIX_DIR@/lib || mkdir -p @PREFIX_DIR@/lib 
+	${INSTALL_CMD} libAIDA_Native.${SHLIBEXT} @PREFIX_DIR@/lib/
+
+%.${OBJEXT}: %.cpp
+	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@

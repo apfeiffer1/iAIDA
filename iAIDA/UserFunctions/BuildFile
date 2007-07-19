@@ -1,0 +1,19 @@
+<include_path path=.></include_path>
+
+<external ref=python>
+<external ref=sockets>
+#LDFLAGS += -Xlinker -export-dynamic
+#CPPFLAGS +=-I/opt/anaphe/specific/redhat73/gcc-3.2/PublicDomainPackages/2.0.0/include/python2.2
+#LDFLAGS += -L/opt/anaphe/specific/redhat73/gcc-3.2/PublicDomainPackages/2.0.0/lib -lpython2.2
+#CPPFLAGS +=-I/afs/cern.ch/sw/lcg/external/Python/2.3.3/rh73_gcc323/include/python2.3
+#LDFLAGS += -L/afs/cern.ch/sw/lcg/external/Python/2.3.3/rh73_gcc323/lib -lpython2.3
+#LDFLAGS += -L/usr/kerberos/lib -lpty
+#LDFLAGS += -L/usr/lib -L/usr/X11R6/lib -lgdbm -ltk -ltcl -lX11 -lm -ldl
+
+
+<use name=AnalysisServices/AIDA_Function>
+<use name=AnalysisServices/AIDA_Proxy>
+
+<export> 
+ <lib name=lcg_UserFunctions>
+</export>

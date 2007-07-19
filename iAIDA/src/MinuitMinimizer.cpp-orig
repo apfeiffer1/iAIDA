@@ -1,0 +1,368 @@
+
+
+# include "FML/MinuitFCNWrapper.h"
+# include "FML/MinuitMinimizer.h"
+
+
+#include "Minuit2/FunctionMinimum.h"
+#include "Minuit2/MnApplication.h"
+#include "Minuit2/MnUserParameters.h"
+#include "Minuit2/MnMinos.h"
+#include "Minuit2/MnPrint.h"
+
+#include "FML/Util/util.h"
+
+// needed for MinuitParameter
+#include  <algorithm>
+
+#include <iostream>
+
+using namespace ROOT::Minuit2;
+
+namespace fml {
+
+  // base class for LCG Minuit minimizers 
+
+LCGMinuitMinimizer::LCGMinuitMinimizer()  : 
+  m_fcn(0) , m_minimizer(0)
+{
+  // set default control parameters 
+  setControlParameters(defaultControlParameters() ); 
+}
+
+  LCGMinuitMinimizer::LCGMinuitMinimizer(IFMLFunction *objfun) : m_minimizer(0)
+{
+  m_fcn = new MinuitFCNWrapper( objfun);
+  // set default control parameters 
+  setControlParameters(defaultControlParameters() ); 
+}
+
+
+  LCGMinuitMinimizer::~LCGMinuitMinimizer()
+{
+  if (m_fcn) delete m_fcn; 
+  if (m_minimizer) delete m_minimizer; 
+}
+
+
+
+bool LCGMinuitMinimizer::setupMinuit()
+{
+
+
+  // check status - reset etc....
+  
+  if (!objectiveFunction() ) { 
+    std::cout << "LCG_MinuitMinimizer: error : no Objective function " << std::endl;
+    return false; 
+  }
+
+  // create FCN wrapper if not existing 
+  if (!m_fcn) m_fcn = createFCN( objectiveFunction() ); 
+
+  if (!m_fcn) return false; 
+
+    
+
+  // set input parameters 
+  std::vector<double> parValues; 
+  
+  MnUserParameters init_params;
+
+  for(unsigned int i=0; i<variables().size(); i++) { 
+
+    const MinimizationVariable &currvar = variables()[i];
+    
+    parValues.push_back(currvar.value()); 
+    
+    // PENDING: parameter names?
+    std::string paramName = "param" + Util::to_string(i); 
+    
+    // fixed parameters 
+    if (currvar.bound().isFixed()) { 
+      init_params.Add(paramName.c_str(), currvar.value(), currvar.stepSize() );
+      init_params.Fix(paramName.c_str() );
+      if (printLevel() >= 1)
+	std::cout << paramName << "  " << currvar.value() << "  is fixed" << std::endl; 
+
+    }
+    else { 
+      if(currvar.bound().isBound()) { 
+	// bounded parameters 
+	double lower = currvar.bound().lowerBound();
+	double upper = currvar.bound().upperBound();
+	init_params.Add(paramName.c_str(), currvar.value(), currvar.stepSize(), lower, upper );  
+      // debug 
+      if (printLevel() >= 1)
+	std::cout << paramName << "  " << currvar.value() << "  step = " << currvar.stepSize() << " bounds " << lower << " , " << upper << std::endl; 
+      }
+      // not bound
+      else { 
+	// free parameters
+	init_params.Add(paramName.c_str(), currvar.value(), currvar.stepSize() );  
+
+	// debug 
+	if (printLevel() >= 2)
+	  std::cout << paramName << "  " << currvar.value() << "  step = " << currvar.stepSize() << std::endl; 
+      }
+    }
+  }
+
+
+
+  m_fcn->setError(controlParameters().errorUP() );
+  if (printLevel() >= 2)
+    std::cout << "Error UP = " << m_fcn->Up() << std::endl; 
+
+  
+
+  // create Minimizer (MiGrad, Simplex or both according to derived class) 
+
+  if (!m_minimizer) m_minimizer = createMinimizer(init_params); 
+
+  if (!m_minimizer) return false; 
+
+  return true; 
+
+}
+// minimize 
+bool LCGMinuitMinimizer::minimize() 
+{ 
+
+  // set up minimizer 
+
+  if (! setupMinuit() )  return false; 
+
+
+
+  // operator () does minimization 
+  //int maxFcn =  controlParameters().maxIter();  
+
+  // change max fcn to larger values 
+  int npar = dimension();
+  // minuit defaults  
+  // int maxFcn = 200 + 100*npar + 5*npar*npar;
+
+  int maxFcn =  std::max( controlParameters().maxIter(), 1000 + 200*npar + 10*npar*npar );  
+  double edmVal = controlParameters().tolerance();
+  if (printLevel() >= 2) { 
+    std::cout << "MINUIT Minimization parameters : "; 
+    std::cout << "tolerance  =  " << edmVal << "    ";  
+    std::cout << "maxIteration =  " << maxFcn << "    "; 
+    std::cout << "errorUP =  " << controlParameters().errorUP() << "  "; 
+    std::cout << "strategy =  " << controlParameters().strategy() << std::endl; 
+  }
+
+
+  FunctionMinimum minimum = (*m_minimizer)(maxFcn, edmVal); 
+
+  if (!minimum.IsValid() ) { 
+    m_state = state_fail; 
+    std::cout << "LCGMinuitMinimizer: Error minimization failed ! " << std::endl;
+    // if debug print out exit params and function values 
+    if (printLevel() >= 1) { 
+      std::vector<double> p = minimum.UserState().Params(); 
+      std::vector<double> err = minimum.UserState().Errors();
+      for (unsigned int i = 0; i < p.size(); ++i) 
+	std::cout << minimum.UserState().Parameter(i).Name()  << "\t  = " 
+		  << p[i] << "\t  +/-  " << err[i] << std::endl;  
+
+      std::cout << "FVAL = " << minimum.UserState().Fval() << std::endl;
+      std::cout << "Edm  = " << minimum.UserState().Edm() << std::endl;
+      std::cout << "Nfcn = " << minimum.UserState().NFcn() << std::endl;
+
+      // print iterations
+      if (printLevel() >= 2) { 
+	const std::vector<MinimumState>& iterationStates = minimum.States(); 
+	std::cout << "Number of iterations " << iterationStates.size() << std::endl; 
+	for (unsigned int i = 0; i <  iterationStates.size(); ++i) { 
+	  //std::cout << iterationStates[i] << std::endl; 
+	  const MinimumState & st =  iterationStates[i]; 
+	  std::cout << "----------> Iteration " << i << std::endl;
+	  std::cout << "            FVAL = " << st.Fval() << " Edm = " << st.Edm() << " Nfcn = " << st.NFcn() << std::endl;
+	  std::cout << "            Internal parameters : "; 
+	  for (int j = 0; j < st.size() ; ++j) std::cout << " p" << j << " = " << st.Vec()(j);
+	  std::cout << std::endl;
+	}
+      }
+
+    }
+
+    return false; 
+  }
+
+
+
+
+  // get results 
+  MnUserParameters params = minimum.UserParameters();
+
+
+
+  double fval = minimum.Fval(); 
+
+  if (printLevel() >= 2) { 
+    std::cout << "Minimum Found " << std::endl; 
+    std::cout << "FVAL  = " << minimum.UserState().Fval() << std::endl;
+    std::cout << "Edm   = " << minimum.UserState().Edm() << std::endl;
+    std::cout << "Nfcn  = " << minimum.UserState().NFcn() << std::endl;
+    std::cout << "NIter = " << minimum.States().size() << std::endl;
+
+    // print iterations
+    if (printLevel() >= 3) { 
+	const std::vector<MinimumState>& iterationStates = minimum.States(); 
+	std::cout << "Number of iterations " << iterationStates.size() << std::endl; 
+	for (unsigned int i = 0; i <  iterationStates.size(); ++i) { 
+	  //std::cout << iterationStates[i] << std::endl; 
+	  const MinimumState & st =  iterationStates[i]; 
+	  std::cout << "----------> Iteration " << i << std::endl;
+	  std::cout << "            FVAL = " << st.Fval() << " Edm = " << st.Edm() << " Nfcn = " << st.NFcn() << std::endl;
+	  std::cout << "            Internal parameters : "; 
+	  for (int j = 0; j < st.size() ; ++j) std::cout << " p" << j << " = " << st.Vec()(j);
+	  std::cout << std::endl;
+	}
+    }
+
+  }
+
+  // fill result object 
+
+  unsigned int dim = objectiveFunction()->dimension();
+  
+  
+
+  // number of  free parameters  
+  MinimumParameters minParams = minimum.Parameters();
+  MnAlgebraicVector freePar = minParams.Vec();
+  unsigned int nFreeParams = freePar.size(); 
+
+  // get result and errors . Use Minos if requested 
+  
+  
+
+
+  std::vector<ResultVariable> result_vars(dim);
+  assert(dim == (params.Params() ).size() ); 
+
+  if ( minosErrorsComputation() ) {
+    if (printLevel() >= 1) 
+      std::cout << "Perform Minos error analysis..." << std::endl;
+    MnMinos minos(*m_fcn, minimum);  
+    for(unsigned int i=0; i<dim; i++) {
+      if (! params.Parameter(i).IsFixed() ) {
+	// need to cache my self the values
+	std::pair<double, double> errMinos =  minos(i);
+	result_vars[i] = ResultVariable(params.Value(i) , params.Error(i), 
+				      errMinos.first, errMinos.second);
+	if (printLevel() >= 1) 
+	  std::cout << i <<  " " << params.Value(i) << " - " 
+		    << errMinos.first << " + " << errMinos.second << std::endl;
+      }
+      else   
+	result_vars[i] = ResultVariable(params.Value(i) , params.Error(i) ); 
+
+    }
+  }
+  else { 
+    for(unsigned int i=0; i<dim; i++) {    
+    // use parameter or user parameters ? 
+    result_vars[i] = ResultVariable(params.Value(i) , params.Error(i) ); 
+    }
+  }
+
+  
+  // get cov matrix 
+  // error matrix
+//   const MinimumError minimum_error = minimum.error ();
+//   MnAlgebraicSymMatrix matrix = minimum_error.invHessian ();
+//   matrix *= 2.0;
+
+
+
+  std::vector< std::vector<double> >  covmatrix(dim);
+  
+  // should be: 
+  if (minimum.HasCovariance() ) { 
+    const MnUserCovariance & matrix = minimum.UserCovariance();
+
+    // to be sure to have correct matrix
+    assert(matrix.Nrow() == nFreeParams); 
+  //assert(matrix.ncol() == nFreeParams); 
+
+  // convert cov matrix to FML - filling elements for the free 
+  // dimension of Minuit matrix is the same, but the non-fixed elements 
+  // are pushed to the front (upper-left) 
+  // parameters with zeros
+
+    int k = 0; 
+    for(unsigned int i=0; i<dim; i++) { 
+      covmatrix[i].resize(dim); 
+      MinuitParameter ipar = params.Parameter(i); 
+      int l = 0; 
+      for(unsigned int j=0; j<dim; j++) {
+	MinuitParameter jpar = params.Parameter(j); 
+	if (!ipar.IsFixed()  && !jpar.IsFixed() ) { 
+	  covmatrix[i][j] = matrix( k,l ); 
+	}
+	else 
+	  covmatrix[i][j] = 0;
+	
+	if (!jpar.IsFixed() ) l++; 
+      }
+      if (! ipar.IsFixed() ) k++; 
+    }
+  
+    
+    // print cov matrix 
+    if (printLevel() >= 2) { 
+      std::cout << "Covariance matrix " << std::endl; 
+      for (unsigned int i=0; i<dim; i++) { 
+	for(unsigned int j=0; j<dim; j++) 
+	  std::cout << covmatrix[i][j] << "    ";
+	
+	std::cout << std::endl; 
+      }
+    }
+  }
+  else {   // no cov matrix as for simplex
+    if (printLevel() >= 3) { 
+      std::cout << "Minimizer has not valid covariance matrix " << std::endl; 
+    }
+  }
+  
+  // set the result 
+
+  _set_result(MinimizerResult(dim, result_vars, controlParameters().errorUP(), fval, covmatrix, minosErrorsComputation()));
+ 
+  m_state = state_success; 
+  return true; 
+
+
+}
+
+
+const MinimizerControlParams& LCGMinuitMinimizer::defaultControlParameters() const
+{
+  MinimizerControlParams c;
+
+ 
+  c.useImplicitPrecision();// does not set precision explicitly
+  c.setTolerance(0.1); // Default edm value
+  c.setMaxIter(0);  //  Let Minuit choose the default value according to number of parameters 
+  c.setErrorUP(1.0);   // MINUIT Reference manual ver 94.1: SET ERR p.2
+  c.setStrategy(1);    // default value used in minuit
+
+  if (printLevel() >= 3) { 
+    std::cout << "set control parameters for Minuit Minimizer" << std::endl;
+    std::cout << "Default Tolerance    =  " << c.tolerance() << std::endl; 
+    std::cout << "Default MaxIteration =  " << c.maxIter() << std::endl;
+    std::cout << "Default Error UP     =  " << c.errorUP() << std::endl; 
+    std::cout << "Default strategy     =  " << c.strategy() << std::endl; 
+  }
+  return _update_current_default_parameters(c);
+}
+
+}   // end namespace fml
+
+
+

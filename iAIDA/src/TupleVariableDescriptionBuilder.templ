@@ -1,0 +1,37 @@
+// Emacs -*- C++ -*-
+
+template< class T > bool
+iAIDA::AIDA_Tuple_native::TupleVariableDescriptionBuilder::buildDescriptionT( T& t,
+                                                                               const std::vector<std::string>& variableNames,
+                                                                               const std::vector<std::string>& variableTypes )
+{
+  if ( variableNames.size() != variableTypes.size() ) return false;
+  for ( unsigned int i = 0; i < variableNames.size(); ++i ) {
+    const std::string& name = variableNames[i];
+    AIDA::Dev::ITupleVariableDescription* description = m_factory.createDescription();
+    if ( ! description ) return false;
+    description->setVariableName( name );
+    const std::string& type = variableTypes[i];
+    std::string::size_type pos = type.find( "uple" );
+    if ( pos == std::string::npos ) {
+      pos = type.find( "tring" );
+      if ( pos == std::string::npos ) {
+	description->setVariableType( type );
+      }
+      else {
+	description->setVariableType( "std::string" );
+      }
+    }
+    else {
+      description->setVariableType( "AIDA::ITuple" );
+      std::string::size_type pos2 = type.find( "{" ); 
+      if (pos2 ==  std::string::npos) return false; 
+      std::string tupleDescription = type.substr( pos2 );      
+      if ( tupleDescription.size() == 0 ) return false;
+      // create the sub descriptions
+      if (! buildDescription( *description, tupleDescription ) ) return false;
+    }
+    if ( ! t.setVariableDescription( description, true ) ) return false;
+  }
+  return true;
+}

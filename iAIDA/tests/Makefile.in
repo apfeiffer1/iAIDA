@@ -1,0 +1,77 @@
+
+AIDA_INC = -I@AIDA_INC_DIR@ 
+BOOST_INC = -I@BOOST_INC_DIR@
+EXPAT_INC = -I@EXPAT_INC_DIR@
+EXPAT_LIB = -L@EXPAT_LIB_DIR@ -lexpat
+
+HAVE_GRACE = @HAVE_GRACE@
+GRACE_INC = -I@GRACE_INC_DIR@
+GRACE_LIB = -L@GRACE_LIB_DIR@ -lgrace_np
+
+INCLUDES = ${AIDA_INC} ${BOOST_INC} ${EXPAT_INC} -I../include -I.. -I.
+
+LIBS = ${EXPAT_LIB} -lz 
+
+
+INCLUDES = ${AIDA_INC} ${BOOST_INC} -I../include
+
+LIBS += -L../src -lAIDA_Native
+
+SRCS = \
+
+
+OS=$(shell uname)
+
+ifeq (${OS}, Linux)
+  ARCH=$(shell uname -m)
+  ifeq (${ARCH}, x86_64)
+    LIB64 = -L/usr/lib64
+  endif
+  CXX = g++
+  OBJEXT=o
+  SHLIBEXT=so
+  CXXFLAGS = -fPIC -pthread -g 
+  SHLIBFLAGS = -shared
+  LDFLAGS = ${LIB64} -pthread -dld # -rdynamic
+  LIBS += -ldl
+endif
+ifeq (${OS}, Darwin)
+  CXX = g++
+  OBJEXT=o
+  SHLIBEXT=dylib
+  CXXFLAGS = -fPIC -g 
+  SHLIBFLAGS = -dynamiclib 
+  LDFLAGS = -lssl
+endif
+
+# now all the vars are prepared, now check if we have Grace ...
+
+ifdef HAVE_GRACE
+CXXFLAGS += -DHAVE_GRACE
+SRCS     += plottingHistograms.cpp
+INCLUDES += ${GRACE_INC}
+LIBS     += ${GRACE_LIB} 
+endif
+
+OBJS = ${SRCS:.cpp=.o}
+EXECS = ${SRCS:.cpp=}
+
+all: ${EXECS}
+
+clean:
+	rm -f ${OBJS} ${EXECS}
+
+run:
+	export DYLD_LIBRARY_PATH=../src:${DYLD_LIBRARY_PATH} ; \
+	export LD_LIBRARY_PATH=../src:${LD_LIBRARY_PATH} ; \
+	rm hist.aida ; \
+	for e in ${EXECS} ; do echo "running "$$e ; ./$$e ; rm hist.aida ; done
+
+
+%.o : %.cpp
+	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
+
+% : %.cpp
+	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
+	${CXX} $@.${OBJEXT} ${FLAGS} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
+

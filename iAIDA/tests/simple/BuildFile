@@ -1,0 +1,14 @@
+
+<use name=AnalysisServices/DataXML>
+
+
+
+<environment> 
+ifdef TEST_READ_XML 
+ CPPFLAGS += -DTEST_READ_XML
+ <bin name=test_DataXML_simple file=dxml_test.cpp></bin>
+endif
+</environment>
+
+
+

@@ -1,0 +1,41 @@
+#include "AIDA_PlotterFactoryProvider.h"
+#include "AIDA_PlotterFactory.h"
+#include "AIDA_Dev/IDevAnalysisFactory.h"
+#include "Initializer.h"
+
+
+
+namespace AidaNative {
+namespace AIDA_Plotter_Grace {
+
+
+
+
+AIDA::IPlotterFactory*
+AIDA_PlotterFactoryProvider::createFactory(int argc, char** argv)
+{
+  return new AIDA_PlotterFactory;
+}
+
+
+
+
+//
+// STATIC OBJECTS FOR INITIALISATION!
+//
+
+static AIDA_PlotterFactoryProvider p;
+static Initializer myInitializer(&p);
+
+
+
+} // end of namespace AIDA_Plotter_Grace
+} // end of namespace AidaNative
+
+
+
+
+
+
+
+

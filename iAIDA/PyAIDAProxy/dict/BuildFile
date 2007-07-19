@@ -1,0 +1,27 @@
+# need definition of SEAL
+SEAL=$(shell echo `$(SCRAM) tool tag SEAL SEAL_BASE`)
+
+
+# dictionary for AIDA_Proxy
+
+DICT_FILES	    = $(LOCALTOP)/src/AnalysisServices/AIDA_Proxy/AIDA_Proxy/AIDA_Proxy.h    $(LOCALTOP)/$(THISDIR)/initVector.h
+
+
+AIDA_Proxy_h_DICT_OPTS       = --select=$(LOCALTOP)/$(THISDIR)/selection.xml 
+initVector_h_DICT_OPTS       = --select=$(LOCALTOP)/$(THISDIR)/initVector.xml
+
+dictcapabilities = dictcapabilities.cpp
+rflxcapabilities = rflxcapabilities.cpp
+
+
+<external ref=seal  use=Dictionary/DictionaryGenerator></external>
+<external ref=seal  use=Dictionary/ReflectionBuilder></external>
+<external ref=seal  use=Dictionary/Reflection></external>
+<external ref=seal  use=Dictionary/SealSTL></external>
+
+
+<use name=AnalysisServices/AIDA_Proxy></use>
+<use name=Analysis
+
+<external ref=aida>
+

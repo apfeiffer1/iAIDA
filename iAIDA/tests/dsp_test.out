@@ -1,0 +1,470 @@
+Creating a datapointset of dimension 1
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsa
+Type : IDataPointSet
+Title : Title a
+Dimension : 1
+Size : 4
+
+Lower extent : -0.1 /
+Upper extent : 3.1 /
+*** Annotation ** START ** 
+Title : Title a
+Name : dpsa
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 /
+1 :  1+0.1-0.1 /
+2 :  2+0.1-0.1 /
+3 :  3+0.1-0.1 /
+
+******* DATA POINT SET ********* END **********************
+Creating a datapointset of dimension 2
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsb
+Type : IDataPointSet
+Title : Title b
+Dimension : 2
+Size : 8
+
+Lower extent : -0.1 / -1 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title b
+Name : dpsb
+Size : 8
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  1+0.1-0.1 / 10+1-1 /
+2 :  2+0.1-0.1 / 20+1-1 /
+3 :  3+0.1-0.1 / 30+1-1 /
+4 :  0+0.1-0.1 / 0+1-1 /
+5 :  1+0.1-0.1 / 10+1-1 /
+6 :  2+0.1-0.1 / 20+1-1 /
+7 :  3+0.1-0.1 / 30+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Creating a copy of the last d.p.s.
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 8
+
+Lower extent : -0.1 / -1 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 8
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  1+0.1-0.1 / 10+1-1 /
+2 :  2+0.1-0.1 / 20+1-1 /
+3 :  3+0.1-0.1 / 30+1-1 /
+4 :  0+0.1-0.1 / 0+1-1 /
+5 :  1+0.1-0.1 / 10+1-1 /
+6 :  2+0.1-0.1 / 20+1-1 /
+7 :  3+0.1-0.1 / 30+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Removing a point in the middle
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 7
+
+Lower extent : -0.1 / -1 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 7
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  1+0.1-0.1 / 10+1-1 /
+2 :  2+0.1-0.1 / 20+1-1 /
+3 :  3+0.1-0.1 / 30+1-1 /
+4 :  1+0.1-0.1 / 10+1-1 /
+5 :  2+0.1-0.1 / 20+1-1 /
+6 :  3+0.1-0.1 / 30+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Removing the last point
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 6
+
+Lower extent : -0.1 / -1 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 6
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  1+0.1-0.1 / 10+1-1 /
+2 :  2+0.1-0.1 / 20+1-1 /
+3 :  3+0.1-0.1 / 30+1-1 /
+4 :  1+0.1-0.1 / 10+1-1 /
+5 :  2+0.1-0.1 / 20+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Removing the first point
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 5
+
+Lower extent : 0.9 / 9 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 5
+*** Annotation *** END ***
+
+Elements :
+0 :  1+0.1-0.1 / 10+1-1 /
+1 :  2+0.1-0.1 / 20+1-1 /
+2 :  3+0.1-0.1 / 30+1-1 /
+3 :  1+0.1-0.1 / 10+1-1 /
+4 :  2+0.1-0.1 / 20+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Adding an empty point
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 6
+
+Lower extent : 0 / 0 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 6
+*** Annotation *** END ***
+
+Elements :
+0 :  1+0.1-0.1 / 10+1-1 /
+1 :  2+0.1-0.1 / 20+1-1 /
+2 :  3+0.1-0.1 / 30+1-1 /
+3 :  1+0.1-0.1 / 10+1-1 /
+4 :  2+0.1-0.1 / 20+1-1 /
+5 :  0+0-0 / 0+0-0 /
+
+******* DATA POINT SET ********* END **********************
+Clearing the set
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 0
+
+Lower extent : 0 / 0 /
+Upper extent : 0 / 0 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 0
+*** Annotation *** END ***
+
+Elements :
+
+******* DATA POINT SET ********* END **********************
+Copying half of the points from the previous set.
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 4
+
+Lower extent : -0.1 / -1 /
+Upper extent : 3.1 / 31 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  1+0.1-0.1 / 10+1-1 /
+2 :  2+0.1-0.1 / 20+1-1 /
+3 :  3+0.1-0.1 / 30+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Scaling the values by a factor of 2
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 4
+
+Lower extent : -0.1 / -1 /
+Upper extent : 6.1 / 61 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  2+0.1-0.1 / 20+1-1 /
+2 :  4+0.1-0.1 / 40+1-1 /
+3 :  6+0.1-0.1 / 60+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Scaling the erros by a factor of 0.5
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 4
+
+Lower extent : -0.05 / -0.5 /
+Upper extent : 6.05 / 60.5 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.05-0.05 / 0+0.5-0.5 /
+1 :  2+0.05-0.05 / 20+0.5-0.5 /
+2 :  4+0.05-0.05 / 40+0.5-0.5 /
+3 :  6+0.05-0.05 / 60+0.5-0.5 /
+
+******* DATA POINT SET ********* END **********************
+Scaling the values and the erros by a factor of 2
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 4
+
+Lower extent : -0.1 / -1 /
+Upper extent : 12.1 / 121 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  4+0.1-0.1 / 40+1-1 /
+2 :  8+0.1-0.1 / 80+1-1 /
+3 :  12+0.1-0.1 / 120+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Trying to insert an incompatible point
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsc
+Type : IDataPointSet
+Title : Title c
+Dimension : 2
+Size : 4
+
+Lower extent : -0.1 / -1 /
+Upper extent : 12.1 / 121 /
+*** Annotation ** START ** 
+Title : Title c
+Name : dpsc
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.1-0.1 / 0+1-1 /
+1 :  4+0.1-0.1 / 40+1-1 /
+2 :  8+0.1-0.1 / 80+1-1 /
+3 :  12+0.1-0.1 / 120+1-1 /
+
+******* DATA POINT SET ********* END **********************
+Creating an addition d.p.s
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsd
+Type : IDataPointSet
+Title : Title d
+Dimension : 2
+Size : 4
+
+Lower extent : -0.141421 / -1.41421 /
+Upper extent : 24.1414 / 241.414 /
+*** Annotation ** START ** 
+Title : Title d
+Name : dpsd
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.141421-0.141421 / 0+1.41421-1.41421 /
+1 :  8+0.141421-0.141421 / 80+1.41421-1.41421 /
+2 :  16+0.141421-0.141421 / 160+1.41421-1.41421 /
+3 :  24+0.141421-0.141421 / 240+1.41421-1.41421 /
+
+******* DATA POINT SET ********* END **********************
+Attemptimg to add two incompatible dps (in length)...
+No effect, correct.
+Attemptimg to add two incompatible dps (in dimension)...
+No effect, correct.
+Creating an subtraction d.p.s
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpse
+Type : IDataPointSet
+Title : Title e
+Dimension : 2
+Size : 4
+
+Lower extent : -0.173205 / -1.73205 /
+Upper extent : 12.1732 / 121.732 /
+*** Annotation ** START ** 
+Title : Title e
+Name : dpse
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0.173205-0.173205 / 0+1.73205-1.73205 /
+1 :  4+0.173205-0.173205 / 40+1.73205-1.73205 /
+2 :  8+0.173205-0.173205 / 80+1.73205-1.73205 /
+3 :  12+0.173205-0.173205 / 120+1.73205-1.73205 /
+
+******* DATA POINT SET ********* END **********************
+Attemptimg to subtract two incompatible dps (in length)...
+No effect, correct.
+Attemptimg to subtract two incompatible dps (in dimension)...
+No effect, correct.
+Creating an multiplication d.p.s
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsg
+Type : IDataPointSet
+Title : Title g
+Dimension : 2
+Size : 4
+
+Lower extent : 0 / 0 /
+Upper extent : 290.939 / 29093.9 /
+*** Annotation ** START ** 
+Title : Title g
+Name : dpsg
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0-0 / 0+0-0 /
+1 :  32+0.979796-0.979796 / 3200+97.9796-97.9796 /
+2 :  128+1.95959-1.95959 / 12800+195.959-195.959 /
+3 :  288+2.93939-2.93939 / 28800+293.939-293.939 /
+
+******* DATA POINT SET ********* END **********************
+Attemptimg to multiply two incompatible dps (in length)...
+No effect, correct.
+Attemptimg to multiply two incompatible dps (in dimension)...
+No effect, correct.
+Creating a division d.p.s
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsh
+Type : IDataPointSet
+Title : Title h
+Dimension : 2
+Size : 4
+
+Lower extent : 0 / 0 /
+Upper extent : 1.0433 / 1.0433 /
+*** Annotation ** START ** 
+Title : Title h
+Name : dpsh
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0-0 / 0+0-0 /
+1 :  1+0.0433013-0.0433013 / 1+0.0433013-0.0433013 /
+2 :  1+0.0216506-0.0216506 / 1+0.0216506-0.0216506 /
+3 :  1+0.0144338-0.0144338 / 1+0.0144338-0.0144338 /
+
+******* DATA POINT SET ********* END **********************
+Attemptimg to divide two incompatible dps (in length)...
+No effect, correct.
+Attemptimg to divide two incompatible dps (in dimension)...
+No effect, correct.
+Copying and scaling the last d.p.s
+******* DATA POINT SET ******** START *********************
+DataPointSet name : 
+Type : IDataPointSet
+Title : Title h
+Dimension : 2
+Size : 4
+
+Lower extent : 0 / 0 /
+Upper extent : 2.0866 / 2.0866 /
+*** Annotation ** START ** 
+Title : Title h
+Name : 
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0-0 / 0+0-0 /
+1 :  2+0.0866025-0.0866025 / 2+0.0866025-0.0866025 /
+2 :  2+0.0433013-0.0433013 / 2+0.0433013-0.0433013 /
+3 :  2+0.0288675-0.0288675 / 2+0.0288675-0.0288675 /
+
+******* DATA POINT SET ********* END **********************
+Retrieving the weighted mean of the last two
+******* DATA POINT SET ******** START *********************
+DataPointSet name : dpsj
+Type : IDataPointSet
+Title : Title j
+Dimension : 2
+Size : 4
+
+Lower extent : 0 / 0 /
+Upper extent : 1.25196 / 1.25196 /
+*** Annotation ** START ** 
+Title : Title j
+Name : dpsj
+Size : 4
+*** Annotation *** END ***
+
+Elements :
+0 :  0+0-0 / 0+0-0 /
+1 :  1.2+0.0519615-0.0519615 / 1.2+0.0519615-0.0519615 /
+2 :  1.2+0.0259808-0.0259808 / 1.2+0.0259808-0.0259808 /
+3 :  1.2+0.0173205-0.0173205 / 1.2+0.0173205-0.0173205 /
+
+******* DATA POINT SET ********* END **********************
+Attemptimg to retrieve the weighted mean of two incompatible dps (in length)...
+No effect, correct.
+Attemptimg to retrieve the weighted mean of two incompatible dps (in dimension)...
+No effect, correct.
+Test succeeded!

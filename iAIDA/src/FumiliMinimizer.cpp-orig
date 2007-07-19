@@ -1,0 +1,83 @@
+
+
+#include "FML/FumiliFunctionWrappers.h"
+#include "FML/FumiliMinimizer.h"
+#include "FML/MinimizerPlugin.h"
+
+
+#include "Minuit2/FunctionMinimum.h"
+#include "Minuit2/MnFumiliMinimize.h"
+#include "Minuit2/MnUserParameters.h"
+
+
+
+// needed for MinuitParameter
+#include  <algorithm>
+
+#include <iostream>
+
+namespace fml {
+
+  // base class for LCG Minuit minimizers 
+
+FumiliMinimizer::FumiliMinimizer()  :  
+  LCGMinuitMinimizer() 
+{
+}
+
+FumiliMinimizer::FumiliMinimizer(IFMLFunction *objfun) : 
+  LCGMinuitMinimizer(objfun) 
+{
+}
+
+  // create FCN 
+ 
+MinuitFCNWrapper * FumiliMinimizer::createFCN( IFMLFunction * objfun) { 
+
+  assert(objfun); 
+  // down cast to Method Function
+  FitMethodFunction * methodFun = dynamic_cast<FitMethodFunction*>(objfun); 
+  assert( methodFun); 
+
+  // create Minuit parametric function 
+  //FumiliModelFunctionWrapper * modelFun = new FumiliModelFunctionWrapper(* methodFun->modelFunction() ); 
+
+  // create fumili objective function 
+  // case of chi2 
+  if (objfun->functionName() == "chi2") { 
+    FumiliChi2FCNWrapper * fumiliFCN = new FumiliChi2FCNWrapper(*methodFun ); 
+    return fumiliFCN; 
+  }
+  else if ( objfun->functionName() == "unbinnedML") { 
+    FumiliMLFCNWrapper * fumiliFCN = new FumiliMLFCNWrapper(*methodFun ); 
+    return fumiliFCN; 
+  }
+
+
+  // report an error
+  std::cerr << "Error: Cannot use FUMILI minimizer with fit method : " << objfun->functionName() << std::endl;
+  return 0; 
+
+}
+
+ROOT::Minuit2::MnApplication * FumiliMinimizer::createMinimizer(const ROOT::Minuit2::MnUserParameters & par) 
+{ 
+  if (!getFCN() ) return 0; 
+  if (printLevel() >= 3)  
+    std::cout << "Create Fumili minimizer - with strategy " << controlParameters().strategy() << std::endl; 
+  // now dynamic cast but should improve : 
+  ROOT::Minuit2::FumiliFCNBase * fumiliFCN = dynamic_cast<ROOT::Minuit2::FumiliFCNBase *>( getFCN() );
+  assert(fumiliFCN);
+  ROOT::Minuit2::MnFumiliMinimize * minimizer = new ROOT::Minuit2::MnFumiliMinimize( *fumiliFCN, par, controlParameters().strategy()); 
+  return minimizer;
+}
+
+
+// decleare class for minimizer plugin 
+
+static Util::Plugin<Minimizer, FumiliMinimizer> fumiliMinimizer_plugin("fumili");
+
+}   // end namespace fml
+
+
+
