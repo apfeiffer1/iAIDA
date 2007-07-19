@@ -148,6 +148,9 @@ class AIDA_Configurator :
         setLDpath = cmd 
         setLDpath += " LD_LIBRARY_PATH" + sep + '"' + self.piRelDir + "/lib:"
 
+        setDLDpath = cmd 
+        setDLDpath += " DYLD_LIBRARY_PATH" + sep + '"' + self.piRelDir + "/lib:"
+
         # add only if it is already defined, otherwise [t]csh will choke :-(((
         if (os.environ.has_key("LD_LIBRARY_PATH") ) :
             setLDpath += '${LD_LIBRARY_PATH}'            
@@ -157,9 +160,9 @@ class AIDA_Configurator :
         if os.uname()[0] == 'Darwin' :    # special for Mac OS X
            # add only if it is already defined, otherwise [t]csh will choke :-(((
            if (os.environ.has_key("DYLD_LIBRARY_PATH") ) :
-              setLDpath += '${DYLD_LIBRARY_PATH}'            
-              setLDpath += '";'
-           print setLDpath
+              setDLDpath += '${DYLD_LIBRARY_PATH}'            
+           setDLDpath += '";'
+           print setDLDpath
 
         setPyPath = cmd + " PYTHONPATH"  + sep + '"'
         setPyPath += self.piRelDir + "/python:"
