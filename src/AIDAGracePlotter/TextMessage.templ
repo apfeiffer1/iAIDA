@@ -1,0 +1,272 @@
+// -*- C++ -*-
+
+/////////////////////////////////////////////////////////////////////////
+//                                                                     //
+//  This library is free software; you can redistribute it and/or      //
+//  modify it under the terms of the GNU Lesser General Public         //
+//  License as published by the Free Software Foundation; either       //
+//  version 2.1 of the License, or (at your option) any later version. //
+//                                                                     //
+//  This library is distributed in the hope that it will be useful,    //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of     //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU   //
+//  Lesser General Public License for more details.                    //
+//                                                                     //
+//  You should have received a copy of the GNU Lesser General Public   //
+//  License along with this library (see file COPYING); if not, write  //
+//  to the Free Software Foundation, Inc., 59 Temple Place, Suite      //
+//  330, Boston, MA 02111-1307 USA, or contact the author.             //
+//                                                                     //
+/////////////////////////////////////////////////////////////////////////
+
+//
+// (c) CERN, Geneva
+//
+
+
+inline void TextMessage::show() const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;
+}
+
+
+
+template<class T1>
+inline void TextMessage::show(T1 a) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl; 
+}
+
+
+
+
+template<class T1, class T2>
+inline void TextMessage::show(T1 a, T2 b) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl; 
+}
+
+
+
+template<class T1, class T2, class T3>
+inline void TextMessage::show(T1 a, T2 b, T3 c) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}
+
+
+
+
+template<class T1, class T2, class T3, class T4>
+inline void TextMessage::show(T1 a, T2 b, T3 c, T4 d) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  (*theStream) << d;
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}
+
+
+
+
+template<class T1, class T2, class T3, class T4, class T5>
+inline void TextMessage::show(T1 a, T2 b, T3 c, T4 d, T5 e) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  (*theStream) << d;
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  (*theStream) << e;
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}
+
+
+
+
+template<class T1, class T2, class T3, class T4, class T5, 
+	 class T6>
+inline void TextMessage::show(T1 a, T2 b, T3 c, T4 d, T5 e, 
+			      T6 f) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  (*theStream) << d;
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  (*theStream) << e;
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  (*theStream) << f;
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}
+
+
+
+
+template<class T1, class T2, class T3, class T4, class T5, 
+	 class T6, class T7>
+inline void TextMessage::show(T1 a, T2 b, T3 c, T4 d, T5 e, 
+			      T6 f, T7 g) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  (*theStream) << d;
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  (*theStream) << e;
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  (*theStream) << f;
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  (*theStream) << g;
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}
+
+
+
+
+template<class T1, class T2, class T3, class T4, class T5, 
+	 class T6, class T7, class T8>
+inline void TextMessage::show(T1 a, T2 b, T3 c, T4 d, T5 e, 
+			      T6 f, T7 g, T8 h) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  (*theStream) << d;
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  (*theStream) << e;
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  (*theStream) << f;
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  (*theStream) << g;
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  (*theStream) << h;
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}
+
+
+
+
+template<class T1, class T2, class T3, class T4, class T5, 
+	 class T6, class T7, class T8, class T9>
+inline void TextMessage::show(T1 a, T2 b, T3 c, T4 d, T5 e, 
+			      T6 f, T7 g, T8 h, T9 i) const
+{
+  writeContext(*theStream);
+  if (messageTokens.size() > 0) (*theStream) << messageTokens[0];
+  (*theStream) << a;
+  if (messageTokens.size() > 1) (*theStream) << messageTokens[1];
+  (*theStream) << b;
+  if (messageTokens.size() > 2) (*theStream) << messageTokens[2];
+  (*theStream) << c;
+  if (messageTokens.size() > 3) (*theStream) << messageTokens[3];
+  (*theStream) << d;
+  if (messageTokens.size() > 4) (*theStream) << messageTokens[4];
+  (*theStream) << e;
+  if (messageTokens.size() > 5) (*theStream) << messageTokens[5];
+  (*theStream) << f;
+  if (messageTokens.size() > 6) (*theStream) << messageTokens[6];
+  (*theStream) << g;
+  if (messageTokens.size() > 7) (*theStream) << messageTokens[7];
+  (*theStream) << h;
+  if (messageTokens.size() > 8) (*theStream) << messageTokens[8];
+  (*theStream) << i;
+  if (messageTokens.size() > 9) (*theStream) << messageTokens[9];
+  (*theStream) << std::endl;  
+}

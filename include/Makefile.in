@@ -1,0 +1,9 @@
+
+all:
+
+install: all
+	@if [ -d AIDA ] ; then \
+	   mkdir -p @PREFIX_DIR@/include/AIDA  ; \
+	   cp -r AIDA/* @PREFIX_DIR@/include/AIDA/. ; \
+	fi
+

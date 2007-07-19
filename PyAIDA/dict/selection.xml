@@ -1,0 +1,8 @@
+
+<lcgdict>
+  <class pattern="AIDA::I*"/>  
+  <class pattern="std::vector<std*>"/>
+  <class pattern="std::vector<AIDA*>"/>
+  <class pattern="pi::*"/>
+</lcgdict>
+

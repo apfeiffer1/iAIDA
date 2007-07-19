@@ -1,0 +1,24 @@
+Creating a CompiledExpressionManager.
+Variables defined: 
+a : int
+b : float
+c : double
+d : bool
+Creating a filter expression from using the string "a*b + c > 0"
+Variables used: 
+a
+b
+c
+Creating a filter expression from using the same string
+Variables used: 
+a
+b
+c
+Creating a evaluator expression from using the string "a + c"
+Variables used: 
+a
+c
+Creating a evaluator expression from using the same string
+Variables used: 
+a
+c

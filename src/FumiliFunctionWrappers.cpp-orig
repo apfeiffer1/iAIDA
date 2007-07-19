@@ -1,0 +1,287 @@
+#include "FML/FumiliFunctionWrappers.h"
+
+// implementation of Fumili Wrapper function
+
+namespace fml { 
+
+
+  FumiliFCNWrapper::FumiliFCNWrapper(const FitMethodFunction & f, double up) : 
+    m_objf(f), 
+    m_up(up)
+  {  
+      // get reference to data points 
+      // get measurement point at index 
+      // works only if datavector is stl vector 
+      DataVectorIterator * dataVI = dynamic_cast<DataVectorIterator *>(m_objf.dataIterator() );
+      assert(dataVI); 
+      // if used DataVectorIterator then is in memory and use stl iterator for best performances
+      const DataVector * vec = dataVI->dataVec();
+      assert(vec); 
+      m_points = &(vec->dataPoints());
+      //std::cout << " index" << index << " x = " <<  m_points[index]->coords()[0] << std::endl; 
+
+      // get model function
+      IFMLFunction * modelFun = m_objf.modelFunction();
+      int npar = modelFun->numberOfParameters(); 
+      m_gradient =  std::vector<double>( npar );
+      m_hessian = std::vector<double>( npar*(npar+1)/2 );
+      m_modelFun_grad = std::vector<double>( npar );
+      m_p2 = std::vector<double>( npar );
+
+      m_providesGradient= modelFun->providesParameterGradient();
+      //m_providesGradient = false; 
+      if (!m_providesGradient ) { 
+
+	m_userModelFunction = dynamic_cast<UserModelFunction *>(modelFun);
+
+      // set in derivator
+
+#ifdef USE_MATHCORE
+	m_derivFunc = DerivFunction(modelFun); 
+	m_derivator.setFunction(m_derivFunc); 
+#endif
+      }
+      else
+	m_userModelFunction = 0; 
+
+      ROOT::Minuit2::MnMachinePrecision prec; 
+      m_precision = prec.Eps2();
+      
+  } 
+
+  // gradient calculation
+
+  void FumiliFCNWrapper::calculate_gradient_and_hessian(const std::vector<double> & p, int type)  { 
+
+      const std::vector<DataPoint> & points = *m_points; 
+
+      IFMLFunction & modelFun = *(m_objf.modelFunction());
+
+      // set parameters 
+      m_p2 = p;
+      modelFun.setParameters(p); 
+
+      // reset 
+      int npar = p.size(); 
+      // dimension of hessian symmetric matrix  
+      int nhdim = 0.5*npar*(npar + 1); 
+      assert( npar == m_gradient.size() ); 
+      assert( nhdim == m_hessian.size() );
+      m_gradient.assign( npar, 0.0); 
+      m_hessian.assign( nhdim, 0.0);
+      double sum = 0; 
+
+      // loop on measurements
+      int nMeasurements = points.size(); 
+      for (int i = 0; i < nMeasurements; ++i) {
+ 
+	const std::vector<double> & x =  points[i].coords(); 
+
+	double fval = modelFun.value(x); 
+	
+	
+	// calculate gradient 
+
+	if (m_providesGradient)  
+	  m_modelFun_grad = modelFun.parameterGradient(x); 
+	else { 
+	  if (m_userModelFunction) 
+	    calculate_fast_numerical_gradient( x, fval); 
+	  else 
+	    calculate_numerical_gradient( modelFun, x, fval); 
+	}
+
+	if (type == 1) { 
+	      // chi2 
+	    
+
+	  double invError =  points[i].invError(); 
+	  double value = points[i].value();
+	  double element = invError*( fval - value );
+
+	  sum += element*element;
+	  
+	  for (int j = 0; j < npar; ++j) { 
+	    
+	    double fj =  invError * m_modelFun_grad[j]; 
+	    m_gradient[j] += 2.0 * element * fj; 
+	    
+	    for (int k = j; k < npar; ++ k) { 
+	      int idx =  j + k*(k+1)/2; 
+	      m_hessian[idx] += 2.0 * fj * invError * m_modelFun_grad[k]; 
+	    }
+	  }
+	}
+	else { 
+	  // likelihood
+	  //if (fval < 1.0E-16) fval = 1.0E-16; // truncate for precision
+	  double invFval = 1.0/fval;
+	  for (int j = 0; j < npar; ++j) {
+
+	    double fj; 
+	    if ( fval < m_precision &&  fabs(m_modelFun_grad[j]) < m_precision ) 
+	      fj = 1.0; 
+	    else 
+	      fj =  invFval * m_modelFun_grad[j]; 
+
+
+// 	    if ( ( ! (fj <= 0) )  && ( ! ( fj > 0) ) ) { 
+// 	      std::cout << "fj is nan -- " << fj << "  " << j << " x " << x[0] << " f(x) = " << fval << "  inv =  " << invFval << "gradient = " 
+// 			<< m_modelFun_grad[j] << "  " << m_modelFun_grad[j]/fval << std::endl;
+// 	      fj = 0; 
+	    
+// 	    }
+
+	    m_gradient[j] -= fj;
+	    
+	    for (int k = j; k < npar; ++ k) { 
+	      int idx =  j + k*(k+1)/2; 
+	      double fk; 
+	      if ( fval < m_precision &&  fabs(m_modelFun_grad[k]) < m_precision ) 
+		fk = 1.0; 
+	      else 
+		fk =  invFval * m_modelFun_grad[k]; 
+
+
+	      m_hessian[idx] += fj * fk;
+	    }
+	  }
+
+
+	}
+      }
+
+	
+  }
+
+  void FumiliFCNWrapper::calculate_numerical_gradient( IFMLFunction & func, const std::vector<double> & x, double f0) {   
+
+	  // calculate gradient 
+	int n = m_p2.size();
+	//std::cout << "Model function Gradient " << std::endl;
+	for (int ipar = 0; ipar < n ; ++ipar) { 
+	  double p0 = m_p2[ipar]; 
+	  // use 0.001 of par 
+	  double h = std::max( 0.001* p0, 8.0*m_precision*fabs( p0 + m_precision) );  
+	  m_p2[ipar] += h;  
+	  func.setParameters(m_p2); 
+	  m_modelFun_grad[ipar] =  ( func.value(x) - f0)/h;
+	  // reset to old value
+	  m_p2[ipar] = p0; 
+	  //	  std::cout << " i " << ipar << par[ipar] << "  " << m_modelFun_grad[ipar] << " xi = " << x[0] << " fval " << f0 << std::endl; 
+	}
+	// reset parameters because model function has changed between 
+        func.setParameters(m_p2); 
+
+  }
+
+  // for UserModelfunction
+  void FumiliFCNWrapper::calculate_fast_numerical_gradient( const std::vector<double> & x,  double f0) {  
+
+	  // calculate gradient 
+	int n = m_p2.size();
+	UserModelFunction & func = *m_userModelFunction; 
+	for (int ipar = 0; ipar < n ; ++ipar) { 
+	  double p0 = m_p2[ipar];
+	  // use 0.001 of par. Shuold use step value ? 
+	  double h = std::max( 0.001* p0, 8.0*m_precision*fabs( p0 + m_precision) );  
+	  m_p2[ipar] += h;  
+	  m_modelFun_grad[ipar] =  ( func.value(x,m_p2) - f0)/h;
+	  // reset to old value
+	  m_p2[ipar] = p0; 
+	}
+  }
+
+  double FumiliFCNWrapper::calculate_element(int index, const std::vector<double> & p, int type) const { 
+
+       const std::vector<DataPoint> & points = *m_points; 
+       const std::vector<double> & x =  points[index].coords(); 
+       IFMLFunction & modelFun = *(m_objf.modelFunction());
+       if (type == 1) {
+	 // chi2
+	 double invError =  points[index].invError();
+	 modelFun.setParameters(p);
+	 return invError*(modelFun.value(x) - points[index].value() ); 
+       }
+       else { 
+	 //likelihood
+	 modelFun.setParameters(p);
+	 return log(modelFun.value(x) ); 	 
+       }
+     }
+
+  // derivatives calculation
+  
+  const std::vector<double> & FumiliFCNWrapper::calculate_derivatives(int index, const std::vector<double> & p, int type ) const { 
+
+      const std::vector<DataPoint> & points = *m_points; 
+      const std::vector<double> & x =  points[index].coords(); 
+      double invError =  points[index].invError(); 
+
+      if (m_providesGradient) { 
+	IFMLFunction & modelFun = *(m_objf.modelFunction());
+	modelFun.setParameters(p); 
+	m_modelFun_grad = modelFun.parameterGradient(x);
+	double ccc = 0; 
+	if (type ==1 )  
+	  ccc = invError; 
+	else if (type ==2) { 
+	  double fval = modelFun.value(x); 
+	  ccc = 1./fval; 
+	}
+	
+	for (unsigned int ipar = 0; ipar < m_modelFun_grad.size(); ++ipar)  
+	    m_modelFun_grad[ipar] *= ccc;
+
+
+      }
+
+      else { 
+
+#ifdef USE_MATHCORE
+	// use GSL (through seal mathcore ) to calculate derivatives 
+	m_derivFunc.setCoordinatesAndParameters(x , p);     
+	// now calculate derivatives of f_x
+	double hStep = 0.0001; 
+	for (unsigned int ipar = 0; ipar < p.size() ; ++ipar) { 
+	  m_derivFunc.setIndex(ipar); 
+	  m_modelFun_grad[ipar] =  m_derivator.evalCentral(p[ipar], hStep); 
+	  m_modelFun_grad[ipar] =  m_derivator.evalCentralAdaptive(p[ipar]); 
+	  m_modelFun_grad[ipar] *= ccc;
+	} 
+#else
+
+
+	// calculate yourself the derivatives (faster and derivatives should not cause big problems ) 
+	IFMLFunction & modelFun = *(m_objf.modelFunction());
+	modelFun.setParameters(p); 
+	double f0 = modelFun.value(x); 
+	double ccc = 1;
+	if (type ==1 )  
+	  ccc = invError; 
+	else if (type ==2) 
+	  ccc = 1./f0; 
+
+	double h = 0.0001;
+	unsigned int n = p.size(); 
+	std::vector<double> p2( n );
+	for (unsigned int ipar = 0; ipar < n ; ++ipar) { 
+	  p2 = p;
+	  p2[ipar] = p[ipar] + h;  
+	  modelFun.setParameters(p2); 
+	  m_modelFun_grad[ipar] =  ( modelFun.value(x) - f0)/h;  
+	  m_modelFun_grad[ipar] *= ccc;
+
+	}
+#endif    
+
+      }
+
+      return m_modelFun_grad; 
+      
+    }
+
+
+} // end namespace fml
+
+

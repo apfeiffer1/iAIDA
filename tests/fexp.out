@@ -1,0 +1,167 @@
+*** Testing the expression parser ***
+Variables defined: 
+b : bool
+energy : double
+mass : double
+n : int
+particles : AIDA::ITuple
+Defining which header files to include and which namespaces to use.
+Forming the logical function for the expression : 
+( n*(energy/mass) < 1232.02 ) && b
+
+/* START OF AUTOMATICALLY GENERATED FILE */
+#include "AIDA_Tuple_native/IFilterExpressionBase.h"
+#include "AIDA_Dev/IDevTuple.h"
+#include <cmath>
+
+using namespace std;
+
+class FilterExpression_aLogicalFunctionName : virtual public pi::AIDA_Tuple_native::IFilterExpressionBase {
+public:
+  FilterExpression_aLogicalFunctionName(){}
+  ~FilterExpression_aLogicalFunctionName(){}
+  bool bind( const std::map<std::string, void*>& args ) {
+    m_b = reinterpret_cast< const bool *>( args.find("b")->second );
+    m_energy = reinterpret_cast< const double *>( args.find("energy")->second );
+    m_mass = reinterpret_cast< const double *>( args.find("mass")->second );
+    m_n = reinterpret_cast< const int *>( args.find("n")->second );
+    return true;
+  };
+  bool accept() const {
+    const bool& b = * m_b;
+    const double& energy = * m_energy;
+    const double& mass = * m_mass;
+    const int& n = * m_n;
+    return ( ( n*(energy/mass) < 1232.02 ) && b );
+  }
+private:
+  const bool* m_b;
+  const double* m_energy;
+  const double* m_mass;
+  const int* m_n;
+};
+
+static pi::AIDA_Tuple_native::IFilterExpressionFactory<FilterExpression_aLogicalFunctionName> factory;
+pi::AIDA_Tuple_native::IFilterExpressionBaseFactory& aLogicalFunctionName = factory;
+
+/* END OF AUTOMATICALLY GENERATED FILE */
+
+Forming the logical function for the expression : 
+int i = n-1;
+if (particles.rows() > i) {
+  return true;
+} else return false;
+
+/* START OF AUTOMATICALLY GENERATED FILE */
+#include "AIDA_Tuple_native/IFilterExpressionBase.h"
+#include "AIDA_Dev/IDevTuple.h"
+#include <cmath>
+
+using namespace std;
+
+class FilterExpression_aLogicalFunctionName : virtual public pi::AIDA_Tuple_native::IFilterExpressionBase {
+public:
+  FilterExpression_aLogicalFunctionName(){}
+  ~FilterExpression_aLogicalFunctionName(){}
+  bool bind( const std::map<std::string, void*>& args ) {
+    m_n = reinterpret_cast< const int *>( args.find("n")->second );
+    m_particles = reinterpret_cast< const AIDA::Dev::IDevTuple *>( args.find("particles")->second );
+    return true;
+  };
+  bool accept() const {
+    const int& n = * m_n;
+    const AIDA::Dev::IDevTuple& particles = * m_particles;
+    int i = n-1;
+    if (particles.rows() > i) {
+      return true;
+    } else return false;
+  }
+private:
+  const int* m_n;
+  const AIDA::Dev::IDevTuple* m_particles;
+};
+
+static pi::AIDA_Tuple_native::IFilterExpressionFactory<FilterExpression_aLogicalFunctionName> factory;
+pi::AIDA_Tuple_native::IFilterExpressionBaseFactory& aLogicalFunctionName = factory;
+
+/* END OF AUTOMATICALLY GENERATED FILE */
+
+Forming the mathematical function for the expression : 
+energy/sqrt(mass)
+
+/* START OF AUTOMATICALLY GENERATED FILE */
+#include "AIDA_Tuple_native/IEvaluatorExpressionBase.h"
+#include "AIDA_Dev/IDevTuple.h"
+#include <cmath>
+
+using namespace std;
+
+class EvaluatorExpression_aMathematicalFunctionName : virtual public pi::AIDA_Tuple_native::IEvaluatorExpressionBase {
+public:
+  EvaluatorExpression_aMathematicalFunctionName(){}
+  ~EvaluatorExpression_aMathematicalFunctionName(){}
+  bool bind( const std::map<std::string, void*>& args ) {
+    m_energy = reinterpret_cast< const double *>( args.find("energy")->second );
+    m_mass = reinterpret_cast< const double *>( args.find("mass")->second );
+    return true;
+  };
+  double evaluate() const {
+    const double& energy = * m_energy;
+    const double& mass = * m_mass;
+    return ( energy/sqrt(mass) );
+  }
+private:
+  const double* m_energy;
+  const double* m_mass;
+};
+
+static pi::AIDA_Tuple_native::IEvaluatorExpressionFactory<EvaluatorExpression_aMathematicalFunctionName> factory;
+pi::AIDA_Tuple_native::IEvaluatorExpressionBaseFactory& aMathematicalFunctionName = factory;
+
+/* END OF AUTOMATICALLY GENERATED FILE */
+
+Forming the mathematical function for the expression : 
+double totalEnergy = 0;
+int energyColumn = particles.findColumn( "energy" );
+particles.start();
+for ( int iParticle = 0; iParticle < particles.rows(); ++iParticle) {
+  particles.next();
+  totalEnergy += particles.getDouble(energyColumn);
+}
+return totalEnergy;
+
+/* START OF AUTOMATICALLY GENERATED FILE */
+#include "AIDA_Tuple_native/IEvaluatorExpressionBase.h"
+#include "AIDA_Dev/IDevTuple.h"
+#include <cmath>
+
+using namespace std;
+
+class EvaluatorExpression_aMathematicalFunctionName : virtual public pi::AIDA_Tuple_native::IEvaluatorExpressionBase {
+public:
+  EvaluatorExpression_aMathematicalFunctionName(){}
+  ~EvaluatorExpression_aMathematicalFunctionName(){}
+  bool bind( const std::map<std::string, void*>& args ) {
+    m_particles = reinterpret_cast< const AIDA::Dev::IDevTuple *>( args.find("particles")->second );
+    return true;
+  };
+  double evaluate() const {
+    const AIDA::Dev::IDevTuple& particles = * m_particles;
+    double totalEnergy = 0;
+    int energyColumn = particles.findColumn( "energy" );
+    particles.start();
+    for ( int iParticle = 0; iParticle < particles.rows(); ++iParticle) {
+      particles.next();
+      totalEnergy += particles.getDouble(energyColumn);
+    }
+    return totalEnergy;
+  }
+private:
+  const AIDA::Dev::IDevTuple* m_particles;
+};
+
+static pi::AIDA_Tuple_native::IEvaluatorExpressionFactory<EvaluatorExpression_aMathematicalFunctionName> factory;
+pi::AIDA_Tuple_native::IEvaluatorExpressionBaseFactory& aMathematicalFunctionName = factory;
+
+/* END OF AUTOMATICALLY GENERATED FILE */
+

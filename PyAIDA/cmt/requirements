@@ -1,0 +1,27 @@
+use AIDA v* LCG_Interfaces
+use SEAL v* LCG_Interfaces
+
+use AIDA_AnalysisFactory  v* AnalysisServices
+use AIDA_Plugin v* AnalysisServices
+
+#macro lcgdict_cmd "python2.3 $(SEAL_home)/bin/lcgdict.py" \
+#  WIN32           "python    $(SEAL_home)/bin/lcgdict.py"
+#macro ppcmd -I
+
+apply_pattern lcg_dictionary dictionary=PyAIDA \
+                             headerfiles=$(PYAIDAROOT)/dict/AFCreator.h
+                                   
+macro AFCreator_lcgdict_options   "--select $(PYAIDAROOT)/dict/selection.xml  " \
+      WIN32                       "--select $(PYAIDAROOT)/dict/selection.xml  --split "
+
+macro append SEAL_linkopts " -lSealSTLDict " WIN32 " SealSTLDict.lib "
+
+# copy python scripts 
+
+path_remove PYTHONPATH "/PI"/ WIN32 "\PI\"
+path_append PYTHONPATH "$(SEAL_home)/lib"
+path_append PYTHONPATH "$(SEAL_home)/../src/Scripting/PyROOT/src"
+path_append PYTHONPATH "$(PYAIDAROOT)/../../../$(tag)/lib"
+path_append PYTHONPATH "$(PYAIDAROOT)/../../../$(tag)/python"
+
+

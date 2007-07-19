@@ -1,0 +1,29 @@
+use AIDA  v* LCG_Interfaces
+use SEAL v* LCG_Interfaces
+
+use AIDA_Proxy  v* AnalysisServices
+use AIDA_Plugin v* AnalysisServices
+
+# macro lcgdict_cmd "python2.3 $(SEAL_home)/bin/lcgdict.py" \
+#   WIN32           "python    $(SEAL_home)/bin/lcgdict.py"
+# macro ppcmd -I
+
+apply_pattern lcg_dictionary dictionary=PyAIDAProxy \
+                             headerfiles=$(AIDA_PROXYROOT)/AIDA_Proxy/AIDA_Proxy.h
+                                   
+macro AIDA_Proxy_lcgdict_options      "--select $(PYAIDAPROXYROOT)/dict/selection.xml " \
+                           WIN32      "--select $(PYAIDAPROXYROOT)/dict/selection.xml --split "    
+
+macro append SEAL_linkopts " -lSealSTLDict " WIN32 " SealSTLDict.lib "
+
+
+# copy python scripts 
+
+path_remove PYTHONPATH "/PI"/ WIN32 "\PI\"
+path_append PYTHONPATH "$(SEAL_home)/lib"
+path_append PYTHONPATH "$(SEAL_home)/../src/Scripting/PyROOT/src"
+path_append PYTHONPATH "$(PYAIDAPROXYROOT)/../../../$(LCG_system)/lib"
+path_append PYTHONPATH "$(PYAIDAPROXYROOT)/../../../$(LCG_system)/python"
+path_append PYTHONPATH "F:\cern.ch\sw\lcg\contrib\moneta\Hippodraw"
+
+
