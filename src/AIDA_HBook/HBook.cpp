@@ -76,7 +76,7 @@ extern "C" {
 
   void hfnt_(int* id);
   void hreset_(int*, char*, int);
-  int hntnew_(int*);
+  int  hntnew_(int*);
   void hgiven_(int*, char*, int*, char*, float*, float*, int, int);
   void hntvdef_(int* id, int* varNum, char* tagName, char* blockName, int* itype,
 		int DtagName, int DblockName);
@@ -362,7 +362,7 @@ pi::AIDA_HBookStore::HBook::hasVariableBinSizes( const int& id )
 }
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
 {
   int tid = id;
@@ -370,7 +370,7 @@ pi::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
 }
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::histoEbe(const int& id )
 {
   int tid = id;
@@ -380,7 +380,7 @@ pi::AIDA_HBookStore::HBook::histoEbe(const int& id )
   return hstati_( &tid, &icase, choice, &num, 4 );
 }
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::histoRms(const int& id )
 {
   int tid = id;
@@ -390,7 +390,7 @@ pi::AIDA_HBookStore::HBook::histoRms(const int& id )
   return hstati_( &tid, &icase, choice, &num, 4 );
 }
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::histoRmsX(const int& id )
 {
   int tid = id;
@@ -400,7 +400,7 @@ pi::AIDA_HBookStore::HBook::histoRmsX(const int& id )
   return hstati_( &tid, &icase, choice, &num, 4 );
 }
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::histoRmsY(const int& id )
 {
   int tid = id;
@@ -427,7 +427,7 @@ pi::AIDA_HBookStore::HBook::areErrorsStored( const int& id )
 }
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
 {
   int tid = id;
@@ -437,7 +437,7 @@ pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
 
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
 {
   int tid = id;
@@ -446,7 +446,7 @@ pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
 }
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
 {
   float x   = 0.0;
@@ -457,23 +457,26 @@ pi::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
 }
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumberX, const int& binNumberY)
 {
   int tid = id;
   int tbnx = binNumberX;
   int tbny = binNumberY;
-  return hij_(&tid, &tbnx, &tbny);
+   HBK_FLOAT_OR_DOUBLE val = hij_(&tid, &tbnx, &tbny);;
+  return val;
 }
 
 
-HBK_FLOAT_OR_DOUBLE
+float
 pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumberX, const int& binNumberY)
 {
   int tid = id;
   int tbnx = binNumberX;
   int tbny = binNumberY;
-  return hije_(&tid, &tbnx, &tbny);
+  
+  HBK_FLOAT_OR_DOUBLE val = hije_(&tid, &tbnx, &tbny);
+  return val;
 }
 
 
