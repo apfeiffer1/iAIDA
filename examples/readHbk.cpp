@@ -18,11 +18,11 @@ public:
   ExaH1 ();
   ~ExaH1 ();
 
-  void doIt() { read(); check(); }
+  void doIt(bool verbose=false) { read(); check(verbose); }
 
   // possibly these could be protected
   void read();
-  void check();
+  void check(bool verbose=false);
 
 private:
   // the factories and the tree
@@ -41,7 +41,7 @@ ExaH1::ExaH1() {
   AIDA::ITreeFactory *tf( af->createTreeFactory() );
   bool readOnly = true;
   bool createNew = false;
-  tree = tf->create("test.hbk","hbook",readOnly, createNew);
+  tree = tf->create("example.hbk","hbook",readOnly, createNew);
   if (!tree) { 
     std::cerr << "ERROR: cannot create hbook tree" << std::endl;
   }
@@ -78,21 +78,23 @@ void ExaH1::read() {
 
 }
 
-void ExaH1::check() {
+void ExaH1::check(bool verbose) {
 
   {
     // Printing some statistical values of the histogram
     std::cout << "Mean : " << h1p->mean() << std::endl;
     std::cout << "RMS  : " << h1p->rms() << std::endl;
     
-    // Printing the contents of the histogram
-    std::cout << "X value     entries    Y value (height)" << std::endl;
-    const AIDA::IAxis& xAxis = h1p->axis();
-    for ( int iBin = 0; iBin < xAxis.bins(); ++iBin ) {
-      std::cout << h1p->binMean( iBin )
-		<< "       "   << h1p->binEntries( iBin )
-		<< "         " << h1p->binHeight( iBin )
-		<< std::endl;
+    if (verbose) {
+       // Printing the contents of the histogram
+       std::cout << "X value     entries    Y value (height)" << std::endl;
+       const AIDA::IAxis& xAxis = h1p->axis();
+       for ( int iBin = 0; iBin < xAxis.bins(); ++iBin ) {
+         std::cout << h1p->binMean( iBin )
+           	<< "       "   << h1p->binEntries( iBin )
+           	<< "         " << h1p->binHeight( iBin )
+           	<< std::endl;
+       }
     }
   }
   std::cout << std::endl;
@@ -101,15 +103,17 @@ void ExaH1::check() {
     std::cout << "Mean : " << p1p->mean() << std::endl;
     std::cout << "RMS  : " << p1p->rms() << std::endl;
     
-    // Printing the contents of the histogram
-    std::cout << "X value     entries    Y value    Y rms" << std::endl;
-    const AIDA::IAxis& xAxis = p1p->axis();
-    for ( int iBin = 0; iBin < xAxis.bins(); ++iBin ) {
-      std::cout << p1p->binMean( iBin )
-		<< "       " << p1p->binEntries( iBin )
-		<< "         " << p1p->binHeight( iBin )
-		<< "         " << p1p->binRms( iBin )
-		<< std::endl;
+    if (verbose) {
+      // Printing the contents of the histogram
+      std::cout << "X value     entries    Y value    Y rms" << std::endl;
+      const AIDA::IAxis& xAxis = p1p->axis();
+      for ( int iBin = 0; iBin < xAxis.bins(); ++iBin ) {
+	std::cout << p1p->binMean( iBin )
+		  << "       " << p1p->binEntries( iBin )
+		  << "         " << p1p->binHeight( iBin )
+		  << "         " << p1p->binRms( iBin )
+		  << std::endl;
+      }
     }
   }
 
@@ -123,11 +127,15 @@ void ExaH1::check() {
   }
 }
 
-int main( int, char** )
+int main( int argc, char** )
 {
 
   ExaH1 exH1;
-  exH1.doIt();
+  if (argc > 1) {
+    exH1.doIt();
+  } else {
+    exH1.doIt(true);
+  }
   std::cout << "That's it !" << std::endl;
   return 0;
 }
