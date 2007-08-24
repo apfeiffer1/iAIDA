@@ -79,12 +79,13 @@ void ExaH1::read() {
 }
 
 void ExaH1::check(bool verbose) {
-
   {
-    // Printing some statistical values of the histogram
-    std::cout << "Mean : " << h1p->mean() << std::endl;
-    std::cout << "RMS  : " << h1p->rms() << std::endl;
-    
+    // Printing some statistical values of the profile
+    std::cout << "Title  : " << h1p->title() << std::endl;
+    std::cout << "Entries: " << h1p->entries() << std::endl;
+    std::cout << "Mean   : " << h1p->mean() << std::endl;
+    std::cout << "RMS    : " << h1p->rms() << std::endl;
+
     if (verbose) {
        // Printing the contents of the histogram
        std::cout << "X value     entries    Y value (height)" << std::endl;
@@ -99,9 +100,12 @@ void ExaH1::check(bool verbose) {
   }
   std::cout << std::endl;
   {
+
     // Printing some statistical values of the profile
-    std::cout << "Mean : " << p1p->mean() << std::endl;
-    std::cout << "RMS  : " << p1p->rms() << std::endl;
+    std::cout << "Title  : " << p1p->title() << std::endl;
+    std::cout << "Entries: " << p1p->entries() << std::endl;
+    std::cout << "Mean   : " << p1p->mean() << std::endl;
+    std::cout << "RMS    : " << p1p->rms() << std::endl;
     
     if (verbose) {
       // Printing the contents of the histogram
@@ -130,12 +134,16 @@ void ExaH1::check(bool verbose) {
 int main( int argc, char** )
 {
 
+  std::cout << "\n--------------------------------------------------------------------------------\n" << std::endl;
+  std::cout << "readHbk> starting" << std::endl;
+
   ExaH1 exH1;
   if (argc > 1) {
     exH1.doIt();
   } else {
     exH1.doIt(true);
   }
-  std::cout << "That's it !" << std::endl;
+  std::cout << "readHbk> That's it !" << std::endl;
+  std::cout << "\n--------------------------------------------------------------------------------\n" << std::endl;
   return 0;
 }
