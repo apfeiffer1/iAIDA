@@ -131,9 +131,12 @@ void ExaH1::check() {
 int main( int, char** )
 {
 
+  std::cout << "\n--------------------------------------------------------------------------------\n" << std::endl;
+  std::cout << "storeHbk> starting" << std::endl;
   ExaH1 exH1;
   exH1.doIt();
 
-  std::cout << "That's it !" << std::endl;
+  std::cout << "storeHbk> That's it !" << std::endl;
+  std::cout << "\n--------------------------------------------------------------------------------\n" << std::endl;
   return 0;
 }
