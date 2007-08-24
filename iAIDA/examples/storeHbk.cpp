@@ -44,7 +44,7 @@ ExaH1::ExaH1() {
   AIDA::ITreeFactory *tf( af->createTreeFactory() );
   bool readOnly = false;
   bool createNew = true;
-  tree = tf->create("test.hbk","hbook",readOnly, createNew);
+  tree = tf->create("example.hbk","hbook",readOnly, createNew);
   factory = af->createHistogramFactory( *tree );
 }
 

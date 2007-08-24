@@ -12,6 +12,12 @@
 
 #include <cctype>
 
+#ifdef __X86_64
+#define HBK_FLOAT_OR_DOUBLE double
+#else
+#define HBK_FLOAT_OR_DOUBLE float
+#endif
+
 extern "C" {
   void hlimit_(int*);
 
@@ -33,15 +39,16 @@ extern "C" {
 
   void hnoent_(int*, int*);
   void hgive_(int*, char*, int*, float*, float*, int*, float*, float*, int*, int*, int);
-  float hsum_(int*);
-  float hstati_(int*, int*, char*, int*, int);
 
-  float hi_(int* id, int* chanx);
-  float hie_(int* id, int* chanx);
+  HBK_FLOAT_OR_DOUBLE hsum_(int*);
+  HBK_FLOAT_OR_DOUBLE hstati_(int*, int*, char*, int*, int);
+
+  HBK_FLOAT_OR_DOUBLE hi_(int* id, int* chanx);
+  HBK_FLOAT_OR_DOUBLE hie_(int* id, int* chanx);
   void hix_(int* id, int* xchan, float* xlo);
 
-  float hij_(int* id, int* chanx, int* chany);
-  float hije_(int* id, int* chanx, int* chany);
+  HBK_FLOAT_OR_DOUBLE hij_(int* id, int* chanx, int* chany);
+  HBK_FLOAT_OR_DOUBLE hije_(int* id, int* chanx, int* chany);
   void hijxy_(int* id, int* xchan, int* ychan, float* xlo, float* ylo);
 
   void hbook1_(int*, char*, int*, float*, float*, float*, int);
@@ -355,7 +362,7 @@ pi::AIDA_HBookStore::HBook::hasVariableBinSizes( const int& id )
 }
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
 {
   int tid = id;
@@ -363,7 +370,7 @@ pi::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
 }
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::histoEbe(const int& id )
 {
   int tid = id;
@@ -373,7 +380,7 @@ pi::AIDA_HBookStore::HBook::histoEbe(const int& id )
   return hstati_( &tid, &icase, choice, &num, 4 );
 }
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::histoRms(const int& id )
 {
   int tid = id;
@@ -383,7 +390,7 @@ pi::AIDA_HBookStore::HBook::histoRms(const int& id )
   return hstati_( &tid, &icase, choice, &num, 4 );
 }
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::histoRmsX(const int& id )
 {
   int tid = id;
@@ -393,7 +400,7 @@ pi::AIDA_HBookStore::HBook::histoRmsX(const int& id )
   return hstati_( &tid, &icase, choice, &num, 4 );
 }
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::histoRmsY(const int& id )
 {
   int tid = id;
@@ -420,7 +427,7 @@ pi::AIDA_HBookStore::HBook::areErrorsStored( const int& id )
 }
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
 {
   int tid = id;
@@ -430,7 +437,7 @@ pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
 
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
 {
   int tid = id;
@@ -439,7 +446,7 @@ pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
 }
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
 {
   float x   = 0.0;
@@ -450,7 +457,7 @@ pi::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
 }
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumberX, const int& binNumberY)
 {
   int tid = id;
@@ -460,7 +467,7 @@ pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumberX, con
 }
 
 
-float
+HBK_FLOAT_OR_DOUBLE
 pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumberX, const int& binNumberY)
 {
   int tid = id;
