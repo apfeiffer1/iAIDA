@@ -14,6 +14,9 @@ install: all
 	cd include ; make install
 	@mkdir -p @PREFIX_DIR@/bin
 	cp aida-config.in @PREFIX_DIR@/bin/aida-config
+	@if [ -d lib ] ; then \
+          cd lib ; tar cf - * | ( cd @PREFIX_DIR@/lib/ ; tar xf - ) \
+	fi
 
 tests:
 	cd src ; make
