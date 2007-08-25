@@ -4,6 +4,7 @@ BOOST_INC = -I@BOOST_INC_DIR@ -I../@BOOST_INC_DIR@
 
 EXPAT_DIR = @EXPAT_DIR@
 EXPAT_INC = -I${EXPAT_DIR}/include -I../${EXPAT_DIR}/include
+EXPAT_LIB_DIR = @EXPAT_LIB_DIR@
 
 ZLIB_DIR = @ZLIB_DIR@
 ZLIB_INC = -I${ZLIB_DIR}/include -I../${ZLIB_DIR}/include
@@ -40,9 +41,9 @@ ifeq (${OS}, Linux)
   SHLIBFLAGS = -shared
   ifeq (${ARCH}, x86_64)
     LIB64 = -L/usr/lib64
-    LIBS = -L${EXPAT_DIR}/lib64  -L${ZLIB_DIR}/lib64 ${LIB64} -lexpat -lz
+    LIBS = -L${EXPAT_LIB_DIR}  -L${ZLIB_DIR}/lib64 ${LIB64} -lexpat -lz
   else
-    LIBS = -L${EXPAT_DIR}/lib  -L${ZLIB_DIR}/lib ${LIB64} -lexpat -lz
+    LIBS = -L${EXPAT_LIB_DIR}  -L${ZLIB_DIR}/lib ${LIB64} -lexpat -lz
   endif
   INSTALL_CMD=cp
 endif

@@ -42,35 +42,37 @@ int doIt()
   int iMax = 1000;
   for ( int i = 0; i < iMax; ++i ) {
 
-    //    if ( i% (iMax/10) == 1 ) {
-    std::cout << " i = " << i << std::endl;
-    //    }
+    if ( i% (iMax/10) == 1 ) {
+      std::cout << " i = " << i << std::endl;
+    }
 
     float val = static_cast<float>( i );
     int col = ia;
-    std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( ia ) << " and row " << i << std::endl;
     }
     val = val + 1;
-    std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    col = ib;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( ib ) << " and row " << i << std::endl;
     }
     val = 2*val;
-    std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    col = ic;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( ic ) << " and row " << i << std::endl;
     }
     val = 5*val;
-    std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    col = id;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( id ) << " and row " << i << std::endl;
     }
 
-    std::cerr << "going to addRow()" << std::endl;
     if ( ! tuple->addRow() ) {
-      std::cerr << "Could not add in the tuple row " << i << std::endl;
+      std::cerr << "Could not add tuple row " << i << std::endl;
       // std::ostringstream error;
       // error << "Could not add in the tuple row " << i << std::ends;
       // throw std::runtime_error( error.str() );

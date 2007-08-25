@@ -2,7 +2,10 @@
 
 import os, sys
 
+# ================================================================================
+
 class Configuration(object):
+
     def __init__(self):
         self.topDir = os.path.join(os.getcwd(), "..")
         self.rootDir = None
@@ -40,11 +43,15 @@ class Configuration(object):
 
         return
 
+    # --------------------------------------------------------------------------------
+
     def setPrefix(self, pref):
 
         self.prefix = os.path.normpath(os.path.abspath(pref))
         print "prefix set to :", self.prefix
         return
+
+    # --------------------------------------------------------------------------------
 
     def findAidaDir(self):
 
@@ -74,6 +81,8 @@ class Configuration(object):
             self.localAida = True
             
         return None
+
+    # --------------------------------------------------------------------------------
 
     def findBoostDir(self):
 
@@ -122,6 +131,8 @@ class Configuration(object):
 
         return
         
+    # --------------------------------------------------------------------------------
+
     def findExpatDir(self):
 
         # if user has set this, don't search
@@ -147,14 +158,30 @@ class Configuration(object):
 
         if not self.expatDir:
             raise str("FATAL: Expat installation not found")
-        
+
+        # check if libexpat.so is available (only libexpat.so.0 is available
+        # on x86_64 machines in 32 bit mode. Set a symlink for these in our
+        # lib/ dir ...
+        if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
+            expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
+            if not os.path.exists( expatLibName0 ) :
+                raise str("FATAL: libexpat.so.0 not found in "+self.expatLibDir)
+            else:
+                if not os.path.exists('lib'): os.makedirs('lib')
+                os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
+                self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
+                print "(symlink for libexpat set) ",
         return
+
+    # --------------------------------------------------------------------------------
 
     def findOther(self):
         self.zlibDir = self.findDir("zlib", self.zlibDir, self.zlibIncDir, self.zlibLibDir )
         self.uuidDir = self.findDir("uuid", self.uuidDir, self.uuidIncDir, self.uuidLibDir )
         return
     
+    # --------------------------------------------------------------------------------
+
     def findDir(self, pkg, topDir, incDir, libDir):
 
         # if user has set this, don't search
@@ -186,6 +213,8 @@ class Configuration(object):
         
         return topDir
         
+    # --------------------------------------------------------------------------------
+
     def findGraceDir(self):
 
         # if user has set this, don't search
@@ -216,6 +245,8 @@ class Configuration(object):
             
         return
         
+    # --------------------------------------------------------------------------------
+
     def findCernlibDir(self):
 
         # if user has set this, don't search
@@ -240,12 +271,14 @@ class Configuration(object):
 
         return
 
+    # --------------------------------------------------------------------------------
+
     def checkSetup(self):
 
         print "checking for AIDA  ",
         self.findAidaDir()
         if self.aidaDir:
-            print "found ", self.aidaDir
+            print "found in ", self.aidaDir
         else:
             print "not found, using local version."
         sys.stdout.flush()
@@ -254,14 +287,14 @@ class Configuration(object):
         sys.stdout.flush()
         self.findBoostDir()
         if self.boostDir:
-            print "found ", self.boostDir
+            print "found in ", self.boostDir
         else:
             print "not found, using local version."
         sys.stdout.flush()
         
         print "checking for Expat ",
         self.findExpatDir()
-        print "found ", self.expatDir
+        print "found in ", self.expatDir
         sys.stdout.flush()
 
         #if os.uname()[0] == "CYGWIN_NT-5.1" :
@@ -273,7 +306,7 @@ class Configuration(object):
         print "checking for Grace ",
         self.findGraceDir()
         if self.graceDir:
-            print "found ", self.graceDir
+            print "found in ", self.graceDir
         else:
             print "not found, will not build Plotter."
         sys.stdout.flush()
@@ -281,18 +314,22 @@ class Configuration(object):
         print "checking for CENRLIB ",
         self.findCernlibDir()
         if self.cernDir:
-            print "found ", self.cernDir
+            print "found in ", self.cernDir
         else:
             print "not found, will not use HBOOK."
         sys.stdout.flush()
         
         return
 
+    # --------------------------------------------------------------------------------
+
     def checkLinkAndSet(self, src, link):
         if not os.path.exists(link) :
             os.symlink(src,link)
 
         return
+
+    # --------------------------------------------------------------------------------
         
     def setupSymlinks(self):
 
@@ -314,12 +351,16 @@ class Configuration(object):
         os.chdir(startDir)
         return
 
+    # --------------------------------------------------------------------------------
+
     def chkPrg(self, prg):
         chk = os.popen('which '+prg+' 2>/dev/null')
         info = chk.readlines()
         chk.close()
         # print "checking for", prg, 'gave:',info
         return info != []
+
+    # --------------------------------------------------------------------------------
 
     def prepareMakefiles(self):
 
@@ -341,6 +382,8 @@ class Configuration(object):
             os.chdir("..")
 
         return
+
+    # --------------------------------------------------------------------------------
 
     def prepareMakefile(self):
 
@@ -414,6 +457,8 @@ class Configuration(object):
             
         return
 
+# ================================================================================
+
 def usage() :
 
     print "configure options:"
@@ -430,6 +475,8 @@ def usage() :
 ./configure --with-boost ~/work/install/boost-1.33.1/ --with-aida ~/work/install/AIDA/3.2.1
 """
     return
+
+# ================================================================================
 
 def main():
 
@@ -483,6 +530,8 @@ def main():
     config.setupSymlinks()
 
     return
+
+# ================================================================================
 
 if __name__ == "__main__" :
     main()

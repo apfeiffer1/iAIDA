@@ -60,6 +60,23 @@ option to tell the package where xmgrace is installed:
 
 
 
+Note for building on SL(C)4 (gcc345) on AMD64 with HBOOK:
+-----------------------------------------------------------
+
+At present you will have to use a 32bit build of CERNLIB
+to use HBook with iAIDA. After installing this, you need
+to configure and build the iAIDA libs with the following
+commands (after unpacking the tarball):
+
+
+linux32 ./configure --prefix <your/path/to/prefix> \
+   --with-cernlib <your/path/to/cernlib/in/ia32/mode> 
+linux32 make CXXFLAGS='-m32'
+linux32 make CXXFLAGS='-m32' install
+
+
+
+
 Note for building on SL(C)4 (gcc345) on AMD64 with xmgrace:
 -----------------------------------------------------------
 
