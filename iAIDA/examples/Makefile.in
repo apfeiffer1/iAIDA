@@ -34,7 +34,7 @@ ifeq (${OS}, Linux)
   CXX = g++
   OBJEXT=o
   SHLIBEXT=so
-  CXXFLAGS = -fPIC -pthread -g 
+  CXXFLAGS += -fPIC -pthread -g 
   SHLIBFLAGS = -shared
   LDFLAGS = -pthread -ldl
   LIBS +=  ${LIB64}  -lexpat -lz 
@@ -43,7 +43,7 @@ ifeq (${OS}, Darwin)
   CXX = g++
   OBJEXT=o
   SHLIBEXT=dylib
-  CXXFLAGS = -fPIC -g 
+  CXXFLAGS += -fPIC -g 
   SHLIBFLAGS = -dynamiclib 
   LDFLAGS = -lssl
   LIBS +=  -lexpat -lz 
@@ -82,5 +82,5 @@ run:
 
 % : %.cpp
 	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
-	${CXX} $@.${OBJEXT} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
+	${CXX} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
 
