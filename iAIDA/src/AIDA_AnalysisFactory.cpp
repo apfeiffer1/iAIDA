@@ -95,17 +95,9 @@ AIDA::IHistogramFactory*
 AIDA_AnalysisFactory::createHistogramFactory( AIDA::ITree& tree )
 {
   AIDA::Dev::IDevTree *devTree = dynamic_cast<AIDA::Dev::IDevTree *> (&tree);
-<<<<<<< .mine
-//   if (devTree == 0) {
-//     std::cerr << "ERROR converting tree to devtree!" << std::endl;
-//   }
-  boost::shared_ptr<AIDA_Histogram_native::AIDA_DevHistogramFactory> devHF ( new AIDA_Histogram_native::AIDA_DevHistogramFactory() );
-  return new AIDA_Histogram_native::AIDA_HistogramFactory( *devTree, *devHF ); 
-=======
   delete devHiF;		// remove old one if we have one
   devHiF = new AIDA_Histogram_native::AIDA_DevHistogramFactory();  
   return new AIDA_Histogram_native::AIDA_HistogramFactory( *devTree, *devHiF ); 
->>>>>>> .r24
 }
 
 
