@@ -1,0 +1,22 @@
+
+#include "FML/DefaultMinuitMinimizer.h"
+#include "FML/MinimizerPlugin.h"
+#include "Minuit2/MnMinimize.h"
+
+namespace fml { 
+
+
+ROOT::Minuit2::MnApplication * DefaultMinuitMinimizer::createMinimizer(const ROOT::Minuit2::MnUserParameters & par) { 
+  if (!getFCN() ) return 0; 
+  if (printLevel() >= 3)  
+    std::cout << "Create Default Minuit minimizer (MnMinimize) - with strategy " << controlParameters().strategy() << std::endl; 
+  ROOT::Minuit2::MnMinimize * minimizer = new ROOT::Minuit2::MnMinimize( *getFCN(), par, controlParameters().strategy()); 
+  return minimizer;
+}
+
+
+
+  //static Util::Plugin<Minimizer, DefaultMinuitMinimizer> minuit_plugin("lcg_minuit");
+static Util::Plugin<Minimizer, DefaultMinuitMinimizer> minuit_plugin("minuit2");
+
+}

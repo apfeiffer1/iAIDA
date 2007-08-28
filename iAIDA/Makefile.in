@@ -1,0 +1,26 @@
+
+all:
+	cd src ; make 
+	cd examples ; make
+	cd tests ; make
+
+clean:
+	cd src ; make clean
+	cd examples ; make clean
+	cd tests ; make clean
+
+install: all
+	cd src ; make install
+	cd include ; make install
+	@mkdir -p @PREFIX_DIR@/bin
+	cp aida-config.in @PREFIX_DIR@/bin/aida-config
+	@if [ -d lib ] ; then \
+          cd lib ; tar cf - * | ( cd @PREFIX_DIR@/lib/ ; tar xf - ) \
+	fi
+
+tests:
+	cd src ; make
+	cd examples ; make run
+
+distclean: clean
+

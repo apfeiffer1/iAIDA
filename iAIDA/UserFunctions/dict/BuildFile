@@ -1,0 +1,31 @@
+# need definition of SEAL
+SEAL=$(shell echo `$(SCRAM) tool tag SEAL SEAL_BASE`)
+
+#LDFLAGS += -Xlinker -export-dynamic -lutil -lpthread
+
+
+
+
+
+# dictionary for AIDA_RootConverter
+
+DICT_FILES	    = $(LOCALTOP)/$(THISDIR)/../UserFunctions/UserFunction.h   
+
+
+#UserFunction_h_DICT_OPTS       = --select=$(LOCALTOP)/$(THISDIR)/selection.xml -c capabilities.cpp
+#UserFunction_h_DICT_OPTS       =  -c capabilities.cpp
+
+dictcapabilities = dictcapabilities.cpp
+rflxcapabilities = rflxcapabilities.cpp
+
+
+<external ref=seal  use=Dictionary/DictionaryGenerator></external>
+<external ref=seal  use=Dictionary/ReflectionBuilder></external>
+<external ref=seal  use=Dictionary/Reflection></external>
+<external ref=seal  use=Dictionary/SealSTL></external>
+<external ref=sockets>
+<external ref=python>
+
+
+<use name=AnalysisServices/UserFunctions></use>
+

@@ -1,0 +1,21 @@
+
+#include "FML/MigradMinimizer.h"
+#include "FML/MinimizerPlugin.h"
+#include "Minuit2/MnMigrad.h"
+
+
+
+namespace fml { 
+
+  ROOT::Minuit2::MnApplication * MigradMinimizer::createMinimizer(const ROOT::Minuit2::MnUserParameters & par) { 
+    if (!getFCN() ) return 0; 
+    if (printLevel() >= 3)  
+      std::cout << "Create MIGRAD minimizer - with strategy " << controlParameters().strategy() << std::endl; 
+    ROOT::Minuit2::MnMigrad * minimizer = new ROOT::Minuit2::MnMigrad( *getFCN(), par, controlParameters().strategy()); 
+    return minimizer;
+  }
+
+
+static Util::Plugin<Minimizer, MigradMinimizer> migradMinimizer_plugin("migrad");
+
+}

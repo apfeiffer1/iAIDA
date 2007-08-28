@@ -1,0 +1,16 @@
+use AIDA  v* LCG_Interfaces
+use Python v*  LCG_Interfaces
+
+
+use AIDA_Proxy v* AnalysisServices
+use AIDA_Function v* AnalysisServices
+
+#add all libs in python/libs
+#macro_append Python_linkopts "  " WIN32 " /LIBPATH:$(Python_home)/libs PyWinTypes.lib	_socket.lib    _testcapi.lib  datetime.lib  python23.lib     zlib.lib PythonCOM.lib	_sre.lib       _tkinter.lib   mmap.lib	    select.lib _bsddb.lib	_ssl.lib       _winreg.lib    parser.lib    unicodedata.lib _csv.lib _symtable.lib  bz2.lib pyexpat.lib   winsound.lib "
+
+apply_pattern lcg_shared_library
+
+private
+
+
+

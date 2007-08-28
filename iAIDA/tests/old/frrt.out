@@ -1,0 +1,15 @@
+Retrieving a tuple from the store...
+Tuple title : Example tuple
+Variables : name type entries min max mean rms
+0	a float 999 0 998 499 288.386
+1	b float 999 1 999 500 288.386
+2	x double 999 0 1996 998 576.773
+3	y double 999 0 2994 1497 865.159
+4	z double 999 0 3992 1996 1153.55
+5	i int 999 -1 997 498 288.386
+6	l bool 999 0 1 0.333333 0.471405
+7	t1 AIDA::ITuple 999 0 0 0 0
+8	t2 AIDA::ITuple 999 0 0 0 0
+9	t3 AIDA::ITuple 999 0 0 0 0
+10	s std::string 1999 0 0 0 0
+Looping over the tuple ...

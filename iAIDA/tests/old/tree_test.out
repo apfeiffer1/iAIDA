@@ -1,0 +1,513 @@
+Creating a tree.
+Store name : Dummy store 1
+Creating a directory named "dir1"
+Adding a new object in the root directory
+  (Store "Dummy store 1" writes object "o1" with full path "/o1")
+Tree contents
+o1	 : 	DummyObject
+dir1	 : 	dir
+Adding another object in the directory "dir1"
+  (Store "Dummy store 1" writes object "o2" with full path "/dir1/o2")
+Tree contents
+o1	 : 	DummyObject
+dir1	 : 	dir
+dir1/o2	 : 	DummyObject
+Entering the directory "dir1"
+Copying the existing object with a different name
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir1/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir1/o3")
+Creating a subdirectory "dir2"
+Contents of the current working directory:
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+dir2	 : 	dir
+Copying the object "o2" in "dir2"
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir1/dir2/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir1/dir2/o2")
+Copying the object "o2" in "dir2" as "o3"
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir1/dir2/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir1/dir2/o3")
+Contents of the current working directory recursively:
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+Copying the object "o2" one directory up
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/o2")
+Copying the object "o3" in the root directory
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/o3")
+Listing the parent directory
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+dir1	 : 	dir
+Adding another object in the root directory
+  (Store "Dummy store 1" writes object "o4" with full path "/o4")
+Copying in "dir2"
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir1/dir2/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir1/dir2/o4")
+Performing a recursive copy of the directory "./dir2" into a directory "./dir3"
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir1/dir3/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir1/dir3/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir1/dir3/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir1/dir3/o3")
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir1/dir3/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir1/dir3/o4")
+Performing a recursive copy of the directory "./dir2" into a directory "/dir2"
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir2/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir2/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir2/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir2/o3")
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir2/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir2/o4")
+Performing a recursive copy of the directory "/dir2" into a directory "./dir4"
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir1/dir4/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir1/dir4/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir1/dir4/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir1/dir4/o3")
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir1/dir4/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir1/dir4/o4")
+Performing a recursive copy of the directory "/dir1" into a directory "/dir3"
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir3/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir3/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir3/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir3/o3")
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir3/dir2/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir3/dir2/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir3/dir2/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir3/dir2/o3")
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir3/dir2/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir3/dir2/o4")
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir3/dir3/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir3/dir3/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir3/dir3/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir3/dir3/o3")
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir3/dir3/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir3/dir3/o4")
+  (Store "Dummy store 1" copies object "o2" and writes it in path "/dir3/dir4/o2")
+  (Store "Dummy store 1" writes object "o2" with full path "/dir3/dir4/o2")
+  (Store "Dummy store 1" copies object "o3" and writes it in path "/dir3/dir4/o3")
+  (Store "Dummy store 1" writes object "o3" with full path "/dir3/dir4/o3")
+  (Store "Dummy store 1" copies object "o4" and writes it in path "/dir3/dir4/o4")
+  (Store "Dummy store 1" writes object "o4" with full path "/dir3/dir4/o4")
+Listing the parent directory recursively
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o2	 : 	DummyObject
+dir1/dir2/o3	 : 	DummyObject
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir3	 : 	dir
+dir1/dir3/o2	 : 	DummyObject
+dir1/dir3/o3	 : 	DummyObject
+dir1/dir3/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o3	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+Going to cd() to /dir1/dir3 in a funny way : ../dir2/../dir3/./../dir1/dir3
+Current working directory : /dir1/dir3/
+Contents of this directory :
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+Removing o2 from the current directory
+  (Store "Dummy store 1" erases object in path "/dir1/dir3/o2")
+Renaming o3 to o5
+  (Store "Dummy store 1" moves object from path "/dir1/dir3/o3" to path "/dir1/dir3/o5")
+Moving o4 to the parent directory
+  (Store "Dummy store 1" moves object from path "/dir1/dir3/o4" to path "/dir1/o4")
+Entering the parent directory, and listing recursively its contents
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o5	 : 	DummyObject
+dir4	 : 	dir
+dir4/o2	 : 	DummyObject
+dir4/o3	 : 	DummyObject
+dir4/o4	 : 	DummyObject
+Moving the dir3/o5 into dir4
+  (Store "Dummy store 1" erases object in path "/dir1/dir4/o3")
+  (Store "Dummy store 1" moves object from path "/dir1/dir3/o5" to path "/dir1/dir4/o3")
+Removing dir3
+Removing "dir2/o2"
+  (Store "Dummy store 1" erases object in path "/dir1/dir2/o2")
+Removing "/dir1/dir2/o3"
+  (Store "Dummy store 1" erases object in path "/dir1/dir2/o3")
+Removing "../dir1/dir4/o3"
+  (Store "Dummy store 1" erases object in path "/dir1/dir4/o3")
+Contents of the current working directory
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o4	 : 	DummyObject
+dir4	 : 	dir
+dir4/o2	 : 	DummyObject
+dir4/o4	 : 	DummyObject
+Creating another tree...
+Store name : Dummy store 2
+Creating a directory named "dir1/dir2"
+Adding a new object in the root directory
+  (Store "Dummy store 2" writes object "o2_1" with full path "/o2_1")
+Adding a new object in that directory
+  (Store "Dummy store 2" writes object "o2_2" with full path "/dir1/dir2/o2_2")
+Tree contents
+o2_1	 : 	DummyObject
+dir1	 : 	dir
+dir1/dir2	 : 	dir
+dir1/dir2/o2_2	 : 	DummyObject
+Creating a mount point "/mnt1" in the first tree and mounting the directory dir1 of the second
+Contents of the first tree
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/o4	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+mnt1	 : 	dir
+mnt1/dir2	 : 	dir
+mnt1/dir2/o2_2	 : 	DummyObject
+Copying /o1 into /mnt1
+  (Store "Dummy store 2" copies object "o1" and writes it in path "/dir1/o1")
+  (Store "Dummy store 2" writes object "o1" with full path "/dir1/o1")
+Entering /mnt1/dir2
+Moving the object o2_2 in the root directory
+  (Store "Dummy store 1" copies object "o2_2" and writes it in path "/o2_2")
+  (Store "Dummy store 1" writes object "o2_2" with full path "/o2_2")
+  (Store "Dummy store 2" erases object in path "/dir1/dir2/o2_2")
+Removing the directory /mnt1/dir2
+Creating the directories /mnt1/dir2a/dir2b
+Creating the directoriy /mnt1/dir3a/dir3b
+Creating a third tree and mounting its root directory on /mnt2
+Store name of the third tree: Dummy store 3
+Adding an objects on the root directory of the mounted tree
+  (Store "Dummy store 3" writes object "o3_1" with full path "/o3_1")
+Copying an object within the same store.
+  (Store "Dummy store 2" copies object "o1" and writes it in path "/dir1/dir3a/o2")
+  (Store "Dummy store 2" writes object "o2" with full path "/dir1/dir3a/o2")
+Moving an object within the same store.
+  (Store "Dummy store 2" moves object from path "/dir1/o1" to path "/dir1/dir3a/o1")
+Moving an object from one mounted tree to another.
+  (Store "Dummy store 3" copies object "o2" and writes it in path "/o2")
+  (Store "Dummy store 3" writes object "o2" with full path "/o2")
+  (Store "Dummy store 2" erases object in path "/dir1/dir3a/o2")
+Contents of the first tree
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o2_2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/o4	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+mnt1	 : 	dir
+mnt1/dir2a	 : 	dir
+mnt1/dir2a/dir2b	 : 	dir
+mnt1/dir3a	 : 	dir
+mnt1/dir3a/o1	 : 	DummyObject
+mnt1/dir3a/dir3b	 : 	dir
+mnt2	 : 	dir
+mnt2/o2	 : 	DummyObject
+mnt2/o3_1	 : 	DummyObject
+Contents of the second tree
+o2_1	 : 	DummyObject
+dir1	 : 	dir
+dir1/dir2a	 : 	dir
+dir1/dir2a/dir2b	 : 	dir
+dir1/dir3a	 : 	dir
+dir1/dir3a/o1	 : 	DummyObject
+dir1/dir3a/dir3b	 : 	dir
+Contents of the third tree
+o2	 : 	DummyObject
+o3_1	 : 	DummyObject
+Committing from the first tree
+  (Store "Dummy store 1" commits changes)
+  (Store "Dummy store 2" commits changes)
+  (Store "Dummy store 3" commits changes)
+Unmounting the second tree
+Contents of the first tree
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o2_2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/o4	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+mnt1	 : 	dir
+mnt2	 : 	dir
+mnt2/o2	 : 	DummyObject
+mnt2/o3_1	 : 	DummyObject
+Committing from the first tree
+  (Store "Dummy store 1" commits changes)
+  (Store "Dummy store 3" commits changes)
+Mounting it again from its root
+Destroying the third tree
+  (Store "Dummy store 3" is closed)
+Contents of the first tree
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o2_2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/o4	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+mnt1	 : 	dir
+mnt1/o2_1	 : 	DummyObject
+mnt1/dir1	 : 	dir
+mnt1/dir1/dir2a	 : 	dir
+mnt1/dir1/dir2a/dir2b	 : 	dir
+mnt1/dir1/dir3a	 : 	dir
+mnt1/dir1/dir3a/o1	 : 	DummyObject
+mnt1/dir1/dir3a/dir3b	 : 	dir
+mnt2	 : 	dir
+Creating symbolic link /dir1/o1s pointing to /o1
+Creating symbolic link /o2s pointing to /dir1/o2
+Fetching the objects from the symbolic links
+Name of object : o1
+Name of object : o2
+Contents of the first tree
+o2s	 : 	-> /dir1/o2
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o2_2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o1s	 : 	-> /o1
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/o4	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+mnt1	 : 	dir
+mnt1/o2_1	 : 	DummyObject
+mnt1/dir1	 : 	dir
+mnt1/dir1/dir2a	 : 	dir
+mnt1/dir1/dir2a/dir2b	 : 	dir
+mnt1/dir1/dir3a	 : 	dir
+mnt1/dir1/dir3a/o1	 : 	DummyObject
+mnt1/dir1/dir3a/dir3b	 : 	dir
+mnt2	 : 	dir
+Store name under in cwd : Dummy store 1
+Store name under dir3 : Dummy store 1
+Store name under /mnt1 : Dummy store 2
+Store name under /mnt1/o2_1 : Dummy store 2
+Store name under /mnt1/dir1 : Dummy store 2
+Store name under /dir1/o1s : Dummy store 1
+Store name under /o2s : Dummy store 1
+Removing the link /o2s
+Contents of the first tree
+o1	 : 	DummyObject
+o2	 : 	DummyObject
+o2_2	 : 	DummyObject
+o3	 : 	DummyObject
+o4	 : 	DummyObject
+dir1	 : 	dir
+dir1/o1s	 : 	-> /o1
+dir1/o2	 : 	DummyObject
+dir1/o3	 : 	DummyObject
+dir1/o4	 : 	DummyObject
+dir1/dir2	 : 	dir
+dir1/dir2/o4	 : 	DummyObject
+dir1/dir4	 : 	dir
+dir1/dir4/o2	 : 	DummyObject
+dir1/dir4/o4	 : 	DummyObject
+dir2	 : 	dir
+dir2/o2	 : 	DummyObject
+dir2/o3	 : 	DummyObject
+dir2/o4	 : 	DummyObject
+dir3	 : 	dir
+dir3/o2	 : 	DummyObject
+dir3/o3	 : 	DummyObject
+dir3/dir2	 : 	dir
+dir3/dir2/o2	 : 	DummyObject
+dir3/dir2/o3	 : 	DummyObject
+dir3/dir2/o4	 : 	DummyObject
+dir3/dir3	 : 	dir
+dir3/dir3/o2	 : 	DummyObject
+dir3/dir3/o3	 : 	DummyObject
+dir3/dir3/o4	 : 	DummyObject
+dir3/dir4	 : 	dir
+dir3/dir4/o2	 : 	DummyObject
+dir3/dir4/o3	 : 	DummyObject
+dir3/dir4/o4	 : 	DummyObject
+mnt1	 : 	dir
+mnt1/o2_1	 : 	DummyObject
+mnt1/dir1	 : 	dir
+mnt1/dir1/dir2a	 : 	dir
+mnt1/dir1/dir2a/dir2b	 : 	dir
+mnt1/dir1/dir3a	 : 	dir
+mnt1/dir1/dir3a/o1	 : 	DummyObject
+mnt1/dir1/dir3a/dir3b	 : 	dir
+mnt2	 : 	dir
+Fetching some objects to find back the path
+Object name : o2
+Path in first tree : /dir3/dir4/o2
+Object name : o2_1
+Path in first tree : /mnt1/o2_1
+Path in second tree : /o2_1
+Committing and closing the trees
+  (Store "Dummy store 1" commits changes)
+  (Store "Dummy store 2" commits changes)
+  (Store "Dummy store 2" commits changes)
+Test succeeded!
+  (Store "Dummy store 2" is closed)
+  (Store "Dummy store 1" is closed)

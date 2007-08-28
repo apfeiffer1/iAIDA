@@ -1,0 +1,6 @@
+Makefile
+lib*
+*.o
+.gdb*
+*.aida
+*.hbk
