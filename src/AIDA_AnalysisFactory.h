@@ -13,12 +13,20 @@
 #include "boost/shared_ptr.hpp"
 typedef boost::shared_ptr<AIDA_Plugin::AIDA_PluginType> PluginType;
 
-
 namespace iAIDA
 { 
 
+  namespace AIDA_Histogram_native { class AIDA_DevHistogramFactory; }
+  namespace AIDA_DataPointSet_native { class AIDA_DevDataPointSetFactory; }
+  namespace AIDA_Tuple_native { 
+    class AIDA_DevTupleFactory; 
+    class AIDA_DevFilterFactory;
+    class AIDA_DevEvaluatorFactory; 
+  }
+  namespace AIDA_Function { class AIDA_DevFunctionFactory; }
+
+
 /**
- * PUT YOUR COMMENT HERE.
  * This class does not support copying.
  */
   class AIDA_AnalysisFactory : public virtual AIDA::IAnalysisFactory 
@@ -55,6 +63,14 @@ private:
   std::string m_functionPlugin;
   std::string m_fitPlugin;
   std::string m_plotterPlugin;
+
+private:
+  AIDA_Histogram_native::AIDA_DevHistogramFactory       *devHiF;
+  AIDA_DataPointSet_native::AIDA_DevDataPointSetFactory *devDpsF;
+  AIDA_Tuple_native::AIDA_DevTupleFactory               *devTpF;
+  AIDA_Tuple_native::AIDA_DevFilterFactory              *devFiF;
+  AIDA_Tuple_native::AIDA_DevEvaluatorFactory           *devEvF;
+  AIDA_Function::AIDA_DevFunctionFactory                *devFuF;
 
 }; 
 

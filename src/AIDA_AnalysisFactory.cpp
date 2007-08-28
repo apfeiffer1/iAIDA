@@ -37,8 +37,6 @@ static const std::string defaultFitPlugin = "AIDA_Fitter_Native";
 static const std::string defaultPlotterPlugin = "AIDA_Plotter_Lab";
 
 
-
-
 // C entry point 
 AIDA::IAnalysisFactory* AIDA_createAnalysisFactory()
 {
@@ -56,12 +54,19 @@ namespace iAIDA
     m_tuplePlugin(defaultTuplePlugin),
     m_functionPlugin(defaultFunctionPlugin),
     m_fitPlugin(defaultFitPlugin),
-    m_plotterPlugin(defaultPlotterPlugin)
+    m_plotterPlugin(defaultPlotterPlugin),
+    devHiF(0), devDpsF(0), devTpF(0), devFiF(0),devEvF(0),devFuF(0)
 {
 }
 
 AIDA_AnalysisFactory::~AIDA_AnalysisFactory() 
 {
+  delete devHiF;
+  delete devDpsF;
+  delete devTpF;
+  delete devFiF;
+  delete devEvF;
+  delete devFuF;
 }
 
 AIDA_AnalysisFactory::AIDA_AnalysisFactory(const AIDA_AnalysisFactory &) 
@@ -91,8 +96,8 @@ AIDA_AnalysisFactory::createHistogramFactory( AIDA::ITree& tree )
 //   if (devTree == 0) {
 //     std::cerr << "ERROR converting tree to devtree!" << std::endl;
 //   }
-  AIDA_Histogram_native::AIDA_DevHistogramFactory *devHF = new AIDA_Histogram_native::AIDA_DevHistogramFactory();  
-  return new AIDA_Histogram_native::AIDA_HistogramFactory( *devTree, *devHF ); 
+  devHiF = new AIDA_Histogram_native::AIDA_DevHistogramFactory();  
+  return new AIDA_Histogram_native::AIDA_HistogramFactory( *devTree, *devHiF ); 
 }
 
 
@@ -103,8 +108,8 @@ AIDA_AnalysisFactory::createDataPointSetFactory( AIDA::ITree& tree )
 //   if (devTree == 0) {
 //     std::cerr << "ERROR converting tree to devtree!" << std::endl;
 //   }
-  AIDA_DataPointSet_native::AIDA_DevDataPointSetFactory *devHF = new AIDA_DataPointSet_native::AIDA_DevDataPointSetFactory();  
-  return new AIDA_DataPointSet_native::AIDA_DataPointSetFactory( *devTree, *devHF ); 
+  devDpsF = new AIDA_DataPointSet_native::AIDA_DevDataPointSetFactory();  
+  return new AIDA_DataPointSet_native::AIDA_DataPointSetFactory( *devTree, *devDpsF ); 
 }
 
 
@@ -115,10 +120,10 @@ AIDA_AnalysisFactory::createTupleFactory( AIDA::ITree& tree )
 //   if (devTree == 0) {
 //     std::cerr << "ERROR converting tree to devtree!" << std::endl;
 //   }
-  AIDA_Tuple_native::AIDA_DevTupleFactory *devHF = new AIDA_Tuple_native::AIDA_DevTupleFactory();  
-  AIDA_Tuple_native::AIDA_DevFilterFactory *devFF = new AIDA_Tuple_native::AIDA_DevFilterFactory();  
-  AIDA_Tuple_native::AIDA_DevEvaluatorFactory *devEF = new AIDA_Tuple_native::AIDA_DevEvaluatorFactory();  
-  return new AIDA_Tuple_native::AIDA_TupleFactory( *devTree, *devHF, *devFF, *devEF ); 
+  devTpF = new AIDA_Tuple_native::AIDA_DevTupleFactory();  
+  devFiF = new AIDA_Tuple_native::AIDA_DevFilterFactory();  
+  devEvF = new AIDA_Tuple_native::AIDA_DevEvaluatorFactory();  
+  return new AIDA_Tuple_native::AIDA_TupleFactory( *devTree, *devTpF, *devFiF, *devEvF ); 
 }
 
 
@@ -129,8 +134,8 @@ AIDA_AnalysisFactory::createFunctionFactory( AIDA::ITree& tree )
 //   if (devTree == 0) {
 //     std::cerr << "ERROR converting tree to devtree!" << std::endl;
 //   }
-  AIDA_Function::AIDA_DevFunctionFactory *devHF = new AIDA_Function::AIDA_DevFunctionFactory();  
-  return new AIDA_Function::AIDA_FunctionFactory( *devTree, *devHF ); 
+  devFuF = new AIDA_Function::AIDA_DevFunctionFactory();  
+  return new AIDA_Function::AIDA_FunctionFactory( *devTree, *devFuF ); 
 
 }
 
