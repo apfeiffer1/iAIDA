@@ -59,7 +59,7 @@ LIBS     += ${GRACE_LIB}
 endif
 
 ifdef HAVE_CERN
-SRCS     += storeHbk.cpp readHbk.cpp storeHbkTup.cpp
+SRCS     += storeHbk.cpp readHbk.cpp storeHbkTup.cpp readHbkTup.cpp 
 endif
 
 OBJS = ${SRCS:.cpp=.o}
