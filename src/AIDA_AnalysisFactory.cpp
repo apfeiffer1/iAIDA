@@ -93,9 +93,7 @@ AIDA::IHistogramFactory*
 AIDA_AnalysisFactory::createHistogramFactory( AIDA::ITree& tree )
 {
   AIDA::Dev::IDevTree *devTree = dynamic_cast<AIDA::Dev::IDevTree *> (&tree);
-//   if (devTree == 0) {
-//     std::cerr << "ERROR converting tree to devtree!" << std::endl;
-//   }
+  delete devHiF;		// remove old one if we have one
   devHiF = new AIDA_Histogram_native::AIDA_DevHistogramFactory();  
   return new AIDA_Histogram_native::AIDA_HistogramFactory( *devTree, *devHiF ); 
 }
@@ -105,9 +103,7 @@ AIDA::IDataPointSetFactory*
 AIDA_AnalysisFactory::createDataPointSetFactory( AIDA::ITree& tree )
 {
   AIDA::Dev::IDevTree *devTree = dynamic_cast<AIDA::Dev::IDevTree *> (&tree);
-//   if (devTree == 0) {
-//     std::cerr << "ERROR converting tree to devtree!" << std::endl;
-//   }
+  delete devDpsF;		// remove old one if we have one
   devDpsF = new AIDA_DataPointSet_native::AIDA_DevDataPointSetFactory();  
   return new AIDA_DataPointSet_native::AIDA_DataPointSetFactory( *devTree, *devDpsF ); 
 }
@@ -117,12 +113,10 @@ AIDA::ITupleFactory*
 AIDA_AnalysisFactory::createTupleFactory( AIDA::ITree& tree )
 {
   AIDA::Dev::IDevTree *devTree = dynamic_cast<AIDA::Dev::IDevTree *> (&tree);
-//   if (devTree == 0) {
-//     std::cerr << "ERROR converting tree to devtree!" << std::endl;
-//   }
-  devTpF = new AIDA_Tuple_native::AIDA_DevTupleFactory();  
-  devFiF = new AIDA_Tuple_native::AIDA_DevFilterFactory();  
-  devEvF = new AIDA_Tuple_native::AIDA_DevEvaluatorFactory();  
+  // delete old version of the dev-Factories first
+  delete devTpF; devTpF = new AIDA_Tuple_native::AIDA_DevTupleFactory();  
+  delete devFiF; devFiF = new AIDA_Tuple_native::AIDA_DevFilterFactory();  
+  delete devEvF; devEvF = new AIDA_Tuple_native::AIDA_DevEvaluatorFactory();  
   return new AIDA_Tuple_native::AIDA_TupleFactory( *devTree, *devTpF, *devFiF, *devEvF ); 
 }
 
@@ -131,9 +125,7 @@ AIDA::IFunctionFactory*
 AIDA_AnalysisFactory::createFunctionFactory( AIDA::ITree& tree )
 {
   AIDA::Dev::IDevTree *devTree = dynamic_cast<AIDA::Dev::IDevTree *> (&tree);
-//   if (devTree == 0) {
-//     std::cerr << "ERROR converting tree to devtree!" << std::endl;
-//   }
+  delete devFuF;		// remove old one if we have one
   devFuF = new AIDA_Function::AIDA_DevFunctionFactory();  
   return new AIDA_Function::AIDA_FunctionFactory( *devTree, *devFuF ); 
 
