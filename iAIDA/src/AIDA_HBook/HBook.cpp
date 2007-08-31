@@ -10,9 +10,11 @@
 # include <sstream>
 #endif
 
+#include <iostream>
+
 #include <cctype>
 
-#ifdef __X86_64
+#ifdef __x86_64
 #define HBK_FLOAT_OR_DOUBLE double
 #else
 #define HBK_FLOAT_OR_DOUBLE float
