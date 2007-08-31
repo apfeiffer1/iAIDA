@@ -36,7 +36,7 @@ ifeq (${OS}, Linux)
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =so
-  CXXFLAGS = -fPIC -pthread -g -DBADENDS
+  CXX_FLAGS = -fPIC -pthread -g -DBADENDS
   LDFLAGS = ${LIB64} -pthread -dld # -rdynamic
   SHLIBFLAGS = -shared
   ifeq (${ARCH}, x86_64)
@@ -54,7 +54,7 @@ ifeq (${OS}, Darwin)
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =dylib
-  CXXFLAGS = -fPIC -g 
+  CXX_FLAGS = -fPIC -g 
   LDFLAGS = -lm -lc
   SHLIBFLAGS = -dynamiclib -single_module
   LIBS = -L${EXPAT_DIR}/lib  -lexpat -L${ZLIB_DIR}/lib -lz 
@@ -70,7 +70,7 @@ ifeq (${OS}, CYGWIN_NT-5.1)
   OBJEXT =obj
   SHLIBEXT =lib
   SHLIB=lib /nologo /OUT:
-  CXXFLAGS = -EHsc -GR -GX -MD -nologo
+  CXX_FLAGS = -EHsc -GR -GX -MD -nologo
   SHLIBFLAGS = 
   LDFLAGS = 
   LIBS = ${ZLIB_DIR}/lib/zlib.lib ${EXPAT_DIR}/Libs/libexpat.lib ${UUID_DIR}/lib/uuid.lib
@@ -83,14 +83,14 @@ OBJS = ${SRCS:.cpp=.${OBJEXT}}
 # now all the vars are prepared, now check if we have Grace ...
 
 ifdef HAVE_GRACE
-CXXFLAGS += -DHAVE_GRACE
+CXX_FLAGS += -DHAVE_GRACE
 SRCS     += $(wildcard AIDAGracePlotter/*.cpp)
 INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
 endif
 
 ifdef HAVE_CERN
-CXXFLAGS += -DHAVE_CERN
+CXX_FLAGS += -DHAVE_CERN
 SRCS     += $(wildcard AIDA_HBook/*.cpp)
 SRCS     += $(wildcard AIDA_HBook/*.F)
 LIBS     += ${CERN_LIB} 
@@ -114,11 +114,11 @@ clean:
 	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT}
 
 lib: ${OBJS}
-	${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
+	${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 
 install: lib
 	test -e @PREFIX_DIR@/lib || mkdir -p @PREFIX_DIR@/lib 
 	${INSTALL_CMD} libAIDA_Native.${SHLIBEXT} @PREFIX_DIR@/lib/
 
 %.${OBJEXT}: %.cpp
-	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
