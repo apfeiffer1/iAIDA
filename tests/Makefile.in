@@ -34,7 +34,7 @@ ifeq (${OS}, Linux)
   CXX = g++
   OBJEXT=o
   SHLIBEXT=so
-  CXXFLAGS = -fPIC -pthread -g 
+  CXX_FLAGS = -fPIC -pthread -g 
   SHLIBFLAGS = -shared
   LDFLAGS = -pthread -dld 
   LIBS += ${LIB64} -lexpat -lz 
@@ -43,7 +43,7 @@ ifeq (${OS}, Darwin)
   CXX = g++
   OBJEXT=o
   SHLIBEXT=dylib
-  CXXFLAGS = -fPIC -g 
+  CXX_FLAGS = -fPIC -g 
   SHLIBFLAGS = -dynamiclib 
   LDFLAGS = -lssl
   LIBS +=  -lexpat -lz 
@@ -52,7 +52,7 @@ endif
 # now all the vars are prepared, now check if we have Grace ...
 
 ifdef HAVE_GRACE
-CXXFLAGS += -DHAVE_GRACE
+CXX_FLAGS += -DHAVE_GRACE
 SRCS     += plottingHistograms.cpp
 INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
@@ -78,9 +78,9 @@ run:
 
 
 %.o : %.cpp
-	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
 
 % : %.cpp
-	${CXX} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
-	${CXX} $@.${OBJEXT} ${FLAGS} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${FLAGS} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
 
