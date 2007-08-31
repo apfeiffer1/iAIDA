@@ -22,7 +22,7 @@ int doIt()
   boost::shared_ptr<AIDA::ITreeFactory> tf( af->createTreeFactory() ); 
   bool readOnly = true;
   bool createNew = false;
-  boost::shared_ptr<AIDA::ITree> tree(tf->create("exatup.hbk","HBOOK",readOnly,createNew)); 
+  boost::shared_ptr<AIDA::ITree> tree(tf->create("exatup.hbk", "HBOOK", readOnly, createNew)); 
 
   //  boost::shared_ptr<AIDA::ITupleFactory> tupF ( af->createTupleFactory(*tree) ) ;
 

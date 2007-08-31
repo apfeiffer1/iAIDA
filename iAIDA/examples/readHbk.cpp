@@ -41,7 +41,7 @@ ExaH1::ExaH1() {
   AIDA::ITreeFactory *tf( af->createTreeFactory() );
   bool readOnly = true;
   bool createNew = false;
-  tree = tf->create("example.hbk","hbook",readOnly, createNew);
+  tree = tf->create("example.hbk","HBOOK", readOnly, createNew);
   if (!tree) { 
     std::cerr << "ERROR: cannot create hbook tree" << std::endl;
   }
