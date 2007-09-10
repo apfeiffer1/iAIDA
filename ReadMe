@@ -17,8 +17,8 @@ of any modern linux installation, so there is no local copy.
 To install the package into /usr/local (assuming that the other packages 
 are installed there too):
 
-tar zxf iAIDA-0.1.8.tgz
-cd iAIDA-0.1.8
+tar zxf iAIDA-0.1.10.tgz
+cd iAIDA-0.1.10
 ./configure --prefix=/usr/local
 make
 make install
@@ -63,10 +63,12 @@ option to tell the package where xmgrace is installed:
 Note for building on SL(C)4 (gcc345) on AMD64 with HBOOK:
 -----------------------------------------------------------
 
-At present you will have to use a 32bit build of CERNLIB
-to use HBook with iAIDA. After installing this, you need
-to configure and build the iAIDA libs with the following
-commands (after unpacking the tarball):
+At present there is a problem with column-wise HBOOK ntuples on 
+64 bit machines (such as AMD64 bit). If you need that feature,
+you will have to use a 32bit build of CERNLIB to use HBook with 
+iAIDA. After installing this, you need to configure and build 
+the iAIDA libs with the following commands (after unpacking the 
+tarball):
 
 
 linux32 ./configure --prefix <your/path/to/prefix> \
@@ -74,6 +76,10 @@ linux32 ./configure --prefix <your/path/to/prefix> \
 linux32 make CXXFLAGS='-m32'
 linux32 make CXXFLAGS='-m32' install
 
+
+If you can live with row-wise HBOOK ntuples, simply use the
+'--RWN' option to the creation of the tuple (the last argument
+in the tupleFactory->create() call).
 
 
 
