@@ -37,7 +37,7 @@ ifeq (${OS}, Linux)
   SHLIB=${CXX} -o 
   SHLIBEXT =so
   CXX_FLAGS = -fPIC -pthread -g -DBADENDS
-  LDFLAGS = ${LIB64} -pthread -dld # -rdynamic
+  LDFLAGS = ${LIB64} -dld # -rdynamic
   SHLIBFLAGS = -shared
   ifeq (${ARCH}, x86_64)
     LIB64 = -L/usr/lib64
@@ -92,8 +92,9 @@ endif
 ifdef HAVE_CERN
 CXX_FLAGS += -DHAVE_CERN
 SRCS     += $(wildcard AIDA_HBook/*.cpp)
-SRCS     += $(wildcard AIDA_HBook/*.F)
-LIBS     += ${CERN_LIB} 
+F_SRCS    = $(wildcard AIDA_HBook/*.F)
+OBJS     += ${F_SRCS:.F=.${OBJEXT}}
+LIBS     += ${CERN_LIB}
  ifdef HAVEF77
    LIBS += -lg2c
   else
@@ -122,3 +123,6 @@ install: lib
 
 %.${OBJEXT}: %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
+
+AIDA_HBook/%.${OBJEXT}: AIDA_HBook/%.F
+	${FC} ${CXX_FLAGS} ${FFLAGS} ${INCLUDES} -c $< -o $@
