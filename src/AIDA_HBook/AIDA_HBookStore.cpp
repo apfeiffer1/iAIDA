@@ -497,7 +497,6 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::close()
 bool pi::AIDA_HBookStore::AIDA_StoreHBook::canMoveTuples() const {return false;}
 bool pi::AIDA_HBookStore::AIDA_StoreHBook::canCopyTuples() const {return false;}
 
-
 bool
 pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleHeader( AIDA::Dev::ITupleHeader& header )
 {
