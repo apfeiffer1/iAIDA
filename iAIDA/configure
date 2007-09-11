@@ -220,7 +220,7 @@ class Configuration(object):
                 topDir = None
 
         if not topDir:
-            print "\n\nFATAL ERROR: "+pkg+" installation not found in: ", pathList, '\n'
+            print "\n\nFATAL ERROR: "+pkg+" header file(s) not found in: ", pathList, '\n'
             sys.exit(-1)
         
         return topDir
