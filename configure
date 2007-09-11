@@ -59,7 +59,8 @@ class Configuration(object):
         if self.aidaDir :
             self.aidaIncDir = os.path.join(self.aidaDir)
             if not os.path.exists( os.path.join(self.aidaIncDir, "AIDA", "AIDA.h") ) :
-                raise str("FATAL: Invalid AIDA directory! (no ADIA/AIDA.h in " + self.aidaIncDir)
+                print "\nFATAL ERROR: Invalid AIDA directory! (no ADIA/AIDA.h in " + self.aidaIncDir+'\n'
+                sys.exit(-1)
             return
 
         aidaVers = "3.2.1"
@@ -96,7 +97,8 @@ class Configuration(object):
             self.boostIncDir = os.path.join(self.boostIncDir, vDir)
             self.boostLibDir = os.path.join(self.boostDir, "lib")
             if not os.path.exists(os.path.join(self.boostIncDir, "boost", "shared_ptr.hpp") ) :
-                raise str("FATAL: Invalid Boost directory! (no boost/shared_ptr.hpp in: "+self.boostIncDir)
+                print "\nFATAL ERROR: Invalid Boost directory! (no boost/shared_ptr.hpp in: "+self.boostIncDir+'\n'
+                sys.exit(-1)
             return
 
         boostVers = "1_33_1"
@@ -141,11 +143,13 @@ class Configuration(object):
             self.expatIncDir = os.path.join(self.expatDir, "include")
             self.expatLibDir = os.path.join(self.expatDir, "lib")
             if not os.path.exists(os.path.join(self.expatIncDir, "expat.h") ) :
-                raise str("FATAL: Invalid Expat directory! (no expat in: "+self.expatIncDir)
+                print "\nFATAL ERROR: Invalid Expat directory! (no expat in: "+self.expatIncDir+'\n'
+                sys.exit(-1)
             return
 
         expatVers = "1.95.8"
-        for path in [self.prefix, "/usr", "/usr/local"]:
+        pathList = [self.prefix, "/", "/usr", "/usr/local"]
+        for path in pathList:
             self.expatDir = os.path.abspath( os.path.join(path) )
             if path == self.prefix:
                 self.expatDir = os.path.join("..", path)
@@ -157,8 +161,9 @@ class Configuration(object):
                 break
 
         if not self.expatDir:
-            raise str("FATAL: Expat installation not found")
-
+            print "\nFATAL ERROR: Expat installation not found in:", pathList, '\n'
+            sys.exit(-1)
+            
         # check if libexpat.so is available (only libexpat.so.0 is available
         # on x86_64 machines in 32 bit mode. Set a symlink for these in our
         # lib/ dir ...
@@ -194,11 +199,16 @@ class Configuration(object):
                 raise str("FATAL: Invalid "+pkg+" directory! (no "+pkg+".h in: "+incDir)
             return
 
-        for path in [self.prefix, "/usr", "/usr/local"]:
+        pathList = [self.prefix, "/", "/usr", "/usr/local"]
+        for path in pathList:
             topDir = os.path.abspath( os.path.join(path) )
             if path == self.prefix:
                 topDir = os.path.join("..", path)
-            incDir = os.path.join(topDir, "include")
+            if topDir == '/':
+                incDir = '/usr/include'
+            else:
+                incDir = os.path.join(topDir, "include")
+
             libDir = os.path.join(topDir, "lib")
             # print "checking for ", pkg, incDir
             if ( os.path.exists(os.path.join(incDir, pkg+".h") ) ) :
@@ -209,7 +219,8 @@ class Configuration(object):
                 topDir = None
 
         if not topDir:
-            raise str("FATAL: "+pkg+" installation not found")
+            print "\nFATAL ERROR: "+pkg+" installation not found in: ", pathList, '\n'
+            sys.exit(-1)
         
         return topDir
         
