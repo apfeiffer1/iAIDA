@@ -22,8 +22,6 @@ SRCS = \
 	testAIDAmem.cpp \
 
 
-
-
 OS=$(shell uname)
 
 ifeq (${OS}, Linux)
@@ -36,7 +34,7 @@ ifeq (${OS}, Linux)
   SHLIBEXT=so
   CXX_FLAGS = -fPIC -pthread -g 
   SHLIBFLAGS = -shared
-  LDFLAGS = -pthread -dld 
+  LDFLAGS = -pthread -ldl 
   LIBS += ${LIB64} -lexpat -lz 
 endif
 ifeq (${OS}, Darwin)
