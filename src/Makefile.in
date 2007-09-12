@@ -37,7 +37,7 @@ ifeq (${OS}, Linux)
   SHLIB=${CXX} -o 
   SHLIBEXT =so
   CXX_FLAGS = -fPIC -pthread -g -DBADENDS
-  LDFLAGS = ${LIB64} -dld # -rdynamic
+  LDFLAGS = ${LIB64} -ldl
   SHLIBFLAGS = -shared
   ifeq (${ARCH}, x86_64)
     LIB64 = -L/usr/lib64
@@ -99,6 +99,7 @@ LIBS     += ${CERN_LIB}
    LIBS += -lg2c
   else
    ifdef HAVEGFOR 
+    FC = gfortran
     LIBS += -lgfortran 
    endif
   endif

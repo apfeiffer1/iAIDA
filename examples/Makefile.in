@@ -73,8 +73,8 @@ clean:
 run:
 	export DYLD_LIBRARY_PATH=../src:${DYLD_LIBRARY_PATH} ; \
 	export LD_LIBRARY_PATH=../src:${LD_LIBRARY_PATH} ; \
-	rm hist.aida ; \
-	for e in ${EXECS} ; do echo "running "$$e ; ./$$e ; rm hist.aida ; done
+	for e in ${EXECS} ; do echo "running "$$e ; ./$$e ; done ; \
+	rm -f exa*.aida exa*.hbk 
 
 
 %.o : %.cpp

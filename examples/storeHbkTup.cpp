@@ -49,25 +49,25 @@ int doIt()
 
     float val = static_cast<float>( i );
     int col = ia;
-        std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( ia ) << " and row " << i << std::endl;
     }
     val = val + 1;
     col = ib;
-       std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    //   std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( ib ) << " and row " << i << std::endl;
     }
     val = 2*val;
     col = ic;
-        std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( ic ) << " and row " << i << std::endl;
     }
     val = 5*val;
     col = id;
-        std::cerr << "going to fill val " << val << " into " << col << std::endl;
+    //    std::cerr << "going to fill val " << val << " into " << col << std::endl;
     if ( ! tuple->fill( col, val ) ) {
       std::cerr << "Could not fill the tuple for variable " << tuple->columnName( id ) << " and row " << i << std::endl;
     }
