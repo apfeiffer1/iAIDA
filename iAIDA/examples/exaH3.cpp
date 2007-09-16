@@ -22,10 +22,10 @@ int main( int, char** )
   boost::shared_ptr<AIDA::IHistogramFactory> factory( af->createHistogramFactory(*tree) );
 
 
-  // Creating a histogram
-  typedef boost::shared_ptr<AIDA::IHistogram3D> H3P;
+  // Creating a histogram. Don't use boost's shared_ptr here as the histograms 
+  // are managed by the tree - which leads to double deletion ... 
+  typedef AIDA::IHistogram3D * H3P;
   H3P h3p(factory->createHistogram3D("Example histogram.", 5, 0, 50, 5, 0, 50, 5, 0, 50 ) );
-
   AIDA::IHistogram3D & h3 = *h3p;
 
   // Filling the histogram with random data
@@ -66,7 +66,9 @@ int main( int, char** )
 
   std::cout << std::endl;
 
-  
+  // clean up ...
+  tree->commit();
+  tree->close();
 
   return 0;
 }

@@ -18,15 +18,15 @@ int main( int, char** )
 
   boost::shared_ptr<AIDA::IAnalysisFactory> af( AIDA_createAnalysisFactory() );
   boost::shared_ptr<AIDA::ITreeFactory> treeF ( af->createTreeFactory() );
-  boost::shared_ptr<AIDA::ITree> tree ( treeF->create() );
+  boost::shared_ptr<AIDA::ITree> tree ( treeF->create() ); // in-memory tree
   boost::shared_ptr<AIDA::IHistogramFactory> factory( af->createHistogramFactory(*tree) );
 
-  // Creating a histogram
-  typedef boost::shared_ptr<AIDA::IHistogram2D> H2P;
-  typedef boost::shared_ptr<AIDA::IProfile2D> P2P;
-  H2P h2p(factory->createHistogram2D("Example histogram.", 10, 0, 50, 10, 0, 50 ) );
-  P2P p2p(factory->createProfile2D("Example profile.", 10, 0, 50, 10, 0, 50 ) );
-
+  // Creating a histogram. Don't use boost's shared_ptr here as the histograms 
+  // are managed by the tree - which leads to double deletion ... 
+  typedef AIDA::IHistogram2D * H2P;
+  typedef AIDA::IProfile2D * P2P;
+  H2P h2p = factory->createHistogram2D("Example histogram.", 10, 0, 50, 10, 0, 50 );
+  P2P p2p = factory->createProfile2D("Example profile.", 10, 0, 50, 10, 0, 50 );
   AIDA::IHistogram2D & h2 = *h2p;
   AIDA::IProfile2D & p2 = *p2p;
 
@@ -64,7 +64,6 @@ int main( int, char** )
 
   
   {
-
     // Printing some statistical values of the profile
     std::cout << "MeanX : " << p2.meanX() << std::endl;
     std::cout << "RMSX  : " << p2.rmsX() << std::endl;
@@ -84,7 +83,6 @@ int main( int, char** )
 		  << std::endl;
       }
     }
-
   }
   
 
@@ -96,6 +94,10 @@ int main( int, char** )
     std::cout << annotation.key( annotationIndex ) << " : "
 	      << annotation.value( annotationIndex ) << std::endl;
   }
+
+  // clean up ...
+  tree->commit();
+  tree->close();
 
   return 0;
 }

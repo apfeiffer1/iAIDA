@@ -392,11 +392,35 @@ class Configuration(object):
         self.prepareMakefile()
 
         subDirs = ['src', 'include', 'examples', 'tests']
-        for dir in subDirs:
-            os.chdir(dir)
+        for actDir in subDirs:
+            os.chdir(actDir)
             self.prepareMakefile()
+            if actDir == 'tests':
+                self.prepareRunTests()
             os.chdir("..")
 
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def prepareRunTests(self):
+
+        print "preparing runTests.py in ", os.getcwd()
+
+        mfi = open("runTests.py.in",'r')
+        lines = mfi.readlines()
+        mfi.close()
+
+        mf = open("runTests.py", 'w')
+        for line in lines:
+            lineOut = line
+            lineOut = lineOut.replace("@PREFIX_DIR@" , os.path.abspath(self.prefix) )
+                
+            mf.write(lineOut)
+
+        mf.close()
+        os.system("chmod +x runTests.py")
+        
         return
 
     # --------------------------------------------------------------------------------
