@@ -8,6 +8,8 @@ HAVE_GRACE = @HAVE_GRACE@
 GRACE_INC = -I@GRACE_INC_DIR@
 GRACE_LIB = -L@GRACE_LIB_DIR@ -lgrace_np
 
+HAVE_ROOT = @HAVE_ROOT@
+
 HAVE_CERN = @HAVE_CERN@
 
 INCLUDES = ${AIDA_INC} ${BOOST_INC} ${EXPAT_INC} -I../include -I.. -I.
@@ -54,6 +56,12 @@ CXX_FLAGS += -DHAVE_GRACE
 SRCS     += plottingHistograms.cpp
 INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
+endif
+
+ifdef HAVE_ROOT
+ROOT_DIR = @ROOT_DIR@/root
+SRCS     += 
+LIBS     += -L${ROOT_DIR}/lib -lCore -lHist -lTree -lMatrix -lCint
 endif
 
 ifdef HAVE_CERN

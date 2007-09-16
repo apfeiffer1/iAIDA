@@ -12,7 +12,10 @@ class iAIDATester(object):
         self.tstDir = os.path.normpath( os.path.dirname( os.path.normpath(sys.argv[0]) ) )
 
         self.examples = ['exaH1', 'exaH2', 'exaH3', 'exaTree',
-                         'storeHbk', 'readHbk', 'storeHbkTup', 'readHbkTup']
+                         'storeRoot', 'readRoot', 'storeRootTup', 'readRootTup',
+                         'storeHbk', 'readHbk', 'storeHbkTup', 'readHbkTup',
+                         ]
+
         self.tests    = ['testAIDAmem',
                          'plottingHistograms']
 
@@ -26,7 +29,7 @@ class iAIDATester(object):
         print "in ", os.getcwd(), ":",
 
         logFile = entry+'.log'
-        cmd = "eval `aida-config --run sh`; "
+        cmd = "eval `../bin/aida-config --run sh`; "
         cmd += './'+entry+' >'+logFile+' 2>&1 3>&1 '
 
         ret = 0

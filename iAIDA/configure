@@ -35,6 +35,10 @@ class Configuration(object):
         self.graceIncDir = None
         self.graceLibDir = None
         
+        self.rootDir = None
+        self.rootLibDir = None
+        self.rootIncDir = None
+
         self.cernDir = None
         self.cernLibDir = None
         self.cernIncDir = None
@@ -265,6 +269,43 @@ class Configuration(object):
         
     # --------------------------------------------------------------------------------
 
+    def findRootDir(self):
+
+        # if user has set this, don't search
+        if self.rootDir :
+            self.rootDir = os.path.abspath( self.rootDir )
+            self.rootIncDir = os.path.join(self.rootDir, "include")
+            self.rootLibDir = os.path.join(self.rootDir, "lib")
+            if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+                self.rootDir = os.path.abspath( self.rootDir ) 
+                self.rootIncDir = os.path.join(self.rootDir, 'root', "include")
+                self.rootLibDir = os.path.join(self.rootDir, 'root', "lib")
+                if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+                    print "\n\nFATAL ERROR: Invalid Root directory! (no TObject in: "+self.rootIncDir+'\n'
+                    sys.exit(-1)
+            return
+
+        rootVers = "5.1.14"
+        for path in [self.prefix, "/usr", "/usr/local", "/usr/X11R6"]:
+            self.rootDir = os.path.abspath( os.path.join(path) )
+            self.rootIncDir = os.path.join(self.rootDir, "include")
+            self.rootLibDir = os.path.join(self.rootDir, "lib")
+            if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+                self.rootDir = None
+            else:
+                break
+            self.rootDir = os.path.join(path,"root")
+            self.rootIncDir = os.path.join(self.rootDir, "include")
+            self.rootLibDir = os.path.join(self.rootDir, "lib")
+            if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+                self.rootDir = None
+            else:
+                break
+            
+        return
+        
+    # --------------------------------------------------------------------------------
+
     def findCernlibDir(self):
 
         # if user has set this, don't search
@@ -332,6 +373,14 @@ class Configuration(object):
             print "not found, will not build Plotter."
         sys.stdout.flush()
 
+        print "checking for ROOT ",
+        self.findRootDir()
+        if self.rootDir:
+            print "found in ", self.rootDir
+        else:
+            print "not found, will not use ROOT."
+        sys.stdout.flush()
+        
         print "checking for CENRLIB ",
         self.findCernlibDir()
         if self.cernDir:
@@ -408,6 +457,39 @@ class Configuration(object):
 
     # --------------------------------------------------------------------------------
 
+    def prepareAidaConfig(self):
+
+        print "preparing aida-config  in ", os.getcwd()
+
+        mfi = open("aida-config.in",'r')
+        lines = mfi.readlines()
+        mfi.close()
+
+        mf = open("bin/aida-config", 'w')
+        for line in lines:
+            lineOut = line
+        
+            if self.rootDir and lineOut.find('# @@ ROOT here') != -1:
+
+                mf.write('        self.rootDir = "'+self.rootDir+'/root"\n')
+                cmdOut = """
+        setLDpath  += self.rootDir + \"/lib:\"
+        setDLDpath += self.rootDir + \"/lib:\"
+        
+                """
+                mf.write(cmdOut+'\n')
+
+                mf.write('        print cmd + " ROOTSYS"  + sep + \'"\' + self.rootDir+ \'";\'\n')
+                
+            mf.write(lineOut)
+
+        mf.close()
+        os.system("chmod +x aida-config")
+
+        return
+
+    # --------------------------------------------------------------------------------
+
     def prepareRunTests(self):
 
         print "preparing runTests.py in ", os.getcwd()
@@ -463,6 +545,7 @@ class Configuration(object):
             lineOut = lineOut.replace("@EXPAT_DIR@", self.expatDir)
             lineOut = lineOut.replace("@EXPAT_INC_DIR@", self.expatIncDir)
             lineOut = lineOut.replace("@EXPAT_LIB_DIR@", self.expatLibDir)
+
             if self.graceDir:
                 lineOut = lineOut.replace("@HAVE_GRACE@"   , "1")
                 lineOut = lineOut.replace("@GRACE_DIR@", self.graceDir)
@@ -473,6 +556,17 @@ class Configuration(object):
                 lineOut = lineOut.replace("@GRACE_DIR@", "")
                 lineOut = lineOut.replace("@GRACE_INC_DIR@", "")
                 lineOut = lineOut.replace("@GRACE_LIB_DIR@", "")
+
+            if self.rootDir:
+                lineOut = lineOut.replace("@HAVE_ROOT@"   , "1")
+                lineOut = lineOut.replace("@ROOT_DIR@", self.rootDir)
+                lineOut = lineOut.replace("@ROOT_INC_DIR@", self.rootIncDir)
+                lineOut = lineOut.replace("@ROOT_LIB_DIR@", self.rootLibDir)
+            else:
+                lineOut = lineOut.replace("@HAVE_ROOT@"   , "")
+                lineOut = lineOut.replace("@ROOT_DIR@", "")
+                lineOut = lineOut.replace("@ROOT_INC_DIR@", "")
+                lineOut = lineOut.replace("@ROOT_LIB_DIR@", "")
 
             if self.cernDir:
                 lineOut = lineOut.replace("@HAVE_CERN@"   , "1")
@@ -515,6 +609,7 @@ def usage() :
 --with-zlib=<your/path/to/zlib>           (default: <prefix>)
 --with-uuid=<your/path/to/uuid>           (default: <prefix>)
 --with-grace=<your/path/to/grace>         (default: <prefix>)
+--with-root=<your/path/to/root>           (default: <prefix>)
 --with-cernlib=<your/path/to/CERNLIB>     (default: <prefix>)
     example: 
 ./configure --with-boost ~/work/install/boost-1.33.1/ --with-aida ~/work/install/AIDA/3.2.1
@@ -532,7 +627,7 @@ def main():
                                    ["help", "prefix=",
                                     "with-aida=", "with-boost=", "with-expat=",
                                     "with-zlib=", "with-uuid=",
-                                    "with-grace=", 'with-cernlib='])
+                                    "with-grace=", 'with-cernlib=', 'with-root='])
     except getopt.GetoptError, e :
         # print help information and exit:
         print str(e)
@@ -564,6 +659,9 @@ def main():
         if o in ("--with-grace",):
             config.graceDir = a
 
+        if o in ("--with-root",):
+            config.rootDir = a
+            
         if o in ("--with-cernlib",):
             config.cernDir = a
             
@@ -572,6 +670,7 @@ def main():
 
     config.checkSetup()
     config.prepareMakefiles()
+    config.prepareAidaConfig()
     config.setupSymlinks()
 
     return
