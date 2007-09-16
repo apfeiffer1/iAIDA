@@ -12,7 +12,7 @@ install: all
 	cd src ; make install
 	cd include ; make install
 	@mkdir -p @PREFIX_DIR@/bin
-	cp aida-config @PREFIX_DIR@/bin/aida-config
+	cp bin/aida-config @PREFIX_DIR@/bin/aida-config
 	@if [ -d lib ] ; then \
           cd lib ; tar cf - * | ( cd @PREFIX_DIR@/lib/ ; tar xf - ) \
 	fi
