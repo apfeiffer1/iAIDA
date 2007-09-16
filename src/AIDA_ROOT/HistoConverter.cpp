@@ -26,6 +26,7 @@
 // 
 // 
 #include <iostream> 
+#include <cmath>
 #include <assert.h>
 
 #include "AIDA_ROOT/HistoConverter.h"
@@ -276,7 +277,7 @@ TProfile *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProf
   // copy the contents in 
   // for profile setters in Root are bizarre: 
   // SetContent : set height*entries
-  // SetError : set sqrt(sumw2) 
+  // SetError : set std::sqrt(sumw2) 
   double sumwy = 0;  // for profile is total of the bin sum of weights*y
   double sumwy2 = 0;     // this is the total of the bin sum of weight*y*y     
 
@@ -286,7 +287,7 @@ TProfile *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProf
     double sumwyBin = h.binHeight(iAida)*h.binEntries(iAida);
     double sumwy2Bin = ( h.binRms(iAida)*h.binRms(iAida) + h.binHeight(iAida)*h.binHeight(iAida) )*h.binEntries(iAida);
     th->SetBinContent(i, sumwyBin ); 
-    th->SetBinError(i,  sqrt(sumwy2Bin) ); 
+    th->SetBinError(i,  std::sqrt(sumwy2Bin) ); 
     th->SetBinEntries(i, h.binEntries(iAida) ); 
     // accumulate the sums for statistics 
     sumwy  += sumwyBin; 
@@ -354,7 +355,7 @@ TProfile2D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IPr
       double sumw2Bin = ( h.binRms(iAida,jAida)*h.binRms(iAida,jAida) + h.binHeight(iAida,jAida)*h.binHeight(iAida,jAida) )*h.binEntries(iAida,jAida); 
 
       th->SetBinContent(i ,j,totBinContent ); 
-      th->SetBinError(i, j, sqrt(sumw2Bin) ); 
+      th->SetBinError(i, j, std::sqrt(sumw2Bin) ); 
       int iBin = th->GetBin(i,j); 
       th->SetBinEntries(iBin,h.binEntries(iAida,jAida) ); 
       if (iAida >=0 && jAida >= 0) { 
@@ -614,7 +615,7 @@ AIDA::Dev::IDevProfile1D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AI
      double height = tprof.GetBinContent(iRBin); 
      double error = tprof.GetBinError(iRBin); 
      // suppose GetBinEntries(iRBin) is sum of weights 
-     double spread = error*sqrt(tprof.GetBinEntries(iRBin) );
+     double spread = error*std::sqrt(tprof.GetBinEntries(iRBin) );
      //double spread = error;   // no possibility to have both in root 
      // to fix : check with error option
      int entries =  static_cast<int> ( tprof.GetBinEntries(iRBin) );
@@ -680,7 +681,7 @@ AIDA::Dev::IDevProfile2D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AI
        //double spread = error; 
        // suppose GetBinEntries(iRBin) is sum of weights 
        double sumOfBinWeights =  tprof.GetBinEntries  (tprof.GetBin(iRBin,jRBin) );
-       double spread = error*sqrt( sumOfBinWeights );
+       double spread = error*std::sqrt( sumOfBinWeights );
        int entries = static_cast<int> ( sumOfBinWeights );
        p->setBinContents(iABin, jABin, entries, height, error, spread, wMeanX, wMeanY);
      }

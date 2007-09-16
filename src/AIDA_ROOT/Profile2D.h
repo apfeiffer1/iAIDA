@@ -9,6 +9,7 @@
 //  GNU Library General Public License described in the LGPL.txt 
 
 #include <vector>
+#include <cmath>
 
 #include "AIDA/IProfile2D.h"
 
@@ -99,7 +100,7 @@ namespace AIDA_ROOT {
     // error on the mean 
     double binError(int indexX, int indexY) const {
       if (binEntries(indexX, indexY) == 0) return 0; 
-      return binRms(indexX, indexY)/sqrt( binEntries(indexX, indexY) );
+      return binRms(indexX, indexY)/std::sqrt( binEntries(indexX, indexY) );
     }
 
     // overwrite reset
