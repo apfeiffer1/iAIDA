@@ -199,6 +199,11 @@ class Configuration(object):
             if ( not os.path.exists(os.path.join(incDir, pkg+".h") ) and
                  not os.path.exists(os.path.join(incDir, pkg, pkg+".h") ) ) :
                 print "\n\nFATAL ERROR: Invalid "+pkg+" directory! (no "+pkg+".h in: "+incDir+'\n'
+                if pkg == 'uuid':
+                    print "Please install the e2fsprogs-devel package !\n"
+                else:
+                    print "Please install the " +pkg+ "-devel package !\n"
+                    
                 sys.exit(-1)
             return topDir
 
