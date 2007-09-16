@@ -61,9 +61,9 @@ LIBS     += ${GRACE_LIB}
 endif
 
 ifdef HAVE_ROOT
-ROOT_DIR = @ROOT_DIR@/root
+ROOT_DIR = @ROOT_DIR@
 SRCS     += storeRoot.cpp readRoot.cpp storeRootTup.cpp readRootTup.cpp 
-LIBS     += -L${ROOT_DIR}/lib -lCore -lHist -lTree -lMatrix -lCint
+LIBS     += `${ROOT_DIR}/bin/root-config --libs`
 endif
 
 ifdef HAVE_CERN

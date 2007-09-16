@@ -17,8 +17,8 @@ GRACE_DIR = @GRACE_DIR@
 GRACE_INC = -I${GRACE_DIR}/include -I../${GRACE_DIR}/include
 
 HAVE_ROOT = @HAVE_ROOT@
-ROOT_DIR = @ROOT_DIR@/root
-ROOT_INC = -I${ROOT_DIR}/include
+ROOT_DIR = @ROOT_DIR@
+ROOT_INC = -I`${ROOT_DIR}/bin/root-config --incdir`
 
 HAVE_CERN = @HAVE_CERN@
 CERN_DIR = @CERN_DIR@
@@ -94,7 +94,7 @@ ifdef HAVE_ROOT
 CXX_FLAGS += -DHAVE_ROOT
 SRCS     += $(wildcard AIDA_ROOT/*.cpp)
 INCLUDES += ${ROOT_INC}
-LIBS     += -L${ROOT_DIR}/lib -lCore -lHist -lTree -lMatrix -lCint
+LIBS     += `${ROOT_DIR}/bin/root-config --libs`
 endif
 
 
@@ -126,7 +126,7 @@ clean:
 	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT}
 
 lib: ${OBJS}
-	@${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
+	${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 	@test -e ../lib || mkdir -p ../lib
 	@mv libAIDA_Native.${SHLIBEXT} ../lib/.
 
