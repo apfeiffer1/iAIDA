@@ -484,7 +484,7 @@ class Configuration(object):
             mf.write(lineOut)
 
         mf.close()
-        os.system("chmod +x aida-config")
+        os.system("chmod +x ./bin/aida-config")
 
         return
 
