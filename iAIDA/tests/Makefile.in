@@ -61,7 +61,7 @@ endif
 ifdef HAVE_ROOT
 ROOT_DIR = @ROOT_DIR@
 SRCS     += 
-LIBS     += `${ROOT_DIR}/bin/root-config --libs`
+LIBS     += `ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --libs`
 endif
 
 ifdef HAVE_CERN

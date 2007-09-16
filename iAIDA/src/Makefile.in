@@ -18,7 +18,7 @@ GRACE_INC = -I${GRACE_DIR}/include -I../${GRACE_DIR}/include
 
 HAVE_ROOT = @HAVE_ROOT@
 ROOT_DIR = @ROOT_DIR@
-ROOT_INC = -I`${ROOT_DIR}/bin/root-config --incdir`
+ROOT_INC = -I`ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --incdir`
 
 HAVE_CERN = @HAVE_CERN@
 CERN_DIR = @CERN_DIR@
@@ -94,7 +94,7 @@ ifdef HAVE_ROOT
 CXX_FLAGS += -DHAVE_ROOT
 SRCS     += $(wildcard AIDA_ROOT/*.cpp)
 INCLUDES += ${ROOT_INC}
-LIBS     += `${ROOT_DIR}/bin/root-config --libs`
+LIBS     += `ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --libs`
 endif
 
 
