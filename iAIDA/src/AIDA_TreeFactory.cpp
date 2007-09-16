@@ -10,6 +10,10 @@
 //-ap #include "AIDA_Plugin/AIDA_PluginType.h"
 //-ap #include "SealBase/SharedLibrary.h"
 
+#ifdef HAVE_ROOT
+# include "AIDA_ROOT/AIDA_RootStoreFactory.h"
+#endif
+
 #ifdef HAVE_CERN
 # include "AIDA_HBook/AIDA_HBookStoreFactory.h"
 #endif
@@ -93,11 +97,16 @@ iAIDA::aida_tree::AIDA_TreeFactory::create( const std::string & storeName,
     AIDA::Dev::IStoreFactory *sf_p=0;
     if (m_storeType == "MEMORY") {
       sf_p = new AIDA_MemoryStore::AIDA_MemoryStoreFactory();
+#ifdef HAVE_ROOT
+    } else if (m_storeType == "ROOT") {
+      sf_p = new pi::AIDA_RootStore::AIDA_RootStoreFactory();
+#endif
 #ifdef HAVE_CERN
     } else if (m_storeType == "HBOOK") {
       sf_p = new pi::AIDA_HBookStore::AIDA_HBookStoreFactory();
 #endif
     } else {
+      std::cerr << "WARNING: Unknow store type " << m_storeType << " falling back to XMLStore !!! " << std::endl;
       sf_p = new AIDA_XMLStore::AIDA_XMLStoreFactory();
     }
 
