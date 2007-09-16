@@ -8,7 +8,8 @@ class Configuration(object):
 
     def __init__(self):
         self.topDir = os.path.join(os.getcwd(), "..")
-        self.rootDir = None
+
+        self.arch = os.uname()[-1].lower()
 
         self.aidaDir = None
         self.aidaIncDir = None
@@ -168,19 +169,20 @@ class Configuration(object):
             print "\n\nFATAL ERROR: Expat installation not found in:", pathList, '\n'
             sys.exit(-1)
             
-        # check if libexpat.so is available (only libexpat.so.0 is available
-        # on x86_64 machines in 32 bit mode. Set a symlink for these in our
-        # lib/ dir ...
-        if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
-            expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
-            if not os.path.exists( expatLibName0 ) :
-                print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
-                sys.exit(-1)
-            else:
-                if not os.path.exists('lib'): os.makedirs('lib')
-                os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
-                self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
-                print "(symlink for libexpat set) ",
+        if self.arch == 'x86_64':
+            # check if libexpat.so is available (only libexpat.so.0 is available
+            # on x86_64 machines in 32 bit mode. Set a symlink for these in our
+            # lib/ dir ...
+            if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
+                expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
+                if not os.path.exists( expatLibName0 ) :
+                    print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
+                    sys.exit(-1)
+                else:
+                    if not os.path.exists('lib'): os.makedirs('lib')
+                    os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
+                    self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
+                    print "(symlink for libexpat set) ",
         return
 
     # --------------------------------------------------------------------------------
