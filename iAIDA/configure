@@ -285,7 +285,6 @@ class Configuration(object):
                     sys.exit(-1)
             return
 
-        rootVers = "5.1.14"
         for path in [self.prefix, "/usr", "/usr/local", "/usr/X11R6"]:
             self.rootDir = os.path.abspath( os.path.join(path) )
             self.rootIncDir = os.path.join(self.rootDir, "include")
@@ -471,7 +470,7 @@ class Configuration(object):
         
             if self.rootDir and lineOut.find('# @@ ROOT here') != -1:
 
-                mf.write('        self.rootDir = "'+self.rootDir+'/root"\n')
+                mf.write('        self.rootDir = "'+self.rootDir+'"\n')
                 cmdOut = """
         setLDpath  += self.rootDir + \"/lib:\"
         setDLDpath += self.rootDir + \"/lib:\"
