@@ -9,7 +9,7 @@
 //  GNU Library General Public License described in the LGPL.txt 
 
 #include <vector>
-
+#include <cmath>
 
 #include "AIDA_ROOT/Axis.h"
 
@@ -133,7 +133,7 @@ namespace AIDA_ROOT {
     // error on the mean 
     double binError(int index) const {
       if (binEntries(index) == 0) return 0; 
-      return binRms(index)/sqrt( binEntries(index) );
+      return binRms(index)/std::sqrt( binEntries(index) );
     }
 
     // overwrite reset
