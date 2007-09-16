@@ -16,6 +16,10 @@ HAVE_GRACE = @HAVE_GRACE@
 GRACE_DIR = @GRACE_DIR@
 GRACE_INC = -I${GRACE_DIR}/include -I../${GRACE_DIR}/include
 
+HAVE_ROOT = @HAVE_ROOT@
+ROOT_DIR = @ROOT_DIR@/root
+ROOT_INC = -I${ROOT_DIR}/include
+
 HAVE_CERN = @HAVE_CERN@
 CERN_DIR = @CERN_DIR@
 CERN_ROOT = @CERN_DIR@
@@ -31,7 +35,6 @@ OS=$(shell uname)
 ifeq (${OS}, Linux)
   ARCH=$(shell uname -m)
   GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
-  CERN_LIB = `${CERN_DIR}/bin/cernlib`
   CXX = g++
   OBJEXT =o
   SHLIB=${CXX} -o 
@@ -49,7 +52,6 @@ ifeq (${OS}, Linux)
 endif
 ifeq (${OS}, Darwin)
   GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
-  CERN_LIB = `${CERN_DIR}/bin/cernlib`
   CXX = g++
   OBJEXT =o
   SHLIB=${CXX} -o 
@@ -62,7 +64,6 @@ ifeq (${OS}, Darwin)
 endif
 ifeq (${OS}, CYGWIN_NT-5.1)
   GRACE_LIB = -L${GRACE_DIR}/lib/libgrace_np.lib
-  CERN_LIB = `${CERN_DIR}/bin/cernlib`
   INCLUDES += -Ic:/Program\ Files/Microsoft\ Visual\ Studio\ .NET\ 2003/Vc7/PlatformSDK/Include
   CXX = cl
   CPP=cl
@@ -89,11 +90,20 @@ INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
 endif
 
+ifdef HAVE_ROOT
+CXX_FLAGS += -DHAVE_ROOT
+SRCS     += $(wildcard AIDA_ROOT/*.cpp)
+INCLUDES += ${ROOT_INC}
+LIBS     += -L${ROOT_DIR}/lib -lCore -lHist -lTree -lMatrix -lCint
+endif
+
+
 ifdef HAVE_CERN
 CXX_FLAGS += -DHAVE_CERN
 SRCS     += $(wildcard AIDA_HBook/*.cpp)
 F_SRCS    = $(wildcard AIDA_HBook/*.F)
 OBJS     += ${F_SRCS:.F=.${OBJEXT}}
+CERN_LIB = `${CERN_DIR}/bin/cernlib`
 LIBS     += ${CERN_LIB}
  ifdef HAVEF77
    LIBS += -lg2c
@@ -113,14 +123,16 @@ all: lib
 
 clean:
 	@echo "Cleaning in src"
-	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT}
+	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT}
 
 lib: ${OBJS}
 	@${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
+	@test -e ../lib || mkdir -p ../lib
+	@mv libAIDA_Native.${SHLIBEXT} ../lib/.
 
 install: lib
 	test -e @PREFIX_DIR@/lib || mkdir -p @PREFIX_DIR@/lib 
-	${INSTALL_CMD} libAIDA_Native.${SHLIBEXT} @PREFIX_DIR@/lib/
+	${INSTALL_CMD} ../lib/libAIDA_Native.${SHLIBEXT} @PREFIX_DIR@/lib/
 
 %.${OBJEXT}: %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
