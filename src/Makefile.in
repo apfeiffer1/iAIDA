@@ -116,7 +116,7 @@ clean:
 	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT}
 
 lib: ${OBJS}
-	${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
+	@${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 
 install: lib
 	test -e @PREFIX_DIR@/lib || mkdir -p @PREFIX_DIR@/lib 

@@ -1,8 +1,11 @@
 
-all:
+all: lib examples 
+
+lib:
 	cd src ; make 
+
+examples:
 	cd examples ; make
-	cd tests ; make
 
 clean:
 	cd src ; make clean
@@ -18,9 +21,17 @@ install: all
           cd lib ; tar cf - * | ( cd @PREFIX_DIR@/lib/ ; tar xf - ) \
 	fi
 
-tests:
-	cd src ; make
-	cd examples ; make run
+
+tests: lib examples testLog
+	rm testLog
+
+testLog:
+	@cd tests ; make
+	@./tests/runTests.py > ./tests/testLog
+	@cp ./tests/testLog .
+	@echo ""
+	@cat testLog
+	@echo ""
 
 distclean: clean
 
