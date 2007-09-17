@@ -300,7 +300,7 @@ pi::AIDA_RootStore::RootTree::readVariableDescription() {
     if (rootType.find("_t") != std::string::npos) { 
       rtype =  rootType.substr(0, rootType.find( "_t" ) );
       // transform to lower case
-      std::transform ( rtype.begin(), rtype.end(), rtype.begin(), _tolower ); 
+      std::transform ( rtype.begin(), rtype.end(), rtype.begin(), tolower ); 
     }
 
     //std::cout << " read branch " << i <<" name " <<  m_varList[i] << " type " << rootType << " new type " << type << std::endl; 

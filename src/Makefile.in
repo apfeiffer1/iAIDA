@@ -58,8 +58,9 @@ ifeq (${OS}, Darwin)
   SHLIBEXT =dylib
   CXX_FLAGS = -fPIC -g -DBADENDS 
   LDFLAGS = -lm -lc
-  SHLIBFLAGS = -dynamiclib -single_module
-  LIBS = -L${EXPAT_DIR}/lib  -lexpat -L${ZLIB_DIR}/lib -lz 
+  export MACOSX_DEPLOYMENT_TARGET=10.4
+  SHLIBFLAGS = -dynamiclib -single_module -undefined dynamic_lookup
+  LIBS = -L${EXPAT_DIR}/lib  -lexpat -L${ZLIB_DIR}/lib 
   INSTALL_CMD=mv
 endif
 ifeq (${OS}, CYGWIN_NT-5.1)
@@ -95,6 +96,10 @@ CXX_FLAGS += -DHAVE_ROOT
 SRCS     += $(wildcard AIDA_ROOT/*.cpp)
 INCLUDES += ${ROOT_INC}
 LIBS     += `ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --libs`
+else  # root has it's own version of libz, so don't use the system one
+ifeq (${OS}, Darwin)
+  LIBS += -lz 
+endif
 endif
 
 
