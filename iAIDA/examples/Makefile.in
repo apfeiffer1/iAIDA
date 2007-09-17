@@ -46,9 +46,10 @@ ifeq (${OS}, Darwin)
   OBJEXT=o
   SHLIBEXT=dylib
   CXX_FLAGS += -fPIC -g 
-  SHLIBFLAGS = -dynamiclib 
+  export MACOSX_DEPLOYMENT_TARGET=10.4
+  SHLIBFLAGS = -dynamiclib -single_module -undefined dynamic_lookup
   LDFLAGS = -lssl -bind_at_load
-  LIBS +=  -lexpat -lz 
+  LIBS +=  -lexpat -ldl
 endif
 
 # now all the vars are prepared, now check if we have Grace ...
@@ -64,6 +65,10 @@ ifdef HAVE_ROOT
 ROOT_DIR = @ROOT_DIR@
 SRCS     += storeRoot.cpp readRoot.cpp storeRootTup.cpp readRootTup.cpp 
 LIBS     += `ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --libs`
+else  # root has it's own version of libz, so don't use the system one
+ifeq (${OS}, Darwin)
+  LIBS += -lz 
+endif
 endif
 
 ifdef HAVE_CERN

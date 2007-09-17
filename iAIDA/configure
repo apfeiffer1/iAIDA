@@ -278,11 +278,11 @@ class Configuration(object):
             self.rootDir = os.path.abspath( self.rootDir )
             self.rootIncDir = os.path.join(self.rootDir, "include")
             self.rootLibDir = os.path.join(self.rootDir, "lib")
-            if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+            if not os.path.exists(os.path.join(self.rootDir, 'bin', "root-config") ) :
                 self.rootDir = os.path.abspath( self.rootDir ) 
                 self.rootIncDir = os.path.join(self.rootDir, 'root', "include")
                 self.rootLibDir = os.path.join(self.rootDir, 'root', "lib")
-                if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+                if not os.path.exists(os.path.join(self.rootDir, 'bin', 'root-config') ) :
                     print "\n\nFATAL ERROR: Invalid Root directory! (no TObject in: "+self.rootIncDir+'\n'
                     sys.exit(-1)
             return
@@ -291,14 +291,14 @@ class Configuration(object):
             self.rootDir = os.path.abspath( os.path.join(path) )
             self.rootIncDir = os.path.join(self.rootDir, "include")
             self.rootLibDir = os.path.join(self.rootDir, "lib")
-            if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+            if not os.path.exists(os.path.join(self.rootDir, 'bin', "root-config") ) :
                 self.rootDir = None
             else:
                 break
             self.rootDir = os.path.join(path,"root")
             self.rootIncDir = os.path.join(self.rootDir, "include")
             self.rootLibDir = os.path.join(self.rootDir, "lib")
-            if not os.path.exists(os.path.join(self.rootIncDir, "TObject.h") ) :
+            if not os.path.exists(os.path.join(self.rootIncDir, 'bin', "root-config") ) :
                 self.rootDir = None
             else:
                 break
