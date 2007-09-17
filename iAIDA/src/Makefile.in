@@ -56,7 +56,7 @@ ifeq (${OS}, Darwin)
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =dylib
-  CXX_FLAGS = -fPIC -g 
+  CXX_FLAGS = -fPIC -g -DBADENDS 
   LDFLAGS = -lm -lc
   SHLIBFLAGS = -dynamiclib -single_module
   LIBS = -L${EXPAT_DIR}/lib  -lexpat -L${ZLIB_DIR}/lib -lz 

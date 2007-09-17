@@ -47,7 +47,7 @@ ifeq (${OS}, Darwin)
   SHLIBEXT=dylib
   CXX_FLAGS += -fPIC -g 
   SHLIBFLAGS = -dynamiclib 
-  LDFLAGS = -lssl
+  LDFLAGS = -lssl -bind_at_load
   LIBS +=  -lexpat -lz 
 endif
 
