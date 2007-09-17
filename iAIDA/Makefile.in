@@ -19,7 +19,7 @@ install: all
 
 
 tests: all testLog
-	rm testLog
+	@rm testLog
 
 testLog:
 	@cd tests ; make
