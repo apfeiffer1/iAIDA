@@ -142,19 +142,19 @@ double NormGaussModelFunction::area()  const
     return totArea; 
   } 
   else 
-    return  sig*sqrt(2.0*PI); 
+    return  sig*std::sqrt(2.0*PI); 
 }
 
 
 
-// calculate erfc = 2/sqrt(pi)*int(e-t2)dt
+// calculate erfc = 2/std::sqrt(pi)*int(e-t2)dt
 
 double NormGaussModelFunction::integral( double x1, double x2) const { 
   // calculate reduced variables 
-  double t1 = ( x1 - mean() ) / sigma()  / sqrt(2.0);
-  double t2 = ( x2 - mean() ) / sigma() / sqrt(2.0);
+  double t1 = ( x1 - mean() ) / sigma()  / std::sqrt(2.0);
+  double t2 = ( x2 - mean() ) / sigma() / std::sqrt(2.0);
 
-  double a = sigma() * sqrt( PI/2.0); 
+  double a = sigma() * std::sqrt( PI/2.0); 
 
   return a * (erfc(t1)  - erfc(t2) ); 
     
@@ -168,7 +168,7 @@ double NormGaussModelFunction::erfc ( double x) const {
 
   // calculate here following algorithm in HippoDraw
   // Compute the complementary error function erfc(x).
-  // Erfc(x) = (2/sqrt(pi)) Integral(exp(-t^2))dt between x and infinity
+  // Erfc(x) = (2/std::sqrt(pi)) Integral(exp(-t^2))dt between x and infinity
   //
   //--- Nve 14-nov-1998 UU-SAP Utrecht
   

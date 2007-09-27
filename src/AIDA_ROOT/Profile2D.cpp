@@ -139,7 +139,7 @@ void Profile2D::copyFromAida( const AIDA::IProfile2D & h ) {
 
       representation().SetBinContent(rBin, h.binHeight(i,j) ); 
       representation().SetBinError(rBin, totBinContent ); 
-      representation().SetBinEntries(rBin,  sqrt(sumw2Bin) ); 
+      representation().SetBinEntries(rBin,  std::sqrt(sumw2Bin) ); 
       // calculate statistics 
       if ( i >= 0 && j >= 0) { 
 	sumwz  += totBinContent; 
@@ -174,9 +174,9 @@ bool Profile2D::setBinContents( int i, int j, int entries,double height,double /
     representation().SetBinEntries(rBin, entries ); 
     // set content takes in root height * entries 
     representation().SetBinContent(rBin, height*entries );
-    // set error takes sqrt of bin sum(w*y**2) 
+    // set error takes std::sqrt of bin sum(w*y**2) 
     double sumwy2Bin = ( spread*spread + height*height )*entries; 
-    representation().SetBinError(rBin, sqrt(sumwy2Bin) ); 
+    representation().SetBinError(rBin, std::sqrt(sumwy2Bin) ); 
 
     m_sumEntries += entries;
     // not very efficient (but do evey bin since root cannot figure out by himself)
