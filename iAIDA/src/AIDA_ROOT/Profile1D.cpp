@@ -115,12 +115,12 @@ void Profile1D::copyFromAida( const AIDA::IProfile1D & h ) {
   // copy the contents in 
   for (int iA=-2; iA < axis().bins(); ++iA) { 
     int i = rIndex(iA); 
-     // content for profile is height*entries and error is sqrt(sumw2) 
+     // content for profile is height*entries and error is std::sqrt(sumw2) 
     double sumwyBin = h.binHeight(iA)*h.binEntries(iA); 
     double sumwy2Bin = ( h.binRms(iA)*h.binRms(iA) + h.binHeight(iA)*h.binHeight(iA) )*h.binEntries(iA); 
     representation().SetBinEntries(i,h.binEntries(iA) ); 
     representation().SetBinContent(i, sumwyBin ); 
-    representation().SetBinError(i, sqrt(sumwy2Bin) ); 
+    representation().SetBinError(i, std::sqrt(sumwy2Bin) ); 
     // calculate statistics 
     if ( i >= 0 ) { 
       sumwy  += sumwyBin; 
@@ -149,9 +149,9 @@ bool Profile1D::setBinContents( int i, int entries,double height,double /*error*
     representation().SetBinEntries(rIndex(i), entries ); 
     // set content takes in root height * entries 
     representation().SetBinContent(rIndex(i), height*entries );
-    // set error takes sqrt of bin sum(w*y**2) 
+    // set error takes std::sqrt of bin sum(w*y**2) 
     double sumwy2Bin = ( spread*spread + height*height )*entries; 
-    representation().SetBinError(rIndex(i), sqrt(sumwy2Bin) ); 
+    representation().SetBinError(rIndex(i), std::sqrt(sumwy2Bin) ); 
     
     m_sumEntries += entries;
     // not very efficient (but do evey bin since root cannot figure out by himself)
