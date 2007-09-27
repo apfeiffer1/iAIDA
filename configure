@@ -469,18 +469,8 @@ class Configuration(object):
         mf = open("bin/aida-config", 'w')
         for line in lines:
             lineOut = line
-        
-            if self.rootDir and lineOut.find('# @@ ROOT here') != -1:
-
-                mf.write('        self.rootDir = "'+self.rootDir+'"\n')
-                cmdOut = """
-        setLDpath  += self.rootDir + \"/lib:\"
-        setDLDpath += self.rootDir + \"/lib:\"
-        
-                """
-                mf.write(cmdOut+'\n')
-
-                mf.write('        print cmd + " ROOTSYS"  + sep + \'"\' + self.rootDir+ \'";\'\n')
+            if self.rootDir and lineOut.find('self.rootDir = None') != -1:
+                lineOut = lineOut.replace('None', '"'+self.rootDir+'"')
                 
             mf.write(lineOut)
 

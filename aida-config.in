@@ -48,6 +48,8 @@ class AIDA_Configurator :
 
         self.platf = plat
 
+        self.rootDir = None
+
         self.setup()
 
         return
@@ -123,10 +125,15 @@ class AIDA_Configurator :
         libList = [ "AIDA_Native"
                   ]
 
+        libListRoot = [ 'Core', 'Hist', 'Cint', 'Matrix']
+
         print "-L" + self.piRelDir   + "/lib " ,
         for lib in libList :
             print " -l" + lib,
 
+        if self.rootDir:
+           print ' `'+self.rootDir+'/bin/root-config --libs` ',
+           
         print " "
 
         return
@@ -151,10 +158,10 @@ class AIDA_Configurator :
         setDLDpath = cmd 
         setDLDpath += " DYLD_LIBRARY_PATH" + sep + '"' + self.piRelDir + "/lib:"
 
-        
-        # don't change the line below, its used to get the setup done for root !!!
-        # @@ ROOT here
-
+        if self.rootDir:
+           setLDpath  += self.rootDir + "/lib:"
+           setDLDpath += self.rootDir + "/lib:"
+           print cmd + " ROOTSYS"  + sep + '"' + self.rootDir+ '";'
 
         # add only if it is already defined, otherwise [t]csh will choke :-(((
         if (os.environ.has_key("LD_LIBRARY_PATH") ) :
