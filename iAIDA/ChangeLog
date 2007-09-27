@@ -1,0 +1,14 @@
+
+2007-09-27 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	aida-config.in, configure: updated handling of Root libs when linking
+	as the libs need to be present for linking when using aida-config --libs
+	(includes not needed).
+	src/AIDA_ROOT/Profile1D.cpp, src/AIDA_ROOT/Profile2D.cpp, added std:: to calls of sqrt
+	src/NormGaussModelFunction.cpp: added std:: to calls of sqrt, added include <cmath>
+
+	Tagged as 0.2.3
+
+	
+2007-09-27 Andreas Pfeiffer
+	start of log with version 0.2.3
+	
