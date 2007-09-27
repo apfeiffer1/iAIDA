@@ -1,6 +1,7 @@
 # include "FML/NormGaussModelFunction.h"
 
 #include <iostream>
+#include <cmath>
 
 #include "FML/RangeSet.h"
 
