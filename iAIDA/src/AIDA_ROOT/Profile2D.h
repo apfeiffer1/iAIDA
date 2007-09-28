@@ -100,7 +100,7 @@ namespace AIDA_ROOT {
     // error on the mean 
     double binError(int indexX, int indexY) const {
       if (binEntries(indexX, indexY) == 0) return 0; 
-      return binRms(indexX, indexY)/std::sqrt( binEntries(indexX, indexY) );
+      return binRms(indexX, indexY)/std::sqrt( double(binEntries(indexX, indexY)) );
     }
 
     // overwrite reset
