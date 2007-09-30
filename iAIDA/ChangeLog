@@ -1,3 +1,8 @@
+2007-09-30 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Added license (LGPL v3) files (COPYING*) and preamble to all code files.
+	Changed all namespaces and include protections to use iAIDA.
+	Fixed typo in class and file name of RootPathFormatter
+	
 2007-09-28 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	src/AIDA_ROOT/Profile1D.h, src/AIDA_ROOT/Profile2D.h: added conversion to double
 	for args to std::sqrt as suggested by Giovanni Santin. Needed for gcc323.
