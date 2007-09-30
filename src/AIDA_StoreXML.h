@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_STOREXML
-#define AIDANATIVE_STOREXML 1
+#ifndef IAIDA_STOREXML
+#define IAIDA_STOREXML 1
 
 #include <vector>
 #include <string>
@@ -122,4 +122,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_StoreXML */
+#endif /* ifndef IAIDA_StoreXML */

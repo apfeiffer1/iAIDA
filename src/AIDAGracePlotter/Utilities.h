@@ -31,8 +31,8 @@
 // Created by user sang on Wed Oct  2 21:58:18 2002
 // 
 
-#ifndef AIDANATIVE_GRACE_AIDA_PLOTTER_UTILITIES_H
-#define AIDANATIVE_GRACE_AIDA_PLOTTER_UTILITIES_H
+#ifndef IAIDA_GRACE_AIDA_PLOTTER_UTILITIES_H
+#define IAIDA_GRACE_AIDA_PLOTTER_UTILITIES_H
 
 
 #include "Grace.h"
@@ -72,5 +72,5 @@ public:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_GRACE_AIDA_PLOTTER_UTILITIES_H
+#endif // IAIDA_GRACE_AIDA_PLOTTER_UTILITIES_H
 

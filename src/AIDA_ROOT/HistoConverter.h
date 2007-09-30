@@ -31,8 +31,8 @@
  * 
  */
 
-#ifndef PI_AIDA_ROOTCONVERTER_HISTOCONVERTER
-#define PI_AIDA_ROOTCONVERTER_HISTOCONVERTER 1
+#ifndef IAIDA_AIDA_ROOTCONVERTER_HISTOCONVERTER
+#define IAIDA_AIDA_ROOTCONVERTER_HISTOCONVERTER 1
 
 
 #include <string>
@@ -65,7 +65,7 @@ namespace AIDA {
    }
  }
 
-namespace pi { 
+namespace iAIDA { 
    namespace AIDA_RootConverter { 
 
 
@@ -107,7 +107,7 @@ public:
 
 }; 
 
-   }      // end of namespace pi::AIDA_RootStore
+   }      // end of namespace iAIDA::AIDA_RootStore
 }
 
 #endif /* HISTOCONVERTER */

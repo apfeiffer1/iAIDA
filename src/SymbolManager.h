@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_SYMBOL_MANAGER
-#define AIDANATIVE_AIDA_TUPLE_SYMBOL_MANAGER 1
+#ifndef IAIDA_AIDA_TUPLE_SYMBOL_MANAGER
+#define IAIDA_AIDA_TUPLE_SYMBOL_MANAGER 1
 
 #include <string>
 #include <set>
@@ -43,4 +43,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_SYMBOL_GENERATOR */
+#endif /* ifndef IAIDA_AIDA_TUPLE_SYMBOL_GENERATOR */

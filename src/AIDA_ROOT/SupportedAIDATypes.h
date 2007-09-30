@@ -1,10 +1,10 @@
-#ifndef PI_AIDA_ROOTSTORE_SUPPORTEDAIDATYPES_H
-#define PI_AIDA_ROOTSTORE_SUPPORTEDAIDATYPES_H
+#ifndef IAIDA_AIDA_ROOTSTORE_SUPPORTEDAIDATYPES_H
+#define IAIDA_AIDA_ROOTSTORE_SUPPORTEDAIDATYPES_H
 
 #include <string>
 #include <set>
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_RootStore {
 
 class SupportedAIDATypes

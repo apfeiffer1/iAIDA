@@ -1,11 +1,11 @@
 // Emacs -*- C++ -*-
-#ifndef PI_ROOTSTOREFACTORY
-#define PI_ROOTSTOREFACTORY 1
+#ifndef IAIDA_ROOTSTOREFACTORY
+#define IAIDA_ROOTSTOREFACTORY 1
 
 #include <string>
 #include "AIDA_Dev/IStoreFactory.h"
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_RootStore {
 
 /// Implementation of AIDA::DEV::IStoreFactory interface for a factory of Root stores
@@ -29,4 +29,4 @@ public:
   }
 }
 
-#endif /* ifndef PI_RootSTOREFACTORY */
+#endif /* ifndef IAIDA_RootSTOREFACTORY */

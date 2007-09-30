@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_AIDA_TUPLE
-#define AIDANATIVE_AIDA_TUPLE_AIDA_TUPLE 1
+#ifndef IAIDA_AIDA_TUPLE_AIDA_TUPLE
+#define IAIDA_AIDA_TUPLE_AIDA_TUPLE 1
 
 #include "AIDA_Dev/IDevTuple.h"
 #include "AIDA_Dev/IBackingStore.h"
@@ -134,4 +134,4 @@ private:
 
 #include "AIDA_Tuple.templ"
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_AIDA_TUPLE */
+#endif /* ifndef IAIDA_AIDA_TUPLE_AIDA_TUPLE */

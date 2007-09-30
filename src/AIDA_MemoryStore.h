@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_MEMORYSTORE
-#define AIDANATIVE_MEMORYSTORE 1
+#ifndef IAIDA_MEMORYSTORE
+#define IAIDA_MEMORYSTORE 1
 
 #include <vector>
 #include <string>
@@ -74,4 +74,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_MEMORYSTORE */
+#endif /* ifndef IAIDA_MEMORYSTORE */

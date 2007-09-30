@@ -6,7 +6,7 @@
 # include "PluginManager/config.h"
 # include <string>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -49,5 +49,5 @@ private:
 //<<<<<< INLINE PUBLIC FUNCTIONS                                        >>>>>>
 //<<<<<< INLINE MEMBER FUNCTIONS                                        >>>>>>
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_DBVIEW_BASE_H

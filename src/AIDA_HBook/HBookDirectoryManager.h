@@ -1,10 +1,10 @@
-#ifndef PI_AIDA_HBOOKSTORE_HBOOKDIRECTORY_MANAGER_H
-#define PI_AIDA_HBOOKSTORE_HBOOKDIRECTORY_MANAGER_H
+#ifndef IAIDA_AIDA_HBOOKSTORE_HBOOKDIRECTORY_MANAGER_H
+#define IAIDA_AIDA_HBOOKSTORE_HBOOKDIRECTORY_MANAGER_H
 
 #include <string>
 #include <vector>
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 class HBookDirectoryManager

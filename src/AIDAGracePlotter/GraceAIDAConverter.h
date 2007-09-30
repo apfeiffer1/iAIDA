@@ -31,8 +31,8 @@
 // Created by user sang on Mon Sep 30 19:27:10 2002
 // 
 
-#ifndef AIDANATIVE_GRACEAIDACONVERTER_H
-#define AIDANATIVE_GRACEAIDACONVERTER_H
+#ifndef IAIDA_GRACEAIDACONVERTER_H
+#define IAIDA_GRACEAIDACONVERTER_H
 
 
 #include <vector>
@@ -99,4 +99,4 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_GRACEAIDACONVERTER_H
+#endif // IAIDA_GRACEAIDACONVERTER_H

@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:29:38 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_INFO_H
-#define AIDANATIVE_AIDA_INFO_H
+#ifndef IAIDA_AIDA_INFO_H
+#define IAIDA_AIDA_INFO_H
 
 
 #include "AIDA/IInfo.h"
@@ -91,5 +91,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_INFO_H
+#endif // IAIDA_AIDA_INFO_H
 

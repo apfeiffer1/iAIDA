@@ -10,7 +10,7 @@
 # include "SealBase/DebugAids.h"
 # include <map>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -1171,5 +1171,5 @@ PluginFactoryImplTypes<R * (T1, T2, T3, T4)>::Info::factory (void) const
     return m_factory;
 }
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_DB_VIEW_H

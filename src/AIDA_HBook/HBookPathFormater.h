@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 class HBookPathFormater

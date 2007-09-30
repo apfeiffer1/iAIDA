@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_GRAVITYBIN1D
-#define AIDANATIVE_GRAVITYBIN1D 1
+#ifndef IAIDA_GRAVITYBIN1D
+#define IAIDA_GRAVITYBIN1D 1
 
 namespace iAIDA {
   namespace AIDA_Histogram_native {
@@ -57,4 +57,4 @@ private:
 
 #include "GravityBin1D.inl"
 
-#endif /* ifndef AIDANATIVE_GRAVITYBIN1D */
+#endif /* ifndef IAIDA_GRAVITYBIN1D */

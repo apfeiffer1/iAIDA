@@ -12,7 +12,7 @@
 # include <list>
 # include <map>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -157,5 +157,5 @@ PluginManager::FeedbackData::FeedbackData (FeedbackCode c,
       error (err)
 {}
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_DB_H

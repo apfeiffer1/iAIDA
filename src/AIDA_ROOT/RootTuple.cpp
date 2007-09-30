@@ -2,7 +2,7 @@
 #include "TNtuple.h"
 #include "TFile.h"
 
-pi::AIDA_RootStore::RootTuple::RootTuple( const std::string& name, 
+iAIDA::AIDA_RootStore::RootTuple::RootTuple( const std::string& name, 
 					  const std::string & title,
 					  const std::vector<std::string> & varList, 
 					  int bufSize, 
@@ -28,7 +28,7 @@ pi::AIDA_RootStore::RootTuple::RootTuple( const std::string& name,
 
 // create from an existing ROOT TTuple
 
-pi::AIDA_RootStore::RootTuple::RootTuple( TNtuple *  tntuple) : 
+iAIDA::AIDA_RootStore::RootTuple::RootTuple( TNtuple *  tntuple) : 
   m_initializedReading( false ), 
   m_tuple(tntuple)
 {
@@ -43,31 +43,31 @@ pi::AIDA_RootStore::RootTuple::RootTuple( TNtuple *  tntuple) :
 }  
 
 
-pi::AIDA_RootStore::RootTuple::~RootTuple() 
+iAIDA::AIDA_RootStore::RootTuple::~RootTuple() 
 { 
   // delete yourself or let ROOT do that ? 
   //if (!m_tuple) delete m_tuple; 
 }  
 
 bool
-pi::AIDA_RootStore::RootTuple::bindVariable( int )
+iAIDA::AIDA_RootStore::RootTuple::bindVariable( int )
 {
   return true;
 }
 
 
 bool
-pi::AIDA_RootStore::RootTuple::clearBindings()
+iAIDA::AIDA_RootStore::RootTuple::clearBindings()
 {
   return true;
 }
 
 
 bool
-pi::AIDA_RootStore::RootTuple::writeTupleRow( int )
+iAIDA::AIDA_RootStore::RootTuple::writeTupleRow( int )
 {
-  //pi::AIDA_RootStore::Root::changeDirectory( m_dir );
-  //pi::AIDA_RootStore::Root::fillRootTuple( m_id, m_cache );
+  //iAIDA::AIDA_RootStore::Root::changeDirectory( m_dir );
+  //iAIDA::AIDA_RootStore::Root::fillRootTuple( m_id, m_cache );
   m_tuple->Fill(&m_cache.front()); 
   m_initializedReading = false;
   return true;
@@ -75,9 +75,9 @@ pi::AIDA_RootStore::RootTuple::writeTupleRow( int )
 
 
 bool
-pi::AIDA_RootStore::RootTuple::readTupleRow( int rowNumber )
+iAIDA::AIDA_RootStore::RootTuple::readTupleRow( int rowNumber )
 {
-  //pi::AIDA_RootStore::Root::changeDirectory( m_dir );
+  //iAIDA::AIDA_RootStore::Root::changeDirectory( m_dir );
   
   if ( ! m_initializedReading ) {
     refreshRootTuplePointers();
@@ -91,16 +91,16 @@ pi::AIDA_RootStore::RootTuple::readTupleRow( int rowNumber )
 }
 
 bool
-pi::AIDA_RootStore::RootTuple::reset()
+iAIDA::AIDA_RootStore::RootTuple::reset()
 {
-  //pi::AIDA_RootStore::Root::changeDirectory( m_dir );
-  //pi::AIDA_RootStore::Root::resetTuple( m_id );
+  //iAIDA::AIDA_RootStore::Root::changeDirectory( m_dir );
+  //iAIDA::AIDA_RootStore::Root::resetTuple( m_id );
   m_initializedReading = false;
   return true;
 }
 
 void 
-pi::AIDA_RootStore::RootTuple::refreshRootTuplePointers() 
+iAIDA::AIDA_RootStore::RootTuple::refreshRootTuplePointers() 
 {
   // set adress for tuples 
   for (unsigned int i = 0; i <  m_varList.size() ; ++i) { 
@@ -110,13 +110,13 @@ pi::AIDA_RootStore::RootTuple::refreshRootTuplePointers()
 
 
 void*
-pi::AIDA_RootStore::RootTuple::variableAddress( int variableIndex )
+iAIDA::AIDA_RootStore::RootTuple::variableAddress( int variableIndex )
 {
   return &( m_cache[variableIndex] );
 }
 
 const void*
-pi::AIDA_RootStore::RootTuple::variableAddress( int variableIndex ) const
+iAIDA::AIDA_RootStore::RootTuple::variableAddress( int variableIndex ) const
 {
   return &( m_cache[variableIndex] );
 }

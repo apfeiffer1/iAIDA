@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef PI_AIDA_HBOOKSTORE_HBOOKSTORE
-#define PI_AIDA_HBOOKSTORE_HBOOKSTORE 1
+#ifndef IAIDA_AIDA_HBOOKSTORE_HBOOKSTORE
+#define IAIDA_AIDA_HBOOKSTORE_HBOOKSTORE 1
 
 #include <vector>
 #include <string>
@@ -15,7 +15,7 @@ namespace AIDA {
   }
 }
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
     class HBookFileHandler;
     class HBookMemoryCache;
@@ -98,4 +98,4 @@ private:
   }
 }
 
-#endif /* ifndef PI_AIDA_HBOOKSTORE_HBOOKSTORE */
+#endif /* ifndef IAIDA_AIDA_HBOOKSTORE_HBOOKSTORE */

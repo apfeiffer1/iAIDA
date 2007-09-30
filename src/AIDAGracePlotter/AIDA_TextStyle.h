@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:38:26 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_TEXTSTYLE_H
-#define AIDANATIVE_AIDA_TEXTSTYLE_H
+#ifndef IAIDA_AIDA_TEXTSTYLE_H
+#define IAIDA_AIDA_TEXTSTYLE_H
 
 
 #include "AIDA/ITextStyle.h"
@@ -106,5 +106,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_TEXTSTYLE_H
+#endif // IAIDA_AIDA_TEXTSTYLE_H
 

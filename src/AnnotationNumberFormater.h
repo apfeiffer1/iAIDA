@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_ANNOTATIONNUMBERFORMATER
-#define AIDANATIVE_ANNOTATIONNUMBERFORMATER 1
+#ifndef IAIDA_ANNOTATIONNUMBERFORMATER
+#define IAIDA_ANNOTATIONNUMBERFORMATER 1
 
 #include <string>
 
@@ -35,4 +35,4 @@ private:
 static const iAIDA::AIDA_Histogram_native::AnnotationNumberFormater iAIDA_annotationNumberFormater;
 
 
-#endif /* ifndef AIDANATIVE_ANNOTATIONNUMBERFORMATER */
+#endif /* ifndef IAIDA_ANNOTATIONNUMBERFORMATER */

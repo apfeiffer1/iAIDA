@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:27:52 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_PLOTTERLAYOUT_H
-#define AIDANATIVE_AIDA_PLOTTERLAYOUT_H
+#ifndef IAIDA_AIDA_PLOTTERLAYOUT_H
+#define IAIDA_AIDA_PLOTTERLAYOUT_H
 
 
 
@@ -91,5 +91,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_PLOTTERLAYOUT_H
+#endif // IAIDA_AIDA_PLOTTERLAYOUT_H
 

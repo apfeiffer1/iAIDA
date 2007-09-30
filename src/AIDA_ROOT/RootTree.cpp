@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <cctype>
 
-pi::AIDA_RootStore::RootTree::RootTree( const std::string& name, 
+iAIDA::AIDA_RootStore::RootTree::RootTree( const std::string& name, 
 					  const std::string & title,
 					  const std::vector<std::string> & varList, 
 					  const std::vector<std::string> & varTypes, 
@@ -42,7 +42,7 @@ pi::AIDA_RootStore::RootTree::RootTree( const std::string& name,
 
 // create from an existing ROOT TTree
 
-pi::AIDA_RootStore::RootTree::RootTree( TTree *  t ) : 
+iAIDA::AIDA_RootStore::RootTree::RootTree( TTree *  t ) : 
   //  m_varType(varType), not needed
   //  m_cache( varList.size(), 0 ),
   m_initializedReading( false ), 
@@ -54,35 +54,35 @@ pi::AIDA_RootStore::RootTree::RootTree( TTree *  t ) :
 }  
 
 
-pi::AIDA_RootStore::RootTree::~RootTree() 
+iAIDA::AIDA_RootStore::RootTree::~RootTree() 
 { 
   // delete yourself or let ROOT do that ? 
   //if (m_tuple) delete m_tuple; 
 }  
 
 bool
-pi::AIDA_RootStore::RootTree::bindVariable( int )
+iAIDA::AIDA_RootStore::RootTree::bindVariable( int )
 {
   return true;
 }
 
 
 bool
-pi::AIDA_RootStore::RootTree::clearBindings()
+iAIDA::AIDA_RootStore::RootTree::clearBindings()
 {
   return true;
 }
 
 
 bool
-pi::AIDA_RootStore::RootTree::writeTupleRow( int /* i */ )
+iAIDA::AIDA_RootStore::RootTree::writeTupleRow( int /* i */ )
 {
   if (!m_initializedWriting) initRootTreePointers(); 
   //void  * p=  variableAddress(0); 
   //double * dp = reinterpret_cast<double *>(p);
   //if (dp) std::cout << " RT val= " << *dp << std::endl;   
- //pi::AIDA_RootStore::Root::changeDirectory( m_dir );
-  //pi::AIDA_RootStore::Root::fillRootTree( m_id, m_cache );
+ //iAIDA::AIDA_RootStore::Root::changeDirectory( m_dir );
+  //iAIDA::AIDA_RootStore::Root::fillRootTree( m_id, m_cache );
   m_tuple->Fill(); 
   m_initializedReading = false;
   return true;
@@ -90,9 +90,9 @@ pi::AIDA_RootStore::RootTree::writeTupleRow( int /* i */ )
 
 
 bool
-pi::AIDA_RootStore::RootTree::readTupleRow( int rowNumber )
+iAIDA::AIDA_RootStore::RootTree::readTupleRow( int rowNumber )
 {
-  //pi::AIDA_RootStore::Root::changeDirectory( m_dir );
+  //iAIDA::AIDA_RootStore::Root::changeDirectory( m_dir );
   
   if ( ! m_initializedReading ) {
     refreshRootTreePointers();
@@ -106,16 +106,16 @@ pi::AIDA_RootStore::RootTree::readTupleRow( int rowNumber )
 }
 
 bool
-pi::AIDA_RootStore::RootTree::reset()
+iAIDA::AIDA_RootStore::RootTree::reset()
 {
-  //pi::AIDA_RootStore::Root::changeDirectory( m_dir );
-  //pi::AIDA_RootStore::Root::resetTree( m_id );
+  //iAIDA::AIDA_RootStore::Root::changeDirectory( m_dir );
+  //iAIDA::AIDA_RootStore::Root::resetTree( m_id );
   m_initializedReading = false;
   return true;
 }
 
 void
-pi::AIDA_RootStore::RootTree::initRootTreePointers() 
+iAIDA::AIDA_RootStore::RootTree::initRootTreePointers() 
 {  
   // create branches and write description 
   for (unsigned int i = 0; i < m_varList.size(); ++i) { 
@@ -133,7 +133,7 @@ pi::AIDA_RootStore::RootTree::initRootTreePointers()
 }
 
 void 
-pi::AIDA_RootStore::RootTree::refreshRootTreePointers() 
+iAIDA::AIDA_RootStore::RootTree::refreshRootTreePointers() 
 {
   // set adress for tuples (bind all variables) 
   for (unsigned int i = 0; i <  m_varList.size() ; ++i) { 
@@ -148,21 +148,21 @@ pi::AIDA_RootStore::RootTree::refreshRootTreePointers()
 
 
 void*
-pi::AIDA_RootStore::RootTree::variableAddress( int variableIndex )
+iAIDA::AIDA_RootStore::RootTree::variableAddress( int variableIndex )
 {
   if ( variableIndex < 0 || variableIndex >= static_cast<int>( m_cache.size() ) ) return 0;
   return m_cache[ variableIndex ].second;
 }
 
 const void*
-pi::AIDA_RootStore::RootTree::variableAddress( int variableIndex ) const
+iAIDA::AIDA_RootStore::RootTree::variableAddress( int variableIndex ) const
 {
   if ( variableIndex < 0 || variableIndex >= static_cast<int>( m_cache.size() ) ) return 0;
   return m_cache[ variableIndex ].second;
 }
 
 void
-pi::AIDA_RootStore::RootTree::setVariableAddress( int variableIndex, void * p )
+iAIDA::AIDA_RootStore::RootTree::setVariableAddress( int variableIndex, void * p )
 {
   if ( variableIndex < 0 || variableIndex >= static_cast<int>( m_cache.size() ) ) return ;
   m_cache[ variableIndex ].second = p;
@@ -172,7 +172,7 @@ pi::AIDA_RootStore::RootTree::setVariableAddress( int variableIndex, void * p )
 // find corresponding root symbol for the type and create the corresponding cache 
 
 void 
-pi::AIDA_RootStore::RootTree::describeTreeType(int i, const std::string & type) 
+iAIDA::AIDA_RootStore::RootTree::describeTreeType(int i, const std::string & type) 
 { 
   std::string typeId = ""; 
 
@@ -243,7 +243,7 @@ pi::AIDA_RootStore::RootTree::describeTreeType(int i, const std::string & type)
 }
 
 bool 
-pi::AIDA_RootStore::RootTree::isTypeSupported(const std::string & type) { 
+iAIDA::AIDA_RootStore::RootTree::isTypeSupported(const std::string & type) { 
     if ( type == "float"   ||   
 	 type == "double"  ||
 	 type == "int"     || 
@@ -260,7 +260,7 @@ pi::AIDA_RootStore::RootTree::isTypeSupported(const std::string & type) {
 
 template <typename T> 
 void
-pi::AIDA_RootStore::RootTree::writeDataDescription(ColumnType col )
+iAIDA::AIDA_RootStore::RootTree::writeDataDescription(ColumnType col )
 {
   void* address = new T;
   m_cache.push_back( std::make_pair( col, address ) );
@@ -268,7 +268,7 @@ pi::AIDA_RootStore::RootTree::writeDataDescription(ColumnType col )
 
 
 void
-pi::AIDA_RootStore::RootTree::writeGenericDataDescription(ColumnType col )
+iAIDA::AIDA_RootStore::RootTree::writeGenericDataDescription(ColumnType col )
 {
   // fill with an empty address - later setVariableAddress must be called
   m_cache.push_back( std::make_pair( col, (void *)0 ) );
@@ -276,7 +276,7 @@ pi::AIDA_RootStore::RootTree::writeGenericDataDescription(ColumnType col )
 
 // unpack from root tree the variable description
 bool 
-pi::AIDA_RootStore::RootTree::readVariableDescription() { 
+iAIDA::AIDA_RootStore::RootTree::readVariableDescription() { 
 
   m_varList.clear();
   m_varType.clear();

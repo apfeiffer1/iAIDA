@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDACLOUD2D
-#define AIDANATIVE_AIDACLOUD2D 1
+#ifndef IAIDA_AIDACLOUD2D
+#define IAIDA_AIDACLOUD2D 1
 
 #include "AIDA_BaseHistogram.h"
 #include "AIDA_Dev/IDevCloud2D.h"
@@ -126,4 +126,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDACLOUD2D */
+#endif /* ifndef IAIDA_AIDACLOUD2D */

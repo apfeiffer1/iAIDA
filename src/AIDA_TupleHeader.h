@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_AIDA_TUPLEHEADER
-#define AIDANATIVE_AIDA_TUPLE_AIDA_TUPLEHEADER 1
+#ifndef IAIDA_AIDA_TUPLE_AIDA_TUPLEHEADER
+#define IAIDA_AIDA_TUPLE_AIDA_TUPLEHEADER 1
 
 #include "AIDA_Dev/ITupleHeader.h"
 #include <map>
@@ -55,4 +55,4 @@ private:
 
 #include "AIDA_TupleHeader.inl"
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_AIDA_TUPLEHEADER */
+#endif /* ifndef IAIDA_AIDA_TUPLE_AIDA_TUPLEHEADER */

@@ -1,5 +1,5 @@
-#ifndef PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_CWNTUPLE_H
-#define PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_CWNTUPLE_H
+#ifndef IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_CWNTUPLE_H
+#define IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_CWNTUPLE_H
 
 #include "IPersistentTuple.h"
 #include "SubTuple.h"
@@ -19,7 +19,7 @@ namespace AIDA {
   }
 }
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 class CWNtuple : virtual public IPersistentTuple

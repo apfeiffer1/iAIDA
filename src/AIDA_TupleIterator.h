@@ -27,8 +27,8 @@
 // 
 // Last update: Fri Oct  4 16:30:41 2002
 // 
-#ifndef AIDANATIVE_AIDA_FITTER_AIDA_TupleITERATOR
-#define AIDANATIVE_AIDA_FITTER_AIDA_TupleITERATOR 1
+#ifndef IAIDA_AIDA_FITTER_AIDA_TupleITERATOR
+#define IAIDA_AIDA_FITTER_AIDA_TupleITERATOR 1
 
 #include "AIDA_FitDataIterator.h"
 #include "AIDA/IEvaluator.h"

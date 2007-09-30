@@ -1,10 +1,10 @@
-#ifndef PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_RWNTUPLE_H
-#define PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_RWNTUPLE_H
+#ifndef IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_RWNTUPLE_H
+#define IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_RWNTUPLE_H
 
 #include "IPersistentTuple.h"
 #include <vector>
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 class RWNtuple : virtual public IPersistentTuple

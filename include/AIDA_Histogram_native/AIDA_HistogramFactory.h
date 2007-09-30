@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDAHISTOGRAMFACTORY_H 
-#define AIDANATIVE_AIDAHISTOGRAMFACTORY_H 1
+#ifndef IAIDA_AIDAHISTOGRAMFACTORY_H 
+#define IAIDA_AIDAHISTOGRAMFACTORY_H 1
 
 // includes 
 #include "AIDA/IHistogramFactory.h"
@@ -106,4 +106,4 @@ private:
 
   }
 }
-#endif /* ifndef AIDANATIVE_AIDAHISTOGRAMFACTORY_H */ 
+#endif /* ifndef IAIDA_AIDAHISTOGRAMFACTORY_H */ 

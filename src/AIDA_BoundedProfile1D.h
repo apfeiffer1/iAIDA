@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDABOUNDEDPROFILE1D
-#define AIDANATIVE_AIDABOUNDEDPROFILE1D 1
+#ifndef IAIDA_AIDABOUNDEDPROFILE1D
+#define IAIDA_AIDABOUNDEDPROFILE1D 1
 
 #include "AIDA_Profile1D.h"
 
@@ -51,4 +51,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDAPROFILE1D */
+#endif /* ifndef IAIDA_AIDAPROFILE1D */

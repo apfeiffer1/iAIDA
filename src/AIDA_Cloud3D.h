@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDACLOUD3D
-#define AIDANATIVE_AIDACLOUD3D 1
+#ifndef IAIDA_AIDACLOUD3D
+#define IAIDA_AIDACLOUD3D 1
 
 #include "AIDA_BaseHistogram.h"
 #include "AIDA_Dev/IDevCloud3D.h"
@@ -141,4 +141,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDACLOUD3D */
+#endif /* ifndef IAIDA_AIDACLOUD3D */

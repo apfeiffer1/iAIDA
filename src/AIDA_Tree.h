@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_TREE
-#define AIDANATIVE_TREE 1
+#ifndef IAIDA_TREE
+#define IAIDA_TREE 1
 
 #include <vector>
 #include <string>
@@ -97,4 +97,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_TREE */
+#endif /* ifndef IAIDA_TREE */

@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:22:41 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_PLOTTERREGION_H
-#define AIDANATIVE_AIDA_PLOTTERREGION_H
+#ifndef IAIDA_AIDA_PLOTTERREGION_H
+#define IAIDA_AIDA_PLOTTERREGION_H
 
 
 #include "AIDA/IPlotterRegion.h"
@@ -116,5 +116,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_PLOTTERREGION_H
+#endif // IAIDA_AIDA_PLOTTERREGION_H
 

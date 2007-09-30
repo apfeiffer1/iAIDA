@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_GRAVITYBIN3D
-#define AIDANATIVE_GRAVITYBIN3D 1
+#ifndef IAIDA_GRAVITYBIN3D
+#define IAIDA_GRAVITYBIN3D 1
 
 #include "GravityBin2D.h"
 
@@ -52,4 +52,4 @@ private:
 
 #include "GravityBin3D.inl"
 
-#endif /* ifndef AIDANATIVE_GRAVITYBIN3D */
+#endif /* ifndef IAIDA_GRAVITYBIN3D */

@@ -301,7 +301,7 @@ iAIDA::AIDA_Tuple_native::CompiledExpressionManager::findIncludePaths(const std:
   for (unsigned int i = 0; i < items.size() ; ++i) { 
     // tokenize with "/"
     seal::StringList subItems = seal::StringOps::split (items[i], "/"); 
-    // look for searchString PI_   (expect to have PI_XXX/platf/lib (items must be at least 3) 
+    // look for searchString IAIDA_   (expect to have IAIDA_XXX/platf/lib (items must be at least 3) 
     if (subItems.size() > 2) { 
      int j = subItems.size() -1 - expectedPos; 
      if (subItems[j].find(searchString) != std::string::npos ) { 

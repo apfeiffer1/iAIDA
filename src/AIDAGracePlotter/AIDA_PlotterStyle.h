@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:48:39 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_PLOTTERSTYLE_H
-#define AIDANATIVE_AIDA_PLOTTERSTYLE_H
+#ifndef IAIDA_AIDA_PLOTTERSTYLE_H
+#define IAIDA_AIDA_PLOTTERSTYLE_H
 
 
 #include "AIDA/IPlotterStyle.h"
@@ -103,5 +103,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_PLOTTERSTYLE_H
+#endif // IAIDA_AIDA_PLOTTERSTYLE_H
 

@@ -6,7 +6,7 @@
 # include "PluginManager/config.h"
 # include <string>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -66,5 +66,5 @@ PluginDef<Factory,Type>::installFactoryName (ModuleDef *def, std::string name)
     Factory::get ()->installFactory (def, name, new AutoFactory);
 }
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_DEF_H

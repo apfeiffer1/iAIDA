@@ -14,7 +14,7 @@
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
 
-namespace seal {
+namespace iAIDA {
 class Module;
 class ModuleDef;
 class ModuleCache;
@@ -136,5 +136,5 @@ inline const char *
 Module::tag (void)
 { return s_tag; }
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_H

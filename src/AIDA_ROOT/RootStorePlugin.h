@@ -10,7 +10,7 @@
 #include "AIDA_Plugin/AIDA_PluginType.h"
 #include "AIDA_Dev/IStoreFactory.h"
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_RootStore {
 
 
@@ -30,12 +30,12 @@ public:
 
   AIDA::Dev::IStoreFactory * createStoreFactory()  
     {
-      return new pi::AIDA_RootStore::AIDA_RootStoreFactory(); 
+      return new iAIDA::AIDA_RootStore::AIDA_RootStoreFactory(); 
     }
 
 
 }; 
 
 } // end namespace AIDA_RootStore
-} // end namespace pi
+} // end namespace iAIDA
 #endif 

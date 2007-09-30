@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef PI_AIDA_STOREROOT_STOREROOT
-#define PI_AIDA_STOREROOT_STOREROOT 1
+#ifndef IAIDA_AIDA_STOREROOT_STOREROOT
+#define IAIDA_AIDA_STOREROOT_STOREROOT 1
 
 #include <vector>
 #include <string>
@@ -25,7 +25,7 @@ namespace DataRoot {
   class DataObject; 
 }
 
-namespace pi {
+namespace iAIDA {
 
   namespace AIDA_RootStore {
 

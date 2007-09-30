@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_FITFACTORY
-#define AIDANATIVE_FITFACTORY 1
+#ifndef IAIDA_FITFACTORY
+#define IAIDA_FITFACTORY 1
 
 #include <string>
 #include "AIDA/IFitFactory.h"
@@ -32,4 +32,4 @@ public:
   }
 }
 
-#endif /* ifndef AIDANATIVE_FITFACTORY */
+#endif /* ifndef IAIDA_FITFACTORY */

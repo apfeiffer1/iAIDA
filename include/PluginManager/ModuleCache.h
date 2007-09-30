@@ -10,7 +10,7 @@
 # include <string>
 # include <list>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -161,5 +161,5 @@ private:
 //<<<<<< INLINE PUBLIC FUNCTIONS                                        >>>>>>
 //<<<<<< INLINE MEMBER FUNCTIONS                                        >>>>>>
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_MODULE_CACHE_H

@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:49:35 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_DATASTYLE_H
-#define AIDANATIVE_AIDA_DATASTYLE_H
+#ifndef IAIDA_AIDA_DATASTYLE_H
+#define IAIDA_AIDA_DATASTYLE_H
 
 
 #include "AIDA/IDataStyle.h"
@@ -96,5 +96,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_DATASTYLE_H
+#endif // IAIDA_AIDA_DATASTYLE_H
 

@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_COMPILED_EXPRESSION_MANAGER
-#define AIDANATIVE_AIDA_TUPLE_COMPILED_EXPRESSION_MANAGER 1
+#ifndef IAIDA_AIDA_TUPLE_COMPILED_EXPRESSION_MANAGER
+#define IAIDA_AIDA_TUPLE_COMPILED_EXPRESSION_MANAGER 1
 
 #include "AIDA_Tuple_native/IFilterExpressionBase.h"
 #include "AIDA_Tuple_native/IEvaluatorExpressionBase.h"
@@ -60,4 +60,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_EXPRESSION_PARSER */
+#endif /* ifndef IAIDA_AIDA_TUPLE_EXPRESSION_PARSER */

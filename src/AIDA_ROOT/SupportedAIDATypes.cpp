@@ -1,14 +1,14 @@
 #include "SupportedAIDATypes.h"
 
-const pi::AIDA_RootStore::SupportedAIDATypes&
-pi::AIDA_RootStore::SupportedAIDATypes::supportedTypes()
+const iAIDA::AIDA_RootStore::SupportedAIDATypes&
+iAIDA::AIDA_RootStore::SupportedAIDATypes::supportedTypes()
 {
-  static pi::AIDA_RootStore::SupportedAIDATypes st;
+  static iAIDA::AIDA_RootStore::SupportedAIDATypes st;
   return st;
 }
 
 
-pi::AIDA_RootStore::SupportedAIDATypes::SupportedAIDATypes()
+iAIDA::AIDA_RootStore::SupportedAIDATypes::SupportedAIDATypes()
 {
   m_supportedTypes.insert( "IHistogram1D" );
   m_supportedTypes.insert( "IHistogram2D" );
@@ -20,7 +20,7 @@ pi::AIDA_RootStore::SupportedAIDATypes::SupportedAIDATypes()
 
 
 bool
-pi::AIDA_RootStore::SupportedAIDATypes::isTypeSupported( const std::string& type ) const
+iAIDA::AIDA_RootStore::SupportedAIDATypes::isTypeSupported( const std::string& type ) const
 {
   if ( m_supportedTypes.find( type ) == m_supportedTypes.end() ) return false;
   else return true;

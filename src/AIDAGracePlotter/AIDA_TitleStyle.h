@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 20:43:17 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_TITLESTYLE_H
-#define AIDANATIVE_AIDA_TITLESTYLE_H
+#ifndef IAIDA_AIDA_TITLESTYLE_H
+#define IAIDA_AIDA_TITLESTYLE_H
 
 
 #include "AIDA/ITitleStyle.h"
@@ -94,5 +94,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_TITLESTYLE_H
+#endif // IAIDA_AIDA_TITLESTYLE_H
 

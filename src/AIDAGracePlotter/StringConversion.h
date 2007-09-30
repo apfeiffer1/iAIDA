@@ -19,8 +19,8 @@
 //                                                                     //
 /////////////////////////////////////////////////////////////////////////
 
-#ifndef AIDANATIVE_GRACE_STRING_CONVERTER_H
-#define AIDANATIVE_GRACE_STRING_CONVERTER_H
+#ifndef IAIDA_GRACE_STRING_CONVERTER_H
+#define IAIDA_GRACE_STRING_CONVERTER_H
 
 /*
  * \file
@@ -84,4 +84,4 @@ bool to_value(std::string s, T& val)
 } // end of namespace AidaNative
 
 
-# endif // AIDANATIVE_GRACE_STRING_CONVERTER_H
+# endif // IAIDA_GRACE_STRING_CONVERTER_H

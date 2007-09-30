@@ -1,5 +1,5 @@
 inline std::vector< std::string >
-pi::AIDA_HBookStore::HBookPathFormater::formPathNames( const std::string& path ) const
+iAIDA::AIDA_HBookStore::HBookPathFormater::formPathNames( const std::string& path ) const
 {
   std::vector<std::string> output;
   std::string currentString;

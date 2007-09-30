@@ -1,6 +1,6 @@
 #include "AIDA_StoreRoot.h"
 #include "AIDA_RootStoreHelper.h"
-#include "RootPathFormater.h"
+#include "RootPathFormatter.h"
 #include "AIDA_ROOT/HistoConverter.h"
 #include "SupportedAIDATypes.h"
 #include "RootTuple.h"
@@ -71,7 +71,7 @@ static std::string defaultTuplePluginType = "AIDA_Tuple_Native";
  *     so createNew has no influence
  */ 
 
-pi::AIDA_RootStore::AIDA_StoreRoot::AIDA_StoreRoot( const std::string& name,
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::AIDA_StoreRoot( const std::string& name,
 						     bool readOnly,
 						     bool createNew,
 						     const std::string& options):
@@ -123,7 +123,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::AIDA_StoreRoot( const std::string& name,
 }
 
 
-pi::AIDA_RootStore::AIDA_StoreRoot::~AIDA_StoreRoot()
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::~AIDA_StoreRoot()
 {
   close(); 
   delete m_store; 
@@ -131,14 +131,14 @@ pi::AIDA_RootStore::AIDA_StoreRoot::~AIDA_StoreRoot()
 
 
 const std::string&
-pi::AIDA_RootStore::AIDA_StoreRoot::name() const
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::name() const
 {
   return m_name;
 }
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::writeObject( const AIDA::IManagedObject& dataObject,
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::writeObject( const AIDA::IManagedObject& dataObject,
 						   const std::string& path )
 {
 
@@ -152,7 +152,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeObject( const AIDA::IManagedObject& dat
   
   const std::string& type = object->userLevelClassType();
    
-  if ( ! pi::AIDA_RootStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
+  if ( ! iAIDA::AIDA_RootStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
     return false;
   }
   
@@ -180,7 +180,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeObject( const AIDA::IManagedObject& dat
 /// Here we need the AIDA types
 
 AIDA::IManagedObject*
-pi::AIDA_RootStore::AIDA_StoreRoot::copyAndWrite( const AIDA::IManagedObject& dataObject,
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::copyAndWrite( const AIDA::IManagedObject& dataObject,
 							  const std::string& path )
 {
   // check first if original object exists
@@ -190,7 +190,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::copyAndWrite( const AIDA::IManagedObject& da
 
   const AIDA::Dev::IDevManagedObject& object = dynamic_cast< const AIDA::Dev::IDevManagedObject& >( dataObject );
   const std::string& type = object.userLevelClassType();
-  if ( ! pi::AIDA_RootStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
+  if ( ! iAIDA::AIDA_RootStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
     return false;
   }
 
@@ -265,7 +265,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::copyAndWrite( const AIDA::IManagedObject& da
 
 
 AIDA::IManagedObject*
-pi::AIDA_RootStore::AIDA_StoreRoot::retrieveObject( const std::string & path )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::retrieveObject( const std::string & path )
 {
   // object is in  in memory... 
   std::map< std::string, AIDA::Dev::IDevManagedObject* >::iterator iObjectRef = m_objectRefs.find( path );
@@ -422,7 +422,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::retrieveObject( const std::string & path )
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::removeObject( const std::string& path )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::removeObject( const std::string& path )
 {
   // just erase object from maps 
   if ( m_objectTypes.find( path ) == m_objectTypes.end() ) return false;
@@ -434,7 +434,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::removeObject( const std::string& path )
 // here is path or also changing object name ?? 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::moveObject(const std::string& from, const std::string& to )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::moveObject(const std::string& from, const std::string& to )
 {
   // erase old object from maps and re-insert with new path 
 
@@ -460,7 +460,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::moveObject(const std::string& from, const st
 
 
 std::vector< std::string >
-pi::AIDA_RootStore::AIDA_StoreRoot::listObjectPaths( const std::string directory,
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::listObjectPaths( const std::string directory,
 						       bool recursive ) const
 
   // This is just a exact copy from Memory Store 
@@ -506,7 +506,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::listObjectPaths( const std::string directory
 
 
 std::vector< std::string >
-pi::AIDA_RootStore::AIDA_StoreRoot::listObjectTypes( const std::string directory,
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::listObjectTypes( const std::string directory,
 						       bool recursive ) const
 {
 
@@ -553,7 +553,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::listObjectTypes( const std::string directory
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::commit()
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::commit()
 {
   // here I write Root store 
   
@@ -587,7 +587,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::commit()
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::close()
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::close()
 {
   // before closing the file I need to delete the object I copied ??
   if (m_readMode) return true; 
@@ -598,14 +598,14 @@ pi::AIDA_RootStore::AIDA_StoreRoot::close()
 }
 
 
-bool pi::AIDA_RootStore::AIDA_StoreRoot::canMoveTuples() const {return false;}
-bool pi::AIDA_RootStore::AIDA_StoreRoot::canCopyTuples() const {return false;}
+bool iAIDA::AIDA_RootStore::AIDA_StoreRoot::canMoveTuples() const {return false;}
+bool iAIDA::AIDA_RootStore::AIDA_StoreRoot::canCopyTuples() const {return false;}
 
 
 // specific tuples methods (all copied from AIDA_MemoryStore.cpp ) 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleHeader( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::writeTupleHeader( AIDA::Dev::ITupleHeader& header )
 {
   // fetch variables names and types 
   const std::string& path = header.pathInStore();
@@ -632,7 +632,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleHeader( AIDA::Dev::ITupleHeader& h
     variableNames.push_back( description->variableName() );
     variableTypes.push_back( description->variableType() );
     if ( variableTypes.back() != float_type ) noFloat = true;
-    if ( ! pi::AIDA_RootStore::RootTree::isTypeSupported(  variableTypes.back() ) ) unsupportedType = true; 
+    if ( ! iAIDA::AIDA_RootStore::RootTree::isTypeSupported(  variableTypes.back() ) ) unsupportedType = true; 
   }
   if ( variableNames.size() == 0 ) { 
     ROOT_STORE_REPORT_ERROR("Tuple contains an empty list of variables"); 
@@ -650,7 +650,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleHeader( AIDA::Dev::ITupleHeader& h
     
     //int bufSize = m_optionParser->bufferSizeForRWN(); 
     int bufSize = defaultTupleBufferSize; 
-    pi::AIDA_RootStore::IPersistentTuple * rootTuple = new pi::AIDA_RootStore::RootTuple(name, title, variableNames, bufSize, m_store ); 
+    iAIDA::AIDA_RootStore::IPersistentTuple * rootTuple = new iAIDA::AIDA_RootStore::RootTuple(name, title, variableNames, bufSize, m_store ); 
     m_tuples.insert( std::make_pair( path, rootTuple) ); 
     return true;
   }
@@ -662,7 +662,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleHeader( AIDA::Dev::ITupleHeader& h
       return false;
     }
     // simple tuples 
-    pi::AIDA_RootStore::IPersistentTuple * rootTree = new pi::AIDA_RootStore::RootTree(name, title, variableNames, variableTypes, m_store ); 
+    iAIDA::AIDA_RootStore::IPersistentTuple * rootTree = new iAIDA::AIDA_RootStore::RootTree(name, title, variableNames, variableTypes, m_store ); 
     m_tuples.insert( std::make_pair( path, rootTree) ); 
     return true;
   }
@@ -671,7 +671,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleHeader( AIDA::Dev::ITupleHeader& h
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::readTupleHeader( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::readTupleHeader( AIDA::Dev::ITupleHeader& header )
 {
 
   const std::string& path = header.pathInStore();
@@ -756,21 +756,21 @@ pi::AIDA_RootStore::AIDA_StoreRoot::readTupleHeader( AIDA::Dev::ITupleHeader& he
   }
 
   /*
-    pi::AIDA_RootStore::Root::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
-    pi::AIDA_RootStore::Root::changeDirectory( m_cache->directoryInFile( dirAndId.first ) );
-    pi::AIDA_RootStore::Root::loadObjectIntoMemory( dirAndId.second );
-    pi::AIDA_RootStore::Root::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
+    iAIDA::AIDA_RootStore::Root::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
+    iAIDA::AIDA_RootStore::Root::changeDirectory( m_cache->directoryInFile( dirAndId.first ) );
+    iAIDA::AIDA_RootStore::Root::loadObjectIntoMemory( dirAndId.second );
+    iAIDA::AIDA_RootStore::Root::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
   */
 
   // create wrapper around root tree
-  pi::AIDA_RootStore::IPersistentTuple * rootTree = 0;
+  iAIDA::AIDA_RootStore::IPersistentTuple * rootTree = 0;
   // case of tuple or tree 
   TNtuple * tntuple = dynamic_cast<TNtuple *> ( ttree); 
   // case is a TNtuple 
   if (tntuple)  
-    rootTree = new  pi::AIDA_RootStore::RootTuple( tntuple); 
+    rootTree = new  iAIDA::AIDA_RootStore::RootTuple( tntuple); 
   else 
-    rootTree = new pi::AIDA_RootStore::RootTree( ttree);
+    rootTree = new iAIDA::AIDA_RootStore::RootTree( ttree);
 
   // insert in the map
   m_tuples.insert( std::make_pair( path, rootTree ) ); 
@@ -805,10 +805,10 @@ pi::AIDA_RootStore::AIDA_StoreRoot::readTupleHeader( AIDA::Dev::ITupleHeader& he
 
     // not yet supported 
     /* 
-       pi::AIDA_RootStore::CWNtuple* cwntuple = new pi::AIDA_RootStore::CWNtuple( m_cache->directoryInMemory( dirAndId.first ),
+       iAIDA::AIDA_RootStore::CWNtuple* cwntuple = new iAIDA::AIDA_RootStore::CWNtuple( m_cache->directoryInMemory( dirAndId.first ),
        dirAndId.second );
        cwntuple->readDescription( header, *tf, this );
-       m_tuples.insert( std::make_pair( pathInStore, static_cast<pi::AIDA_RootStore::IPersistentTuple*>( cwntuple ) ) );
+       m_tuples.insert( std::make_pair( pathInStore, static_cast<iAIDA::AIDA_RootStore::IPersistentTuple*>( cwntuple ) ) );
        return true;
     */ 
   return true;         
@@ -817,17 +817,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::readTupleHeader( AIDA::Dev::ITupleHeader& he
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::bindVariable( AIDA::Dev::ITupleHeader& header, int variableIndex )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::bindVariable( AIDA::Dev::ITupleHeader& header, int variableIndex )
 {
   const std::string& pathInStore = header.pathInStore();
   if  ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->bindVariable( variableIndex );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->bindVariable( variableIndex, pathInStore );
   }
@@ -835,17 +835,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::bindVariable( AIDA::Dev::ITupleHeader& heade
 
 
 void*
-pi::AIDA_RootStore::AIDA_StoreRoot::variableAddress( AIDA::Dev::ITupleHeader& header, int variableIndex )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::variableAddress( AIDA::Dev::ITupleHeader& header, int variableIndex )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return 0;
     else return iTuple->second->variableAddress( variableIndex );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return 0;
     else {
       void * p = iTuple->second->variableAddress( variableIndex, pathInStore );
@@ -856,11 +856,11 @@ pi::AIDA_RootStore::AIDA_StoreRoot::variableAddress( AIDA::Dev::ITupleHeader& he
 
 
 void
-pi::AIDA_RootStore::AIDA_StoreRoot::setVariableAddress(const  AIDA::Dev::ITupleHeader& header, int variableIndex, void * p )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::setVariableAddress(const  AIDA::Dev::ITupleHeader& header, int variableIndex, void * p )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) { 
       return;
     }
@@ -871,7 +871,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::setVariableAddress(const  AIDA::Dev::ITupleH
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return;
     else {
       iTuple->second->setVariableAddress( variableIndex, pathInStore, p );
@@ -882,17 +882,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::setVariableAddress(const  AIDA::Dev::ITupleH
 
 
 const void*
-pi::AIDA_RootStore::AIDA_StoreRoot::variableAddress( const AIDA::Dev::ITupleHeader& header, int variableIndex ) const
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::variableAddress( const AIDA::Dev::ITupleHeader& header, int variableIndex ) const
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return 0;
     else return iTuple->second->variableAddress( variableIndex );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return 0;
     else  {
       const void * p = iTuple->second->variableAddress( variableIndex, pathInStore );
@@ -903,17 +903,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::variableAddress( const AIDA::Dev::ITupleHead
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::clearBindings( const AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::clearBindings( const AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->clearBindings();
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->clearBindings( pathInStore );
   }
@@ -921,17 +921,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::clearBindings( const AIDA::Dev::ITupleHeader
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleRow( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::writeTupleRow( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->writeTupleRow( header.currentRowNumber() );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->writeTupleRow( header.currentRowNumber(), pathInStore );
   }
@@ -939,17 +939,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::writeTupleRow( AIDA::Dev::ITupleHeader& head
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::readTupleRow( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::readTupleRow( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->readTupleRow( header.currentRowNumber() );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->readTupleRow( header.currentRowNumber(), pathInStore );
   }
@@ -957,17 +957,17 @@ pi::AIDA_RootStore::AIDA_StoreRoot::readTupleRow( AIDA::Dev::ITupleHeader& heade
 
 
 bool
-pi::AIDA_RootStore::AIDA_StoreRoot::resetTuple( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::resetTuple( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->reset();
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_RootStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->reset( pathInStore );
   }
@@ -977,7 +977,7 @@ pi::AIDA_RootStore::AIDA_StoreRoot::resetTuple( AIDA::Dev::ITupleHeader& header 
  /// append Managed object to Root file
  /// but not write yet to the file  just convert objects 
  
-bool  pi::AIDA_RootStore::AIDA_StoreRoot::writeToRoot(AIDA::Dev::IDevManagedObject * object, const std::string & path ) { 
+bool  iAIDA::AIDA_RootStore::AIDA_StoreRoot::writeToRoot(AIDA::Dev::IDevManagedObject * object, const std::string & path ) { 
 
 
 
@@ -1076,7 +1076,7 @@ bool  pi::AIDA_RootStore::AIDA_StoreRoot::writeToRoot(AIDA::Dev::IDevManagedObje
 
 // collect all types of objects and name from root file
 void
-pi::AIDA_RootStore::AIDA_StoreRoot::collectObjectTypes(const std::string & directory )
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::collectObjectTypes(const std::string & directory )
 {  
   AIDA::Dev::IDevManagedObject * dummyObject = 0;
   std::string rootDir = m_name + ":" + directory;
@@ -1108,10 +1108,10 @@ pi::AIDA_RootStore::AIDA_StoreRoot::collectObjectTypes(const std::string & direc
 
 
 std::pair<std::string, std::string> 
-pi::AIDA_RootStore::AIDA_StoreRoot::getDirectoryAndName(const std::string & path) {  
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::getDirectoryAndName(const std::string & path) {  
   
   std::pair<std::string, std::string> dirAndName; 
-  std::vector<std::string> dirList = pi::AIDA_RootStore::RootPathFormater::theFormater().formPathNames( path ); 
+  std::vector<std::string> dirList = iAIDA::AIDA_RootStore::RootPathFormatter::theFormatter().formPathNames( path ); 
   // if path list is empty return
   if (dirList.size() == 0) return dirAndName; 
   // name of object is last item 
@@ -1129,9 +1129,9 @@ pi::AIDA_RootStore::AIDA_StoreRoot::getDirectoryAndName(const std::string & path
     
 
 bool 
-pi::AIDA_RootStore::AIDA_StoreRoot::setCurrentDirectory(const std::string & path) {
+iAIDA::AIDA_RootStore::AIDA_StoreRoot::setCurrentDirectory(const std::string & path) {
 
-  std::vector<std::string> dirList = pi::AIDA_RootStore::RootPathFormater::theFormater().formPathNames( path ); 
+  std::vector<std::string> dirList = iAIDA::AIDA_RootStore::RootPathFormatter::theFormatter().formPathNames( path ); 
   // if path is list is empty return
   if (dirList.size() == 0) return false; 
   std::string lastItem = dirList.back();

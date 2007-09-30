@@ -1,5 +1,5 @@
-# ifndef AIDANATIVE_AIDA_FITTER_IDevFitDataIteratorFMLBase_h__included__
-# define AIDANATIVE_AIDA_FITTER_IDevFitDataIteratorFMLBase_h__included__
+# ifndef IAIDA_AIDA_FITTER_IDevFitDataIteratorFMLBase_h__included__
+# define IAIDA_AIDA_FITTER_IDevFitDataIteratorFMLBase_h__included__
 
 
 # include "AIDA_Dev/IDevFitDataIterator.h"

@@ -1,11 +1,11 @@
 // Emacs -*- C++ -*-
-#ifndef PI_AIDA_HBOOKSTORE_HBOOKSTOREFACTORY
-#define PI_AIDA_HBOOKSTORE_HBOOKSTOREFACTORY 1
+#ifndef IAIDA_AIDA_HBOOKSTORE_HBOOKSTOREFACTORY
+#define IAIDA_AIDA_HBOOKSTORE_HBOOKSTOREFACTORY 1
 
 #include <string>
 #include "AIDA_Dev/IStoreFactory.h"
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 /// Implementation of AIDA::DEV::IStoreFactory interface for a factory of hbook stores
@@ -29,4 +29,4 @@ public:
   }
 }
 
-#endif /* ifndef PI_AIDA_HBOOKSTORE_HBOOKSTOREFACTORY */
+#endif /* ifndef IAIDA_AIDA_HBOOKSTORE_HBOOKSTOREFACTORY */

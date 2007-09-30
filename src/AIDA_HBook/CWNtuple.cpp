@@ -22,7 +22,7 @@
 
 static const std::string emptyString = "";
 
-pi::AIDA_HBookStore::CWNtuple::CWNtuple( const std::string& memoryDirectory,
+iAIDA::AIDA_HBookStore::CWNtuple::CWNtuple( const std::string& memoryDirectory,
 					     int id ):
   m_dir( memoryDirectory ),
   m_id( id ),
@@ -30,28 +30,28 @@ pi::AIDA_HBookStore::CWNtuple::CWNtuple( const std::string& memoryDirectory,
 {}
 
 
-pi::AIDA_HBookStore::CWNtuple::~CWNtuple()
+iAIDA::AIDA_HBookStore::CWNtuple::~CWNtuple()
 {
   for ( std::vector< std::pair< ColumnType, void* > >::iterator iObject = m_cache.begin();
 	iObject != m_cache.end(); ++iObject ) {
-    pi::AIDA_HBookStore::CWNtuple::ColumnType type = iObject->first;
+    iAIDA::AIDA_HBookStore::CWNtuple::ColumnType type = iObject->first;
     switch ( type ) {
-    case pi::AIDA_HBookStore::CWNtuple::DOUBLE :
+    case iAIDA::AIDA_HBookStore::CWNtuple::DOUBLE :
       delete reinterpret_cast< double * >( iObject->second );
       break;
-    case pi::AIDA_HBookStore::CWNtuple::FLOAT :
+    case iAIDA::AIDA_HBookStore::CWNtuple::FLOAT :
       delete reinterpret_cast< float * >( iObject->second );
       break;
-    case pi::AIDA_HBookStore::CWNtuple::INT :
+    case iAIDA::AIDA_HBookStore::CWNtuple::INT :
       delete reinterpret_cast< int * >( iObject->second );
       break;
-    case pi::AIDA_HBookStore::CWNtuple::BOOL :
+    case iAIDA::AIDA_HBookStore::CWNtuple::BOOL :
       delete reinterpret_cast< int * >( iObject->second );
       break;
-    case pi::AIDA_HBookStore::CWNtuple::STRING :
+    case iAIDA::AIDA_HBookStore::CWNtuple::STRING :
       delete reinterpret_cast< std::string * >( iObject->second );
       break;
-    case pi::AIDA_HBookStore::CWNtuple::TUPLE :
+    case iAIDA::AIDA_HBookStore::CWNtuple::TUPLE :
       // do nothing; all the tuples will be cleared below
       break;
     };
@@ -68,7 +68,7 @@ pi::AIDA_HBookStore::CWNtuple::~CWNtuple()
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::writeDescription( AIDA::Dev::ITupleHeader& header,
+iAIDA::AIDA_HBookStore::CWNtuple::writeDescription( AIDA::Dev::ITupleHeader& header,
 						     AIDA::Dev::IDevTupleFactory& tf,
 						     AIDA::Dev::IBackingStore* store )
 {
@@ -109,13 +109,13 @@ pi::AIDA_HBookStore::CWNtuple::writeDescription( AIDA::Dev::ITupleHeader& header
       else {
 	throw std::runtime_error( "Variables of type \"" + type + "\" are not supported for CWN" );
       }
-      pi::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockName,
+      iAIDA::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockName,
 							    steeringStringAndAddress.second,
 							    steeringStringAndAddress.first );
     }
     else {
       std::pair< std::string, char* > steeringStringAndAddress = writeStringDataDescription( i, description, options );
-      pi::AIDA_HBookStore::HBook::describeCWNvariablesChar( m_id, blockName,
+      iAIDA::AIDA_HBookStore::HBook::describeCWNvariablesChar( m_id, blockName,
 								steeringStringAndAddress.second,
 								steeringStringAndAddress.first );
     }
@@ -138,7 +138,7 @@ pi::AIDA_HBookStore::CWNtuple::writeDescription( AIDA::Dev::ITupleHeader& header
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
+iAIDA::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
 						    AIDA::Dev::IDevTupleFactory& tf,
 						    AIDA::Dev::IBackingStore* store )
 {
@@ -146,12 +146,12 @@ pi::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
   std::string title;
   std::vector<std::pair<float,float> > columnMinAndMax;
   m_names.clear();
-  pi::AIDA_HBookStore::HBook::getTupleParameters( m_id, title, m_names, columnMinAndMax);
+  iAIDA::AIDA_HBookStore::HBook::getTupleParameters( m_id, title, m_names, columnMinAndMax);
   m_blockNames.clear();
-  std::vector< std::pair< pi::AIDA_HBookStore::CWNtuple::ColumnType, int > > typesAndDimensionality;
+  std::vector< std::pair< iAIDA::AIDA_HBookStore::CWNtuple::ColumnType, int > > typesAndDimensionality;
   for ( unsigned int i = 0; i < m_names.size(); ++i ) {
     std::pair< std::string, std::string > blockAndType =
-      pi::AIDA_HBookStore::HBook::getCWNtupleVariableDescription( m_id,
+      iAIDA::AIDA_HBookStore::HBook::getCWNtupleVariableDescription( m_id,
 								      static_cast<int>( i + 1 ) );
 
     // Overwrite the variable name. HBook gives it truncated with HGIVEN !!!
@@ -189,26 +189,26 @@ pi::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
 	throw std::runtime_error( "Unsupported sub-tuple type : " + typeLetter );
     }
 
-    pi::AIDA_HBookStore::CWNtuple::ColumnType type;
+    iAIDA::AIDA_HBookStore::CWNtuple::ColumnType type;
     if ( typeLetter == 'R' ) {
       if ( typeDescription[2] == '8' ) {
-	type = pi::AIDA_HBookStore::CWNtuple::DOUBLE;
+	type = iAIDA::AIDA_HBookStore::CWNtuple::DOUBLE;
       }
       else {
-	type = pi::AIDA_HBookStore::CWNtuple::FLOAT;
+	type = iAIDA::AIDA_HBookStore::CWNtuple::FLOAT;
       }
     }
     else if ( typeLetter == 'I' || typeLetter == 'U' ) {
       if ( typeDescription[2] != '4' ) throw std::runtime_error( "64 bit integers are not supported" );
       else {
-	type = pi::AIDA_HBookStore::CWNtuple::INT;
+	type = iAIDA::AIDA_HBookStore::CWNtuple::INT;
       }
     }
     else if ( typeLetter == 'L' ) {
-      type = pi::AIDA_HBookStore::CWNtuple::BOOL;
+      type = iAIDA::AIDA_HBookStore::CWNtuple::BOOL;
     }
     else if ( typeLetter == 'C' ) {
-      type = pi::AIDA_HBookStore::CWNtuple::STRING;
+      type = iAIDA::AIDA_HBookStore::CWNtuple::STRING;
     }
     else throw std::runtime_error( "Unrecognised type : " + typeLetter );
     typesAndDimensionality.push_back( std::make_pair( type, dimensionality ) );
@@ -226,7 +226,7 @@ pi::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
 					     columnMinAndMax[iVar].second,
 					     0, 0, numberOfEntries );
 
-    pi::AIDA_HBookStore::CWNtuple::ColumnType type = typesAndDimensionality[iVar].first;
+    iAIDA::AIDA_HBookStore::CWNtuple::ColumnType type = typesAndDimensionality[iVar].first;
 
     // Create the descriptions and the internal structures
     if ( typesAndDimensionality[iVar].second > 0 ) { // sub tuples...
@@ -244,34 +244,34 @@ pi::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
       desp->setVariableDescription( desd, true );
       desd->setVariableName( m_names[iVar] );
 
-      if ( type == pi::AIDA_HBookStore::CWNtuple::DOUBLE )
+      if ( type == iAIDA::AIDA_HBookStore::CWNtuple::DOUBLE )
 	desd->setVariableType( "double" );
-      else if ( type == pi::AIDA_HBookStore::CWNtuple::FLOAT )
+      else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::FLOAT )
 	desd->setVariableType( "float" );
-      else if ( type == pi::AIDA_HBookStore::CWNtuple::INT )
+      else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::INT )
 	desd->setVariableType( "int" );
       else throw std::runtime_error( "No valid type for sub-tuples" );
       writeSubTupleDataDescription( static_cast<int>(iVar), description, optionString,
 				    header, tf, store, indexVariables );
     }
     else {
-      if ( type == pi::AIDA_HBookStore::CWNtuple::DOUBLE ) {
+      if ( type == iAIDA::AIDA_HBookStore::CWNtuple::DOUBLE ) {
 	description->setVariableType( "double" );
 	writeDoubleDataDescription( description, optionString );
       }
-      else if ( type == pi::AIDA_HBookStore::CWNtuple::FLOAT ) {
+      else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::FLOAT ) {
 	description->setVariableType( "float" );
 	writeFloatDataDescription( description, optionString );
       }
-      else if ( type == pi::AIDA_HBookStore::CWNtuple::INT ) {
+      else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::INT ) {
 	description->setVariableType( "int" );
 	writeIntDataDescription( description, optionString );
       }
-      else if ( type == pi::AIDA_HBookStore::CWNtuple::BOOL ) {
+      else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::BOOL ) {
 	description->setVariableType( "bool" );
 	writeBoolDataDescription( description, optionString );
       }
-      else if ( type == pi::AIDA_HBookStore::CWNtuple::STRING ) {
+      else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::STRING ) {
 	description->setVariableType( "std::string" );
 	writeStringDataDescription( static_cast<int>(iVar), description, optionString );
       }
@@ -298,10 +298,10 @@ pi::AIDA_HBookStore::CWNtuple::readDescription( AIDA::Dev::ITupleHeader& header,
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::bindVariable( int variableIndex )
+iAIDA::AIDA_HBookStore::CWNtuple::bindVariable( int variableIndex )
 {
   if ( m_boundVariables.find( variableIndex ) != m_boundVariables.end() ) return true;
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
   const std::string& blockVar = m_blockNames[ variableIndex ];
 
   std::ostringstream os;
@@ -310,17 +310,17 @@ pi::AIDA_HBookStore::CWNtuple::bindVariable( int variableIndex )
   os << std::ends;
 #endif
   std::string steeringString = os.str();
-  pi::AIDA_HBookStore::CWNtuple::ColumnType type = m_cache[variableIndex].first;
-  if ( type != pi::AIDA_HBookStore::CWNtuple::STRING ) {
-    if ( type == pi::AIDA_HBookStore::CWNtuple::DOUBLE ||
-	 type == pi::AIDA_HBookStore::CWNtuple::FLOAT ||
-	 type == pi::AIDA_HBookStore::CWNtuple::INT ||
-	 type == pi::AIDA_HBookStore::CWNtuple::BOOL ) {
-      pi::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockVar,
+  iAIDA::AIDA_HBookStore::CWNtuple::ColumnType type = m_cache[variableIndex].first;
+  if ( type != iAIDA::AIDA_HBookStore::CWNtuple::STRING ) {
+    if ( type == iAIDA::AIDA_HBookStore::CWNtuple::DOUBLE ||
+	 type == iAIDA::AIDA_HBookStore::CWNtuple::FLOAT ||
+	 type == iAIDA::AIDA_HBookStore::CWNtuple::INT ||
+	 type == iAIDA::AIDA_HBookStore::CWNtuple::BOOL ) {
+      iAIDA::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockVar,
 							    m_cache[variableIndex].second,
 							    steeringString );
     }
-    else if ( type == pi::AIDA_HBookStore::CWNtuple::TUPLE ) {
+    else if ( type == iAIDA::AIDA_HBookStore::CWNtuple::TUPLE ) {
       void * address = 0;
       if ( m_doubleTuples.find( variableIndex ) != m_doubleTuples.end() ) {
 	address = m_doubleTuples.find( variableIndex )->second.startAddress();
@@ -331,13 +331,13 @@ pi::AIDA_HBookStore::CWNtuple::bindVariable( int variableIndex )
       else if ( m_intTuples.find( variableIndex ) != m_intTuples.end() ) {
 	address = m_intTuples.find( variableIndex )->second.startAddress();
       }
-      pi::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockVar,
+      iAIDA::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockVar,
 							    address,
 							    steeringString );
     }
   }
   else {
-    pi::AIDA_HBookStore::HBook::describeCWNvariablesChar( m_id, blockVar,
+    iAIDA::AIDA_HBookStore::HBook::describeCWNvariablesChar( m_id, blockVar,
 							      m_charVariables.find( variableIndex )->second.first,
 							      steeringString );
   }
@@ -347,12 +347,12 @@ pi::AIDA_HBookStore::CWNtuple::bindVariable( int variableIndex )
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::clearBindings()
+iAIDA::AIDA_HBookStore::CWNtuple::clearBindings()
 {
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
   const std::string blockVar = " ";
   const std::string steeringString = "$CLEAR";
-  pi::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockVar, 0 , steeringString );
+  iAIDA::AIDA_HBookStore::HBook::describeCWNvariables( m_id, blockVar, 0 , steeringString );
   m_boundVariables.clear();
   m_initializedReading = false;
   return true;
@@ -360,7 +360,7 @@ pi::AIDA_HBookStore::CWNtuple::clearBindings()
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::writeTupleRow( int rowNumber )
+iAIDA::AIDA_HBookStore::CWNtuple::writeTupleRow( int rowNumber )
 {
   // Update first the string variables
   for ( std::map< int, std::pair<char*, unsigned int> >::iterator iVar = m_charVariables.begin();
@@ -386,8 +386,8 @@ pi::AIDA_HBookStore::CWNtuple::writeTupleRow( int rowNumber )
     else *v = 0;
   }
 
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
-  pi::AIDA_HBookStore::HBook::fillCWNtuple( m_id );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::fillCWNtuple( m_id );
 
   // Reset the sub-tuples.
   for( std::vector< std::pair< AIDA::Dev::IDevTuple*, int > >::iterator iTuple = m_devTuples.begin();
@@ -400,17 +400,17 @@ pi::AIDA_HBookStore::CWNtuple::writeTupleRow( int rowNumber )
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::readTupleRow( int rowNumber )
+iAIDA::AIDA_HBookStore::CWNtuple::readTupleRow( int rowNumber )
 {
   if ( ! m_initializedReading ) {
     for ( int i = 0; i < static_cast<int>( m_names.size() ); ++i ) bindVariable( i );
     m_initializedReading = true;
   }
   else {
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
   }
 
-  if ( ! pi::AIDA_HBookStore::HBook::readCWNtupleRow( m_id, rowNumber + 1 ) ) return false;
+  if ( ! iAIDA::AIDA_HBookStore::HBook::readCWNtupleRow( m_id, rowNumber + 1 ) ) return false;
 
 
   // Update the boolean variables
@@ -451,16 +451,16 @@ pi::AIDA_HBookStore::CWNtuple::readTupleRow( int rowNumber )
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::reset()
+iAIDA::AIDA_HBookStore::CWNtuple::reset()
 {
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
-  pi::AIDA_HBookStore::HBook::resetTuple( m_id );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::resetTuple( m_id );
   return true;
 }
 
 
 void*
-pi::AIDA_HBookStore::CWNtuple::variableAddress( int variableIndex )
+iAIDA::AIDA_HBookStore::CWNtuple::variableAddress( int variableIndex )
 {
   if ( variableIndex < 0 || variableIndex >= static_cast<int>( m_cache.size() ) ) return 0;
   return m_cache[ variableIndex ].second;
@@ -468,7 +468,7 @@ pi::AIDA_HBookStore::CWNtuple::variableAddress( int variableIndex )
 
 
 const void*
-pi::AIDA_HBookStore::CWNtuple::variableAddress( int variableIndex ) const
+iAIDA::AIDA_HBookStore::CWNtuple::variableAddress( int variableIndex ) const
 {
   if ( variableIndex < 0 || variableIndex >= static_cast<int>( m_cache.size() ) ) return 0;
   return m_cache[ variableIndex ].second;
@@ -476,31 +476,31 @@ pi::AIDA_HBookStore::CWNtuple::variableAddress( int variableIndex ) const
 
 
 std::pair< std::string, void* >
-pi::AIDA_HBookStore::CWNtuple::writeDoubleDataDescription( AIDA::Dev::ITupleVariableDescription* description,
+iAIDA::AIDA_HBookStore::CWNtuple::writeDoubleDataDescription( AIDA::Dev::ITupleVariableDescription* description,
 							       const std::string& options )
 {
   void* address = new double;
-  m_cache.push_back( std::make_pair( pi::AIDA_HBookStore::CWNtuple::DOUBLE, address ) );
+  m_cache.push_back( std::make_pair( iAIDA::AIDA_HBookStore::CWNtuple::DOUBLE, address ) );
   return std::make_pair( description->variableName() + ":R*8", address );
 }
 
 std::pair< std::string, void* >
-pi::AIDA_HBookStore::CWNtuple::writeFloatDataDescription( AIDA::Dev::ITupleVariableDescription* description,
+iAIDA::AIDA_HBookStore::CWNtuple::writeFloatDataDescription( AIDA::Dev::ITupleVariableDescription* description,
 							      const std::string& options )
 {
   void* address = new float;
-  m_cache.push_back( std::make_pair( pi::AIDA_HBookStore::CWNtuple::FLOAT, address ) );
+  m_cache.push_back( std::make_pair( iAIDA::AIDA_HBookStore::CWNtuple::FLOAT, address ) );
   return std::make_pair( description->variableName() + ":R*4", address );
 }
 
 std::pair< std::string, void* >
-pi::AIDA_HBookStore::CWNtuple::writeIntDataDescription( AIDA::Dev::ITupleVariableDescription* description,
+iAIDA::AIDA_HBookStore::CWNtuple::writeIntDataDescription( AIDA::Dev::ITupleVariableDescription* description,
 							    const std::string& options )
 {
   const std::string& name = description->variableName();
   std::string steeringString = name;
   void* address = new int;
-  m_cache.push_back( std::make_pair( pi::AIDA_HBookStore::CWNtuple::INT, address ) );
+  m_cache.push_back( std::make_pair( iAIDA::AIDA_HBookStore::CWNtuple::INT, address ) );
   std::string::size_type idx = options.find( " " + name );
   if ( idx != std::string::npos ) {
     std::istringstream is( options.substr( idx + name.size() + 1 ).c_str() );
@@ -529,24 +529,24 @@ pi::AIDA_HBookStore::CWNtuple::writeIntDataDescription( AIDA::Dev::ITupleVariabl
 }
 
 std::pair< std::string, void* >
-pi::AIDA_HBookStore::CWNtuple::writeBoolDataDescription( AIDA::Dev::ITupleVariableDescription* description,
+iAIDA::AIDA_HBookStore::CWNtuple::writeBoolDataDescription( AIDA::Dev::ITupleVariableDescription* description,
 							     const std::string& options )
 {
   int* iaddr = new int;
   void* address = iaddr;
   m_boolVariables.push_back( iaddr );
-  m_cache.push_back( std::make_pair( pi::AIDA_HBookStore::CWNtuple::BOOL, address ) );
+  m_cache.push_back( std::make_pair( iAIDA::AIDA_HBookStore::CWNtuple::BOOL, address ) );
   return std::make_pair( description->variableName() + ":L", address );
 }
 
 std::pair< std::string, char* >
-pi::AIDA_HBookStore::CWNtuple::writeStringDataDescription( int variableIndex,
+iAIDA::AIDA_HBookStore::CWNtuple::writeStringDataDescription( int variableIndex,
 							       AIDA::Dev::ITupleVariableDescription* description,
 							       const std::string& options )
 {
   const std::string& name = description->variableName();
   void* p =  new std::string;
-  m_cache.push_back( std::make_pair( pi::AIDA_HBookStore::CWNtuple::STRING, p ) );
+  m_cache.push_back( std::make_pair( iAIDA::AIDA_HBookStore::CWNtuple::STRING, p ) );
   unsigned int stringSize = 4;
   std::string::size_type idx = options.find( name );
   if ( idx != std::string::npos ) {
@@ -576,7 +576,7 @@ pi::AIDA_HBookStore::CWNtuple::writeStringDataDescription( int variableIndex,
 
 
 bool
-pi::AIDA_HBookStore::CWNtuple::findDimensionsFromOptionString( const std::string& options,
+iAIDA::AIDA_HBookStore::CWNtuple::findDimensionsFromOptionString( const std::string& options,
 								   const std::string& tupleVariable,
 								   std::vector<int>& dimensions,
 								   std::string& indexVariableName ) const
@@ -652,7 +652,7 @@ pi::AIDA_HBookStore::CWNtuple::findDimensionsFromOptionString( const std::string
 
 
 std::pair< std::string, void* >
-pi::AIDA_HBookStore::CWNtuple::writeSubTupleDataDescription( int variableIndex,
+iAIDA::AIDA_HBookStore::CWNtuple::writeSubTupleDataDescription( int variableIndex,
 								 AIDA::Dev::ITupleVariableDescription* description,
 								 const std::string& options,
 								 AIDA::Dev::ITupleHeader& header,
@@ -687,7 +687,7 @@ pi::AIDA_HBookStore::CWNtuple::writeSubTupleDataDescription( int variableIndex,
   steeringString += os.str();
 
   // Find the type of the variable and create the cache
-  pi::AIDA_HBookStore::ISubTuple* st = 0;
+  iAIDA::AIDA_HBookStore::ISubTuple* st = 0;
   AIDA::Dev::ITupleVariableDescription* des = description;
   while ( true ) {
     const std::string stype = des->variableType();
@@ -700,27 +700,27 @@ pi::AIDA_HBookStore::CWNtuple::writeSubTupleDataDescription( int variableIndex,
       if ( stype == "double" ) {
 	steeringString += ":R*8";
 	m_doubleTuples.insert( std::make_pair( variableIndex,
-					       pi::AIDA_HBookStore::VectorTuple<double>( totalSize,
+					       iAIDA::AIDA_HBookStore::VectorTuple<double>( totalSize,
 											     dimensions.front() ) ) );
-	pi::AIDA_HBookStore::VectorTuple<double> * vt = &( m_doubleTuples.find( variableIndex )->second );
+	iAIDA::AIDA_HBookStore::VectorTuple<double> * vt = &( m_doubleTuples.find( variableIndex )->second );
 	address = vt->startAddress();
 	st = vt;
       }
       else if ( stype == "float" ) {
 	steeringString += ":R*4";
 	m_floatTuples.insert( std::make_pair( variableIndex,
-					      pi::AIDA_HBookStore::VectorTuple<float>( totalSize,
+					      iAIDA::AIDA_HBookStore::VectorTuple<float>( totalSize,
 											    dimensions.front() ) ) );
-	pi::AIDA_HBookStore::VectorTuple<float> * vt = &( m_floatTuples.find( variableIndex )->second );
+	iAIDA::AIDA_HBookStore::VectorTuple<float> * vt = &( m_floatTuples.find( variableIndex )->second );
 	address = vt->startAddress();
 	st = vt;
       }
       else if ( stype == "int" ) {
 	steeringString += ":I*4";
 	m_intTuples.insert( std::make_pair( variableIndex,
-					    pi::AIDA_HBookStore::VectorTuple<int>( totalSize,
+					    iAIDA::AIDA_HBookStore::VectorTuple<int>( totalSize,
 										       dimensions.front() ) ) );
-	pi::AIDA_HBookStore::VectorTuple<int> * vt = &( m_intTuples.find( variableIndex )->second );
+	iAIDA::AIDA_HBookStore::VectorTuple<int> * vt = &( m_intTuples.find( variableIndex )->second );
 	address = vt->startAddress();
 	st = vt;
       }
@@ -744,7 +744,7 @@ pi::AIDA_HBookStore::CWNtuple::writeSubTupleDataDescription( int variableIndex,
 
   // The other tuples
   for ( unsigned int ist = 1; ist < dimensions.size(); ++ist ) {
-    m_subTuples.push_back( pi::AIDA_HBookStore::SubTuple( lastTuple, st, dimensions[ist] ) );
+    m_subTuples.push_back( iAIDA::AIDA_HBookStore::SubTuple( lastTuple, st, dimensions[ist] ) );
     st = &( m_subTuples.back() );
     std::string tuplePathInStore = "v";
     for ( int ii = 0; ii < variableIndex; ++ii ) tuplePathInStore += "_";
@@ -761,7 +761,7 @@ pi::AIDA_HBookStore::CWNtuple::writeSubTupleDataDescription( int variableIndex,
   }
 
   void* p = lastTuple;
-  m_cache.push_back( std::make_pair( pi::AIDA_HBookStore::CWNtuple::TUPLE, p ) );
+  m_cache.push_back( std::make_pair( iAIDA::AIDA_HBookStore::CWNtuple::TUPLE, p ) );
   
   des = description->variableDescription(0);
   const unsigned int ntuplesTotal = m_devTuples.size();

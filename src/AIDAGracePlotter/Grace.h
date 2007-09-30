@@ -31,8 +31,8 @@
 // Created by user sang on Tue Oct  1 14:46:39 2002
 // 
 
-#ifndef AIDANATIVE_GRACE_H
-#define AIDANATIVE_GRACE_H
+#ifndef IAIDA_GRACE_H
+#define IAIDA_GRACE_H
 
 
 #include <utility>
@@ -269,5 +269,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_GRACE_H
+#endif // IAIDA_GRACE_H
 

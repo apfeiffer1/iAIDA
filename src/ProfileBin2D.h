@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_PROFILEBIN2D
-#define AIDANATIVE_PROFILEBIN2D 1
+#ifndef IAIDA_PROFILEBIN2D
+#define IAIDA_PROFILEBIN2D 1
 
 #include "ProfileBin1D.h"
 
@@ -52,4 +52,4 @@ private:
 
 #include "ProfileBin2D.inl"
 
-#endif /* ifndef AIDANATIVE_PROFILEBIN2D */
+#endif /* ifndef IAIDA_PROFILEBIN2D */

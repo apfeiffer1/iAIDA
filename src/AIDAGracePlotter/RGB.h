@@ -31,8 +31,8 @@
 // Created by user sang on Fri Oct  4 23:05:13 2002
 // 
 
-#ifndef AIDANATIVE_RGB_H
-#define AIDANATIVE_RGB_H
+#ifndef IAIDA_RGB_H
+#define IAIDA_RGB_H
 
 
 
@@ -68,5 +68,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_RGB_H
+#endif // IAIDA_RGB_H
 
