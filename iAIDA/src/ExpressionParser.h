@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_EXPRESSION_PARSER
-#define AIDANATIVE_AIDA_TUPLE_EXPRESSION_PARSER 1
+#ifndef IAIDA_AIDA_TUPLE_EXPRESSION_PARSER
+#define IAIDA_AIDA_TUPLE_EXPRESSION_PARSER 1
 
 #include <string>
 #include <iosfwd>
@@ -64,4 +64,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_EXPRESSION_PARSER */
+#endif /* ifndef IAIDA_AIDA_TUPLE_EXPRESSION_PARSER */

@@ -7,7 +7,7 @@
 # include "SealBase/Filename.h"
 # include <list>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -98,5 +98,5 @@ inline const char *
 ModuleReg::tag (void)
 { return s_tag; }
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_MODULE_REG_H

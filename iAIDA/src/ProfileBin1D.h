@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_PROFILEBIN1D
-#define AIDANATIVE_PROFILEBIN1D 1
+#ifndef IAIDA_PROFILEBIN1D
+#define IAIDA_PROFILEBIN1D 1
 
 namespace iAIDA {
   namespace AIDA_Histogram_native {
@@ -84,4 +84,4 @@ private:
 
 #include "ProfileBin1D.inl"
 
-#endif /* ifndef AIDANATIVE_PROFILEBIN */
+#endif /* ifndef IAIDA_PROFILEBIN */

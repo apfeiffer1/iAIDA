@@ -1,10 +1,10 @@
-#ifndef PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_SUBTUPLE_H
-#define PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_SUBTUPLE_H
+#ifndef IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_SUBTUPLE_H
+#define IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_SUBTUPLE_H
 
 #include "ISubTuple.h"
 #include "AIDA_Dev/IDevTuple.h"
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 class SubTuple : virtual public ISubTuple

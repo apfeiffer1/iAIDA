@@ -31,8 +31,8 @@
 // Created by user sang on Wed Sep 25 11:56:41 2002
 // 
 
-#ifndef AIDANATIVE_QPLOTTER_NEWVIEWER_LAYOUT_H
-#define AIDANATIVE_QPLOTTER_NEWVIEWER_LAYOUT_H
+#ifndef IAIDA_QPLOTTER_NEWVIEWER_LAYOUT_H
+#define IAIDA_QPLOTTER_NEWVIEWER_LAYOUT_H
 
 
 #include "ParameterHandler.h"
@@ -89,5 +89,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_QPLOTTER_NEWVIEWER_LAYOUT_H
+#endif // IAIDA_QPLOTTER_NEWVIEWER_LAYOUT_H
 

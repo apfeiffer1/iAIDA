@@ -9,15 +9,15 @@
 #endif
 
 
-pi::AIDA_RootStore::AIDA_RootStoreFactory::AIDA_RootStoreFactory()
+iAIDA::AIDA_RootStore::AIDA_RootStoreFactory::AIDA_RootStoreFactory()
 {}
 
-pi::AIDA_RootStore::AIDA_RootStoreFactory::~AIDA_RootStoreFactory()
+iAIDA::AIDA_RootStore::AIDA_RootStoreFactory::~AIDA_RootStoreFactory()
 {}
 
 
 AIDA::Dev::IStore*
-pi::AIDA_RootStore::AIDA_RootStoreFactory::createStore( const std::string & storeName,
+iAIDA::AIDA_RootStore::AIDA_RootStoreFactory::createStore( const std::string & storeName,
 							  bool readOnly,
 							  bool createNew,
 							  const std::string & options )
@@ -25,7 +25,7 @@ pi::AIDA_RootStore::AIDA_RootStoreFactory::createStore( const std::string & stor
 #ifdef Root_STORE_NO_EXCEPTIONS_TO_USER
   try {
 #endif
-    return new pi::AIDA_RootStore::AIDA_StoreRoot( storeName, readOnly, createNew, options );
+    return new iAIDA::AIDA_RootStore::AIDA_StoreRoot( storeName, readOnly, createNew, options );
 #ifdef Root_STORE_NO_EXCEPTIONS_TO_USER
   }
   catch ( std::exception& e ) {
@@ -37,7 +37,7 @@ pi::AIDA_RootStore::AIDA_RootStoreFactory::createStore( const std::string & stor
 
 
 bool
-pi::AIDA_RootStore::AIDA_RootStoreFactory::destroyStore( AIDA::Dev::IStore* store )
+iAIDA::AIDA_RootStore::AIDA_RootStoreFactory::destroyStore( AIDA::Dev::IStore* store )
 {
   if ( store ) {
     delete store;

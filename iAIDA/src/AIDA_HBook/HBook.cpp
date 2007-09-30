@@ -113,7 +113,7 @@ extern "C" {
 static bool isInitialized = false;
 
 void
-pi::AIDA_HBookStore::HBook::initialize()
+iAIDA::AIDA_HBookStore::HBook::initialize()
 {
   if ( ! isInitialized ) {
     int SizeOfPawCommonT = SizeOfPawCommon;
@@ -124,7 +124,7 @@ pi::AIDA_HBookStore::HBook::initialize()
 
 
 bool
-pi::AIDA_HBookStore::HBook::openDirectAccessFile(const int& LUN, const std::string& symbolicName,
+iAIDA::AIDA_HBookStore::HBook::openDirectAccessFile(const int& LUN, const std::string& symbolicName,
 						     const std::string& fileName, const FileMode& mode,
 						     int& recordLength)
 {
@@ -135,10 +135,10 @@ pi::AIDA_HBookStore::HBook::openDirectAccessFile(const int& LUN, const std::stri
   int recLen = recordLength;
   const bool returnRecordLength = (recordLength <= 0);
   switch (mode) {
-  case pi::AIDA_HBookStore::HBook::NEW:       { std::strcpy(tmode, "N"); break; }
-  case pi::AIDA_HBookStore::HBook::READ_ONLY: { std::strcpy(tmode, " "); break; }
-  case pi::AIDA_HBookStore::HBook::UPDATE:    { std::strcpy(tmode, "U"); break; }
-  case pi::AIDA_HBookStore::HBook::EXCHANGE:  { std::strcpy(tmode, "X"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::NEW:       { std::strcpy(tmode, "N"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::READ_ONLY: { std::strcpy(tmode, " "); break; }
+  case iAIDA::AIDA_HBookStore::HBook::UPDATE:    { std::strcpy(tmode, "U"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::EXCHANGE:  { std::strcpy(tmode, "X"); break; }
   default: return false;
   }
   int failed = 0;
@@ -153,7 +153,7 @@ pi::AIDA_HBookStore::HBook::openDirectAccessFile(const int& LUN, const std::stri
 
 
 void
-pi::AIDA_HBookStore::HBook::releaseZebraDirectory(const std::string& name)
+iAIDA::AIDA_HBookStore::HBook::releaseZebraDirectory(const std::string& name)
 {
   std::string tname = name;
   int len = tname.length();
@@ -167,7 +167,7 @@ pi::AIDA_HBookStore::HBook::releaseZebraDirectory(const std::string& name)
 }
 
 bool
-pi::AIDA_HBookStore::HBook::removeLock(const int& lun, const std::string& filename, const int& recordLength )
+iAIDA::AIDA_HBookStore::HBook::removeLock(const int& lun, const std::string& filename, const int& recordLength )
 {
   int tlun = lun;
   std::string ttopdir = "qX6AiJb";
@@ -195,7 +195,7 @@ pi::AIDA_HBookStore::HBook::removeLock(const int& lun, const std::string& filena
 }
 
 void
-pi::AIDA_HBookStore::HBook::changeDirectory(const std::string& dirName)
+iAIDA::AIDA_HBookStore::HBook::changeDirectory(const std::string& dirName)
 {
   std::string tmpDir = dirName;
   char blank[2] = " ";
@@ -205,7 +205,7 @@ pi::AIDA_HBookStore::HBook::changeDirectory(const std::string& dirName)
 
 
 std::string
-pi::AIDA_HBookStore::HBook::getCurrentDirectory(void)
+iAIDA::AIDA_HBookStore::HBook::getCurrentDirectory(void)
 {
   char result[MAXLEN+1] = {'\0'};
   char read  [2]        =  "R";
@@ -218,7 +218,7 @@ pi::AIDA_HBookStore::HBook::getCurrentDirectory(void)
 
 
 void
-pi::AIDA_HBookStore::HBook::makeNewDirectory(const std::string& dirName)
+iAIDA::AIDA_HBookStore::HBook::makeNewDirectory(const std::string& dirName)
 {
   char blank[2] = " ";
   std::string tdir = dirName;
@@ -228,7 +228,7 @@ pi::AIDA_HBookStore::HBook::makeNewDirectory(const std::string& dirName)
 
 
 void
-pi::AIDA_HBookStore::HBook::deleteExistingDirectory(const std::string& dirName)
+iAIDA::AIDA_HBookStore::HBook::deleteExistingDirectory(const std::string& dirName)
 {
   std::string tdir = dirName;
   int len = tdir.length();
@@ -237,7 +237,7 @@ pi::AIDA_HBookStore::HBook::deleteExistingDirectory(const std::string& dirName)
 
 
 void
-pi::AIDA_HBookStore::HBook::deleteObjectFromDiskDirectory(const int& id)
+iAIDA::AIDA_HBookStore::HBook::deleteObjectFromDiskDirectory(const int& id)
 {
   char blank[2] = " ";
   int  victim   = id;
@@ -247,36 +247,36 @@ pi::AIDA_HBookStore::HBook::deleteObjectFromDiskDirectory(const int& id)
 
 
 void
-pi::AIDA_HBookStore::HBook::getNextObjectInDiskDirectory(int& id,
-							     const pi::AIDA_HBookStore::HBook::ObjectType& typeToFind,
-							     pi::AIDA_HBookStore::HBook::ObjectType& foundType, 
+iAIDA::AIDA_HBookStore::HBook::getNextObjectInDiskDirectory(int& id,
+							     const iAIDA::AIDA_HBookStore::HBook::ObjectType& typeToFind,
+							     iAIDA::AIDA_HBookStore::HBook::ObjectType& foundType, 
 							     std::string& foundTitle)
 {
   char cFoundType [2]               = {'\0'};
   char cTypeToFind[2]               =  " ";
   char cFoundTitle[HBook::MAXLEN+2] = {'\0'};
   switch (typeToFind) {
-  case pi::AIDA_HBookStore::HBook::HISTO1D:   { std::strcpy(cTypeToFind, "1"); break; }
-  case pi::AIDA_HBookStore::HBook::HISTO2D:   { std::strcpy(cTypeToFind, "2"); break; }
-  case pi::AIDA_HBookStore::HBook::PROFILE:   { std::strcpy(cTypeToFind, "1"); break; } // "P" not possible
-  case pi::AIDA_HBookStore::HBook::NTUPLE:    { std::strcpy(cTypeToFind, "N"); break; }
-  case pi::AIDA_HBookStore::HBook::DIRECTORY: { std::strcpy(cTypeToFind, "D"); break; }
-  case pi::AIDA_HBookStore::HBook::UNKNOWN:   { std::strcpy(cTypeToFind, " "); break; } // look for everything
+  case iAIDA::AIDA_HBookStore::HBook::HISTO1D:   { std::strcpy(cTypeToFind, "1"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::HISTO2D:   { std::strcpy(cTypeToFind, "2"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::PROFILE:   { std::strcpy(cTypeToFind, "1"); break; } // "P" not possible
+  case iAIDA::AIDA_HBookStore::HBook::NTUPLE:    { std::strcpy(cTypeToFind, "N"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::DIRECTORY: { std::strcpy(cTypeToFind, "D"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::UNKNOWN:   { std::strcpy(cTypeToFind, " "); break; } // look for everything
   }
   hlnext_(&id, cFoundType, cFoundTitle, cTypeToFind, 1, HBook::MAXLEN, 1);
   std::string sFoundType = cFoundType;
-  if      (sFoundType == "1") foundType = pi::AIDA_HBookStore::HBook::HISTO1D; // but could be profile!
-  else if (sFoundType == "2") foundType = pi::AIDA_HBookStore::HBook::HISTO2D;
-  else if (sFoundType == "N") foundType = pi::AIDA_HBookStore::HBook::NTUPLE;
-  else if (sFoundType == "D") foundType = pi::AIDA_HBookStore::HBook::DIRECTORY;
-  else                        foundType = pi::AIDA_HBookStore::HBook::UNKNOWN;
+  if      (sFoundType == "1") foundType = iAIDA::AIDA_HBookStore::HBook::HISTO1D; // but could be profile!
+  else if (sFoundType == "2") foundType = iAIDA::AIDA_HBookStore::HBook::HISTO2D;
+  else if (sFoundType == "N") foundType = iAIDA::AIDA_HBookStore::HBook::NTUPLE;
+  else if (sFoundType == "D") foundType = iAIDA::AIDA_HBookStore::HBook::DIRECTORY;
+  else                        foundType = iAIDA::AIDA_HBookStore::HBook::UNKNOWN;
   std::istringstream is( cFoundTitle );
   is >> foundTitle;
 }
 
 
-pi::AIDA_HBookStore::HBook::ObjectType
-pi::AIDA_HBookStore::HBook::typeOfObject(const int& id)
+iAIDA::AIDA_HBookStore::HBook::ObjectType
+iAIDA::AIDA_HBookStore::HBook::typeOfObject(const int& id)
 {
   int tid = id;
   char opt[2] = " ";
@@ -284,17 +284,17 @@ pi::AIDA_HBookStore::HBook::typeOfObject(const int& id)
   hkind_(&tid, kind, opt, 1);
   const int& k = kind[0];
   switch (k) {
-  case  1: return pi::AIDA_HBookStore::HBook::HISTO1D;
-  case  2: return pi::AIDA_HBookStore::HBook::HISTO2D;
-  case  4: return pi::AIDA_HBookStore::HBook::NTUPLE;
-  case  8: return pi::AIDA_HBookStore::HBook::PROFILE;
-  default: return pi::AIDA_HBookStore::HBook::UNKNOWN;
+  case  1: return iAIDA::AIDA_HBookStore::HBook::HISTO1D;
+  case  2: return iAIDA::AIDA_HBookStore::HBook::HISTO2D;
+  case  4: return iAIDA::AIDA_HBookStore::HBook::NTUPLE;
+  case  8: return iAIDA::AIDA_HBookStore::HBook::PROFILE;
+  default: return iAIDA::AIDA_HBookStore::HBook::UNKNOWN;
   }
 }
 
 
 void
-pi::AIDA_HBookStore::HBook::deleteFromMemory(const int& id)
+iAIDA::AIDA_HBookStore::HBook::deleteFromMemory(const int& id)
 {
   int tid = id;
   hdelet_(&tid);
@@ -302,7 +302,7 @@ pi::AIDA_HBookStore::HBook::deleteFromMemory(const int& id)
 
 
 void
-pi::AIDA_HBookStore::HBook::loadObjectIntoMemory(const int& id, const int& offset, const int& cycle)
+iAIDA::AIDA_HBookStore::HBook::loadObjectIntoMemory(const int& id, const int& offset, const int& cycle)
 {
   int tid = id;
   int toffset = offset;
@@ -312,7 +312,7 @@ pi::AIDA_HBookStore::HBook::loadObjectIntoMemory(const int& id, const int& offse
 
 
 void
-pi::AIDA_HBookStore::HBook::flushObjectToFile(const int& id)
+iAIDA::AIDA_HBookStore::HBook::flushObjectToFile(const int& id)
 {
   int tid       = id;
   int icycle    = 0;
@@ -322,7 +322,7 @@ pi::AIDA_HBookStore::HBook::flushObjectToFile(const int& id)
 
 
 int
-pi::AIDA_HBookStore::HBook::numberOfEntries(const int& id)
+iAIDA::AIDA_HBookStore::HBook::numberOfEntries(const int& id)
 {
   int n = 0;
   int tid = id;
@@ -332,13 +332,13 @@ pi::AIDA_HBookStore::HBook::numberOfEntries(const int& id)
 
 
 void
-pi::AIDA_HBookStore::HBook::getHistoParameters(const int& id, std::string& title, 
+iAIDA::AIDA_HBookStore::HBook::getHistoParameters(const int& id, std::string& title, 
 						   int& numberOfXBins, float& lowerEdgeX, float& upperEdgeX,
 						   int& numberOfYBins, float& lowerEdgeY, float& upperEdgeY)
 {
   int  zebraAddress  = 0;
   int  nCharTitle    = 0;
-  const int space    = pi::AIDA_HBookStore::HBook::MAXLEN;
+  const int space    = iAIDA::AIDA_HBookStore::HBook::MAXLEN;
   char cTitle[space] = {'\0'};
   int  tid           = id;
   hgive_(&tid, cTitle, 
@@ -353,7 +353,7 @@ pi::AIDA_HBookStore::HBook::getHistoParameters(const int& id, std::string& title
 
 
 bool
-pi::AIDA_HBookStore::HBook::hasVariableBinSizes( const int& id )
+iAIDA::AIDA_HBookStore::HBook::hasVariableBinSizes( const int& id )
 {
   int tid = id;
   char opt[2] = "A";
@@ -365,7 +365,7 @@ pi::AIDA_HBookStore::HBook::hasVariableBinSizes( const int& id )
 
 
 float
-pi::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
+iAIDA::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
 {
   int tid = id;
   return hsum_(&tid);
@@ -373,7 +373,7 @@ pi::AIDA_HBookStore::HBook::sumOfInRangeBinsInHisto(const int& id)
 
 
 float
-pi::AIDA_HBookStore::HBook::histoEbe(const int& id )
+iAIDA::AIDA_HBookStore::HBook::histoEbe(const int& id )
 {
   int tid = id;
   int icase = 3;
@@ -383,7 +383,7 @@ pi::AIDA_HBookStore::HBook::histoEbe(const int& id )
 }
 
 float
-pi::AIDA_HBookStore::HBook::histoRms(const int& id )
+iAIDA::AIDA_HBookStore::HBook::histoRms(const int& id )
 {
   int tid = id;
   int icase = 2;
@@ -393,7 +393,7 @@ pi::AIDA_HBookStore::HBook::histoRms(const int& id )
 }
 
 float
-pi::AIDA_HBookStore::HBook::histoRmsX(const int& id )
+iAIDA::AIDA_HBookStore::HBook::histoRmsX(const int& id )
 {
   int tid = id;
   int icase = 2;
@@ -403,7 +403,7 @@ pi::AIDA_HBookStore::HBook::histoRmsX(const int& id )
 }
 
 float
-pi::AIDA_HBookStore::HBook::histoRmsY(const int& id )
+iAIDA::AIDA_HBookStore::HBook::histoRmsY(const int& id )
 {
   int tid = id;
   int icase = 2;
@@ -413,7 +413,7 @@ pi::AIDA_HBookStore::HBook::histoRmsY(const int& id )
 }
 
 bool
-pi::AIDA_HBookStore::HBook::areErrorsStored( const int& id )
+iAIDA::AIDA_HBookStore::HBook::areErrorsStored( const int& id )
 {
   int tid = id;
   char opt[2] = "A";
@@ -430,7 +430,7 @@ pi::AIDA_HBookStore::HBook::areErrorsStored( const int& id )
 
 
 float
-pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
+iAIDA::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
 {
   int tid = id;
   int tbn = binNumber;
@@ -440,7 +440,7 @@ pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumber)
 
 
 float
-pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
+iAIDA::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
 {
   int tid = id;
   int tbn = binNumber;
@@ -449,7 +449,7 @@ pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumber)
 
 
 float
-pi::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
+iAIDA::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
 {
   float x   = 0.0;
   int   tid = id;
@@ -460,7 +460,7 @@ pi::AIDA_HBookStore::HBook::binLowerEdge(const int& id, const int& binNumber)
 
 
 float
-pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumberX, const int& binNumberY)
+iAIDA::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumberX, const int& binNumberY)
 {
   int tid = id;
   int tbnx = binNumberX;
@@ -471,7 +471,7 @@ pi::AIDA_HBookStore::HBook::binContent(const int& id, const int& binNumberX, con
 
 
 float
-pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumberX, const int& binNumberY)
+iAIDA::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumberX, const int& binNumberY)
 {
   int tid = id;
   int tbnx = binNumberX;
@@ -484,7 +484,7 @@ pi::AIDA_HBookStore::HBook::binError(const int& id, const int& binNumberX, const
 
 
 std::pair<float,float>
-pi::AIDA_HBookStore::HBook::binLowerEdges( const int& id, 
+iAIDA::AIDA_HBookStore::HBook::binLowerEdges( const int& id, 
 					       const int& binNumberX, 
 					       const int& binNumberY)
 {
@@ -499,7 +499,7 @@ pi::AIDA_HBookStore::HBook::binLowerEdges( const int& id,
 
 
 void
-pi::AIDA_HBookStore::HBook::bookFixedBin1DHisto(const int& id, const std::string title,
+iAIDA::AIDA_HBookStore::HBook::bookFixedBin1DHisto(const int& id, const std::string title,
 						    const int& nb, const float& lowX, const float& highX)
 {
   int   tid          = id;
@@ -514,7 +514,7 @@ pi::AIDA_HBookStore::HBook::bookFixedBin1DHisto(const int& id, const std::string
 
 
 void
-pi::AIDA_HBookStore::HBook::bookFixedBinProfileHisto(const int& id, const std::string title,
+iAIDA::AIDA_HBookStore::HBook::bookFixedBinProfileHisto(const int& id, const std::string title,
 							 const int& nb, 
 							 const float& lowX, const float& highX,
 							 const float& lowY, const float& highY )
@@ -537,7 +537,7 @@ pi::AIDA_HBookStore::HBook::bookFixedBinProfileHisto(const int& id, const std::s
 
 
 void
-pi::AIDA_HBookStore::HBook::bookVariableBin1DHisto(const int& id, const std::string title,
+iAIDA::AIDA_HBookStore::HBook::bookVariableBin1DHisto(const int& id, const std::string title,
 						       const std::vector<float>& binEdges)
 {
   const int nedges       = binEdges.size();
@@ -555,7 +555,7 @@ pi::AIDA_HBookStore::HBook::bookVariableBin1DHisto(const int& id, const std::str
 
 
 void
-pi::AIDA_HBookStore::HBook::bookFixedBin2DHisto(const int& id, const std::string title,
+iAIDA::AIDA_HBookStore::HBook::bookFixedBin2DHisto(const int& id, const std::string title,
 						    const int& nbx, const float& lowX, const float& highX,
 						    const int& nby, const float& lowY, const float& highY)
 {
@@ -574,7 +574,7 @@ pi::AIDA_HBookStore::HBook::bookFixedBin2DHisto(const int& id, const std::string
 
 
 void
-pi::AIDA_HBookStore::HBook::useErrorsForHisto1D( const int& id )
+iAIDA::AIDA_HBookStore::HBook::useErrorsForHisto1D( const int& id )
 {
   int tid = id;
   hbarx_( &tid );
@@ -583,7 +583,7 @@ pi::AIDA_HBookStore::HBook::useErrorsForHisto1D( const int& id )
 
 
 void
-pi::AIDA_HBookStore::HBook::useErrorsForHisto2D( const int& id )
+iAIDA::AIDA_HBookStore::HBook::useErrorsForHisto2D( const int& id )
 {
   int tid = id;
   hbar2_( &tid );
@@ -591,7 +591,7 @@ pi::AIDA_HBookStore::HBook::useErrorsForHisto2D( const int& id )
 
 
 void
-pi::AIDA_HBookStore::HBook::fillHisto( const int& id, const float& x, const float& y, const float& w )
+iAIDA::AIDA_HBookStore::HBook::fillHisto( const int& id, const float& x, const float& y, const float& w )
 {
   int tid = id;
   float tx = x;
@@ -602,11 +602,11 @@ pi::AIDA_HBookStore::HBook::fillHisto( const int& id, const float& x, const floa
 
 
 bool
-pi::AIDA_HBookStore::HBook::bookRWNtuple( const int& id, const std::string& title, 
+iAIDA::AIDA_HBookStore::HBook::bookRWNtuple( const int& id, const std::string& title, 
 					      const std::vector<std::string>& columnNames,
 					      const std::string& zebraDirectory, const int& bufferSize)
 {
-  if ( columnNames.size() > pi::AIDA_HBookStore::HBook::MAXVAR ) return false;
+  if ( columnNames.size() > iAIDA::AIDA_HBookStore::HBook::MAXVAR ) return false;
   int tid = id;
   std::string ttitle = title;
   int ntags = static_cast<int>( columnNames.size() );
@@ -615,9 +615,9 @@ pi::AIDA_HBookStore::HBook::bookRWNtuple( const int& id, const std::string& titl
   std::ostringstream os;
   for ( std::vector<std::string>::const_iterator iVar = columnNames.begin();
 	iVar != columnNames.end(); ++iVar ) {
-    if ( iVar->size() > pi::AIDA_HBookStore::HBook::MAXTAGLEN ) return false;
+    if ( iVar->size() > iAIDA::AIDA_HBookStore::HBook::MAXTAGLEN ) return false;
     os << *iVar;
-    for ( unsigned int i = pi::AIDA_HBookStore::HBook::MAXTAGLEN; i > iVar->size(); --i ) os << " ";
+    for ( unsigned int i = iAIDA::AIDA_HBookStore::HBook::MAXTAGLEN; i > iVar->size(); --i ) os << " ";
   }
   os << std::ends;
   const std::string columnString = os.str();
@@ -636,7 +636,7 @@ pi::AIDA_HBookStore::HBook::bookRWNtuple( const int& id, const std::string& titl
 
 
 void
-pi::AIDA_HBookStore::HBook::declareCWNTuple(const int& id, const std::string& title)
+iAIDA::AIDA_HBookStore::HBook::declareCWNTuple(const int& id, const std::string& title)
 {
   int tid = id;
   std::string ttitle = title;
@@ -649,11 +649,11 @@ pi::AIDA_HBookStore::HBook::declareCWNTuple(const int& id, const std::string& ti
 
 
 bool
-pi::AIDA_HBookStore::HBook::describeCWNvariables(const int& id, const std::string& blockName,
+iAIDA::AIDA_HBookStore::HBook::describeCWNvariables(const int& id, const std::string& blockName,
 						     void* firstVariableInCommonBlock, 
 						     const std::string& steeringString)
 {
-  if (blockName.length() > pi::AIDA_HBookStore::HBook::MAX_BLOCKNAME_LENGTH) return false;
+  if (blockName.length() > iAIDA::AIDA_HBookStore::HBook::MAX_BLOCKNAME_LENGTH) return false;
   if (0 == firstVariableInCommonBlock) return false;
   int tid = id;
   std::string tblockName = blockName;
@@ -673,11 +673,11 @@ pi::AIDA_HBookStore::HBook::describeCWNvariables(const int& id, const std::strin
 
 
 bool
-pi::AIDA_HBookStore::HBook::describeCWNvariablesChar(const int& id, const std::string& blockName,
+iAIDA::AIDA_HBookStore::HBook::describeCWNvariablesChar(const int& id, const std::string& blockName,
 							 char* firstVariableInCommonBlock, 
 							 const std::string& steeringString )
 {
-  if (blockName.length() > pi::AIDA_HBookStore::HBook::MAX_BLOCKNAME_LENGTH) return false;
+  if (blockName.length() > iAIDA::AIDA_HBookStore::HBook::MAX_BLOCKNAME_LENGTH) return false;
   if (0 == firstVariableInCommonBlock) return false;
   int tid = id;
   std::string tblockName = blockName;
@@ -693,7 +693,7 @@ pi::AIDA_HBookStore::HBook::describeCWNvariablesChar(const int& id, const std::s
 
 
 void
-pi::AIDA_HBookStore::HBook::fillRWNtuple( const int& id, const std::vector<float>& columns )
+iAIDA::AIDA_HBookStore::HBook::fillRWNtuple( const int& id, const std::vector<float>& columns )
 {
   int tid       = id;
   float* addr = const_cast<float*>( &( columns[0] ) );
@@ -702,7 +702,7 @@ pi::AIDA_HBookStore::HBook::fillRWNtuple( const int& id, const std::vector<float
 
 
 void
-pi::AIDA_HBookStore::HBook::refreshRWNtuplePointers( const int& id )
+iAIDA::AIDA_HBookStore::HBook::refreshRWNtuplePointers( const int& id )
 {
   int  tid      = id;
   char caller[] = "pi";
@@ -712,7 +712,7 @@ pi::AIDA_HBookStore::HBook::refreshRWNtuplePointers( const int& id )
 
 
 bool
-pi::AIDA_HBookStore::HBook::fastFillArrayFromRWNtupleRow( const int& id, const int& rowNumber, 
+iAIDA::AIDA_HBookStore::HBook::fastFillArrayFromRWNtupleRow( const int& id, const int& rowNumber, 
 							      float* destinationArray)
 {
   int tid       = id;
@@ -723,7 +723,7 @@ pi::AIDA_HBookStore::HBook::fastFillArrayFromRWNtupleRow( const int& id, const i
 }
 
 void
-pi::AIDA_HBookStore::HBook::HBook::fillCWNtuple(const int& id)
+iAIDA::AIDA_HBookStore::HBook::HBook::fillCWNtuple(const int& id)
 {
   int tid = id;
   hfnt_(&tid);
@@ -731,7 +731,7 @@ pi::AIDA_HBookStore::HBook::HBook::fillCWNtuple(const int& id)
 
 
 void
-pi::AIDA_HBookStore::HBook::resetTuple(const int& id )
+iAIDA::AIDA_HBookStore::HBook::resetTuple(const int& id )
 {
   int tid = id;
   std::string ttitle = " ";
@@ -740,7 +740,7 @@ pi::AIDA_HBookStore::HBook::resetTuple(const int& id )
 
 
 bool
-pi::AIDA_HBookStore::HBook::isCWNtuple( const int& id )
+iAIDA::AIDA_HBookStore::HBook::isCWNtuple( const int& id )
 {
   int tid = id;
   return ( hntnew_(&tid) != 0 );
@@ -748,14 +748,14 @@ pi::AIDA_HBookStore::HBook::isCWNtuple( const int& id )
 
 
 void
-pi::AIDA_HBookStore::HBook::getTupleParameters( const int& id, std::string& title, 
+iAIDA::AIDA_HBookStore::HBook::getTupleParameters( const int& id, std::string& title, 
 						    std::vector<std::string>& columnNames,
 						    std::vector<std::pair<float,float> >& columnMinAndMax)
 {
-  const int tagLength         = pi::AIDA_HBookStore::HBook::MAXTAGLEN;
-  const int tagArrayLength    = pi::AIDA_HBookStore::HBook::MAXVAR*tagLength;
-  const int titleArrayLength  = pi::AIDA_HBookStore::HBook::MAXLEN;
-  const int minMaxArrayLength = pi::AIDA_HBookStore::HBook::MAXVAR;
+  const int tagLength         = iAIDA::AIDA_HBookStore::HBook::MAXTAGLEN;
+  const int tagArrayLength    = iAIDA::AIDA_HBookStore::HBook::MAXVAR*tagLength;
+  const int titleArrayLength  = iAIDA::AIDA_HBookStore::HBook::MAXLEN;
+  const int minMaxArrayLength = iAIDA::AIDA_HBookStore::HBook::MAXVAR;
   columnNames.clear();
   columnMinAndMax.clear();
   char*  titleArray = new char[titleArrayLength];
@@ -811,7 +811,7 @@ pi::AIDA_HBookStore::HBook::getTupleParameters( const int& id, std::string& titl
 
 
 std::pair< std::string, std::string >
-pi::AIDA_HBookStore::HBook::getCWNtupleVariableDescription( const int& id, const int& iVar )
+iAIDA::AIDA_HBookStore::HBook::getCWNtupleVariableDescription( const int& id, const int& iVar )
 {
   int tupleId = id;
   int var = iVar;
@@ -829,7 +829,7 @@ pi::AIDA_HBookStore::HBook::getCWNtupleVariableDescription( const int& id, const
 }
 
 bool
-pi::AIDA_HBookStore::HBook::readCWNtupleRow(const int& id, const int& rowNumber )
+iAIDA::AIDA_HBookStore::HBook::readCWNtupleRow(const int& id, const int& rowNumber )
 {
   int tid = id;
   int row = rowNumber;
@@ -839,20 +839,20 @@ pi::AIDA_HBookStore::HBook::readCWNtupleRow(const int& id, const int& rowNumber 
 }
 
 bool
-pi::AIDA_HBookStore::HBook::fillBuffersFromCWNtupleRow(const int& id, const int& rowNumber,
+iAIDA::AIDA_HBookStore::HBook::fillBuffersFromCWNtupleRow(const int& id, const int& rowNumber,
 							   const std::vector< std::string >& variableList )
 {
   if ( variableList.empty() ) return false;
   int tid = id;
   int row = rowNumber;
   int nVars = static_cast< int >( variableList.size() );
-  int varListSize = static_cast<int>(pi::AIDA_HBookStore::HBook::MAXTAGLEN * variableList.size());
+  int varListSize = static_cast<int>(iAIDA::AIDA_HBookStore::HBook::MAXTAGLEN * variableList.size());
   char * varList = new char[ varListSize ];
   for ( int i = 0; i < varListSize; ++i ) varList[i] = ' ';
   for ( unsigned int i = 0; i < variableList.size(); ++i ) {
-    unsigned int firstChar = i * pi::AIDA_HBookStore::HBook::MAXTAGLEN;
+    unsigned int firstChar = i * iAIDA::AIDA_HBookStore::HBook::MAXTAGLEN;
     const std::string& variableName = variableList[i];
-    for ( unsigned int j = 0; j < variableName.size() && j < pi::AIDA_HBookStore::HBook::MAXTAGLEN; ++j ) {
+    for ( unsigned int j = 0; j < variableName.size() && j < iAIDA::AIDA_HBookStore::HBook::MAXTAGLEN; ++j ) {
       varList[firstChar + j] = variableName[j];
     }
   }
@@ -864,7 +864,7 @@ pi::AIDA_HBookStore::HBook::fillBuffersFromCWNtupleRow(const int& id, const int&
 
 
 bool
-pi::AIDA_HBookStore::HBook::fastFillBuffersFromCWNtupleRow(const int& id, const int& rowNumber)
+iAIDA::AIDA_HBookStore::HBook::fastFillBuffersFromCWNtupleRow(const int& id, const int& rowNumber)
 {
   int tid = id;
   int trowNumber = rowNumber;
@@ -875,7 +875,7 @@ pi::AIDA_HBookStore::HBook::fastFillBuffersFromCWNtupleRow(const int& id, const 
 
 /// calls Olivier hack to set contents for Histogram 1D
 void 
-pi::AIDA_HBookStore::HBook::setHisto1DContents(const int & id, const int & entries, const float & eqBinEntries,  
+iAIDA::AIDA_HBookStore::HBook::setHisto1DContents(const int & id, const int & entries, const float & eqBinEntries,  
 						   const float & mean, const float & rms, 
 						   std::vector<float> & binHeights, 
 						   std::vector<float> & binErrors, 
@@ -903,7 +903,7 @@ pi::AIDA_HBookStore::HBook::setHisto1DContents(const int & id, const int & entri
 
 /// calls Olivier hack to set contents foe Histogram 2D (and profile ? ) 
 void 
-pi::AIDA_HBookStore::HBook::setHisto2DContents(const int & id, const int & entries, 
+iAIDA::AIDA_HBookStore::HBook::setHisto2DContents(const int & id, const int & entries, 
 						   std::vector<float> & binHeights, 
 						   std::vector<float> & binErrors, 
 						   bool setErrors)

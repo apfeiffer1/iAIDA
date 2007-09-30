@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:47:12 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_INFOSTYLE_H
-#define AIDANATIVE_AIDA_INFOSTYLE_H
+#ifndef IAIDA_AIDA_INFOSTYLE_H
+#define IAIDA_AIDA_INFOSTYLE_H
 
 
 
@@ -94,5 +94,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_INFOSTYLE_H
+#endif // IAIDA_AIDA_INFOSTYLE_H
 

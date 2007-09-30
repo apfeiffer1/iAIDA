@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDAHISTOGRAM1D
-#define AIDANATIVE_AIDAHISTOGRAM1D 1
+#ifndef IAIDA_AIDAHISTOGRAM1D
+#define IAIDA_AIDAHISTOGRAM1D 1
 
 #include "AIDA_BaseHistogram.h"
 #include "AIDA_Dev/IDevHistogram1D.h"
@@ -111,4 +111,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDAHISTOGRAM1D */
+#endif /* ifndef IAIDA_AIDAHISTOGRAM1D */

@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:43:51 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_LINESTYLE_H
-#define AIDANATIVE_AIDA_LINESTYLE_H
+#ifndef IAIDA_AIDA_LINESTYLE_H
+#define IAIDA_AIDA_LINESTYLE_H
 
 
 #include "AIDA/ILineStyle.h"
@@ -101,5 +101,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_LINESTYLE_H
+#endif // IAIDA_AIDA_LINESTYLE_H
 

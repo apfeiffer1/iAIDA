@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_SUBTREE
-#define AIDANATIVE_SUBTREE 1
+#ifndef IAIDA_SUBTREE
+#define IAIDA_SUBTREE 1
 
 #include <string>
 #include <map>
@@ -100,4 +100,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_SUBTREE */
+#endif /* ifndef IAIDA_SUBTREE */

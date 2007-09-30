@@ -10,15 +10,15 @@
 #endif
 
 
-pi::AIDA_HBookStore::AIDA_HBookStoreFactory::AIDA_HBookStoreFactory()
+iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory::AIDA_HBookStoreFactory()
 {}
 
-pi::AIDA_HBookStore::AIDA_HBookStoreFactory::~AIDA_HBookStoreFactory()
+iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory::~AIDA_HBookStoreFactory()
 {}
 
 
 AIDA::Dev::IStore*
-pi::AIDA_HBookStore::AIDA_HBookStoreFactory::createStore( const std::string & storeName,
+iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory::createStore( const std::string & storeName,
 							      bool readOnly,
 							      bool createNew,
 							      const std::string & options )
@@ -26,7 +26,7 @@ pi::AIDA_HBookStore::AIDA_HBookStoreFactory::createStore( const std::string & st
 #ifdef HBOOK_STORE_NO_EXCEPTIONS_TO_USER
   try {
 #endif
-    return new pi::AIDA_HBookStore::AIDA_StoreHBook( storeName, readOnly, createNew, options );
+    return new iAIDA::AIDA_HBookStore::AIDA_StoreHBook( storeName, readOnly, createNew, options );
 #ifdef HBOOK_STORE_NO_EXCEPTIONS_TO_USER
   }
   catch ( std::exception& e ) {
@@ -38,7 +38,7 @@ pi::AIDA_HBookStore::AIDA_HBookStoreFactory::createStore( const std::string & st
 
 
 bool
-pi::AIDA_HBookStore::AIDA_HBookStoreFactory::destroyStore( AIDA::Dev::IStore* store )
+iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory::destroyStore( AIDA::Dev::IStore* store )
 {
   if ( store ) {
     delete store;

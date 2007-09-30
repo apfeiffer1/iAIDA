@@ -53,11 +53,11 @@
 static const std::string emptyString = "";
 
 
-pi::AIDA_RootConverter::HistoConverter::HistoConverter(const pi::AIDA_RootConverter::HistoConverter &)  
+iAIDA::AIDA_RootConverter::HistoConverter::HistoConverter(const iAIDA::AIDA_RootConverter::HistoConverter &)  
 {
 }
 
-pi::AIDA_RootConverter::HistoConverter & pi::AIDA_RootConverter::HistoConverter::operator = (const pi::AIDA_RootConverter::HistoConverter &rhs) 
+iAIDA::AIDA_RootConverter::HistoConverter & iAIDA::AIDA_RootConverter::HistoConverter::operator = (const iAIDA::AIDA_RootConverter::HistoConverter &rhs) 
 {
    if (this == &rhs) return *this;  // time saving self-test
 
@@ -71,7 +71,7 @@ pi::AIDA_RootConverter::HistoConverter & pi::AIDA_RootConverter::HistoConverter:
 // 1D histo (T.B.D. : template on the TH1 type ? ) 
 
 
-TH1D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogram1D & h, const std::string & name) 
+TH1D *  iAIDA::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogram1D & h, const std::string & name) 
 { 
   TH1D * th = 0;
   if (h.axis().isFixedBinning() ) { 
@@ -114,7 +114,7 @@ TH1D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogra
 
 // 2D histo
 
-TH2D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogram2D & h, const std::string & name) 
+TH2D *  iAIDA::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogram2D & h, const std::string & name) 
 { 
   TH2D * th = 0;
   if (h.xAxis().isFixedBinning() &&  h.yAxis().isFixedBinning() ) { 
@@ -178,7 +178,7 @@ TH2D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogra
 
 // 3D histo
 
-TH3D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogram3D & h, const std::string & name) 
+TH3D *  iAIDA::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogram3D & h, const std::string & name) 
 { 
   TH3D * th = 0;
   if (h.xAxis().isFixedBinning() &&  h.yAxis().isFixedBinning() ) { 
@@ -261,7 +261,7 @@ TH3D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IHistogra
 
 // 1D Profile
 
-TProfile *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProfile1D & h, const std::string & name) 
+TProfile *  iAIDA::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProfile1D & h, const std::string & name) 
 { 
   TProfile * th = 0;
   if (h.axis().isFixedBinning() ) { 
@@ -321,7 +321,7 @@ TProfile *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProf
 
 // 2D Profile
 
-TProfile2D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProfile2D & h, const std::string & name) 
+TProfile2D *  iAIDA::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IProfile2D & h, const std::string & name) 
 { 
   TProfile2D * th = 0;
   if (h.xAxis().isFixedBinning() &&  h.yAxis().isFixedBinning() ) { 
@@ -395,7 +395,7 @@ TProfile2D *  pi::AIDA_RootConverter::HistoConverter::copyToRoot(const AIDA::IPr
 }
 
 
-AIDA::Dev::IDevHistogram1D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TH1 &  th )
+AIDA::Dev::IDevHistogram1D * iAIDA::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TH1 &  th )
 { 
 
   // read header 
@@ -448,7 +448,7 @@ AIDA::Dev::IDevHistogram1D * pi::AIDA_RootConverter::HistoConverter::copyToAida(
 
 
 
-AIDA::Dev::IDevHistogram2D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TH2 &  th ) 
+AIDA::Dev::IDevHistogram2D * iAIDA::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TH2 &  th ) 
 {
 
   std::string title = th.GetTitle(); 
@@ -508,7 +508,7 @@ AIDA::Dev::IDevHistogram2D * pi::AIDA_RootConverter::HistoConverter::copyToAida(
 
 // 3D histogram 
 
-AIDA::Dev::IDevHistogram3D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TH3 &  th ) 
+AIDA::Dev::IDevHistogram3D * iAIDA::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TH3 &  th ) 
 {
   std::string title = th.GetTitle(); 
   // read axis
@@ -576,7 +576,7 @@ AIDA::Dev::IDevHistogram3D * pi::AIDA_RootConverter::HistoConverter::copyToAida(
 
 // profile 1D 
 
-AIDA::Dev::IDevProfile1D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TProfile &  tprof ) 
+AIDA::Dev::IDevProfile1D * iAIDA::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TProfile &  tprof ) 
 {
 
   // read header 
@@ -633,7 +633,7 @@ AIDA::Dev::IDevProfile1D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AI
 
 
 
-AIDA::Dev::IDevProfile2D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TProfile2D &  tprof )
+AIDA::Dev::IDevProfile2D * iAIDA::AIDA_RootConverter::HistoConverter::copyToAida(AIDA::Dev::IDevHistogramFactory& factory, const TProfile2D &  tprof )
 {
  
 
@@ -698,7 +698,7 @@ AIDA::Dev::IDevProfile2D * pi::AIDA_RootConverter::HistoConverter::copyToAida(AI
 
 // get bin edges vectors from AIDA histogram (axis)
 
-void pi::AIDA_RootConverter::HistoConverter::getBinEdges(const AIDA::IAxis & axis, std::vector<double> & binEdges) { 
+void iAIDA::AIDA_RootConverter::HistoConverter::getBinEdges(const AIDA::IAxis & axis, std::vector<double> & binEdges) { 
 
   binEdges.resize( axis.bins() + 1 );
   for (int i =0; i < axis.bins(); ++i) 
@@ -709,7 +709,7 @@ void pi::AIDA_RootConverter::HistoConverter::getBinEdges(const AIDA::IAxis & axi
   return;
 }
 
-void pi::AIDA_RootConverter::HistoConverter::getBinEdges(const TAxis & axis, std::vector<double> & binEdges) { 
+void iAIDA::AIDA_RootConverter::HistoConverter::getBinEdges(const TAxis & axis, std::vector<double> & binEdges) { 
 
   int nbin =  axis.GetNbins(); 
   binEdges.resize( nbin + 1 );
@@ -722,7 +722,7 @@ void pi::AIDA_RootConverter::HistoConverter::getBinEdges(const TAxis & axis, std
   return;
 }
 
-bool pi::AIDA_RootConverter::HistoConverter::isEqBinSize(const  TAxis * axis) 
+bool iAIDA::AIDA_RootConverter::HistoConverter::isEqBinSize(const  TAxis * axis) 
 { 
   // do as Root does to check if variable bins 
   assert(axis);

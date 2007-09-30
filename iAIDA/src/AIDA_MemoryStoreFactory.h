@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_MEMORYSTOREFACTORY
-#define AIDANATIVE_MEMORYSTOREFACTORY 1
+#ifndef IAIDA_MEMORYSTOREFACTORY
+#define IAIDA_MEMORYSTOREFACTORY 1
 
 #include <string>
 #include "AIDA_Dev/IStoreFactory.h"
@@ -29,4 +29,4 @@ public:
   }
 }
 
-#endif /* ifndef AIDANATIVE_MEMORYSTOREFACTORY */
+#endif /* ifndef IAIDA_MEMORYSTOREFACTORY */

@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_AIDA_EVALUATOR
-#define AIDANATIVE_AIDA_TUPLE_AIDA_EVALUATOR 1
+#ifndef IAIDA_AIDA_TUPLE_AIDA_EVALUATOR
+#define IAIDA_AIDA_TUPLE_AIDA_EVALUATOR 1
 
 #include "AIDA/IEvaluator.h"
 #include "AIDA_Tuple_native/IEvaluatorExpressionBase.h"
@@ -42,4 +42,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_AIDA_EVALUATOR */
+#endif /* ifndef IAIDA_AIDA_TUPLE_AIDA_EVALUATOR */

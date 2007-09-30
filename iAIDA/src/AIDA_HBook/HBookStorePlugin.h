@@ -3,14 +3,14 @@
 // Author    : Lorenzo.MONETA@cern.ch 
 // Created by: moneta  at Tue Sep 30 00:22:40 2003
 
-#ifndef PI_AIDA_HBOOKSTORE_HBOOKSTOREPLUGIN_H
-#define PI_AIDA_HBOOKSTORE_HBOOKSTOREPLUGIN_H 1
+#ifndef IAIDA_AIDA_HBOOKSTORE_HBOOKSTOREPLUGIN_H
+#define IAIDA_AIDA_HBOOKSTORE_HBOOKSTOREPLUGIN_H 1
 
 #include "AIDA_HBookStore/AIDA_HBookStoreFactory.h"
 // #include "AIDA_Plugin/AIDA_PluginType.h"
 #include "AIDA_Dev/IStoreFactory.h"
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 
@@ -30,12 +30,12 @@ public:
 
   AIDA::Dev::IStoreFactory * createStoreFactory()  
     {
-      return new pi::AIDA_HBookStore::AIDA_HBookStoreFactory(); 
+      return new iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory(); 
     }
 
 
 }; 
 
 } // end namespace AIDA_HBookStore
-} // end namespace pi
+} // end namespace iAIDA
 #endif 

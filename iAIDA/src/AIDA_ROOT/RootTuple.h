@@ -1,5 +1,5 @@
-#ifndef PI_AIDA_ROOTSTORE_AIDA_ROOTSTORE_ROOTTUPLE_H
-#define PI_AIDA_ROOTSTORE_AIDA_ROOTSTORE_ROOTTUPLE_H
+#ifndef IAIDA_AIDA_ROOTSTORE_AIDA_ROOTSTORE_ROOTTUPLE_H
+#define IAIDA_AIDA_ROOTSTORE_AIDA_ROOTSTORE_ROOTTUPLE_H
 
 #include "IPersistentTuple.h"
 #include <vector>
@@ -7,7 +7,7 @@
 class TNtuple; 
 class TFile;
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_RootStore {
 
 class RootTuple : virtual public IPersistentTuple

@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_PATHPARSER
-#define AIDANATIVE_PATHPARSER 1
+#ifndef IAIDA_PATHPARSER
+#define IAIDA_PATHPARSER 1
 
 #include <list>
 #include <string>
@@ -30,4 +30,4 @@ public:
 
 static const iAIDA::aida_tree::PathParser tree_path_parser;
 
-#endif /* ifndef AIDANATIVE_PATHPARSER */
+#endif /* ifndef IAIDA_PATHPARSER */

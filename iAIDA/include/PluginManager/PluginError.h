@@ -6,7 +6,7 @@
 # include "PluginManager/config.h"
 # include "SealBase/Error.h"
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -29,5 +29,5 @@ public:
 //<<<<<< INLINE PUBLIC FUNCTIONS                                        >>>>>>
 //<<<<<< INLINE MEMBER FUNCTIONS                                        >>>>>>
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_ERROR_H

@@ -23,8 +23,8 @@
 // (c) CERN, Geneva
 //
 
-#ifndef AIDANATIVE_TEXT_MESSAGE_H
-#define AIDANATIVE_TEXT_MESSAGE_H
+#ifndef IAIDA_TEXT_MESSAGE_H
+#define IAIDA_TEXT_MESSAGE_H
 
 
 
@@ -159,5 +159,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_TEXT_MESSAGE_H
+#endif // IAIDA_TEXT_MESSAGE_H
 

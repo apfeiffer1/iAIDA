@@ -27,8 +27,8 @@
 // 
 // Last update: Fri Oct  4 16:54:59 2002
 // 
-#ifndef AIDANATIVE_FML_RANGESET
-#define AIDANATIVE_FML_RANGESET 1
+#ifndef IAIDA_FML_RANGESET
+#define IAIDA_FML_RANGESET 1
 
 #include <vector>
 

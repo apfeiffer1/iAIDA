@@ -1,15 +1,15 @@
 #include "HBookFileRegistry.h"
 
-pi::AIDA_HBookStore::HBookFileRegistry&
-pi::AIDA_HBookStore::HBookFileRegistry::theRegistry()
+iAIDA::AIDA_HBookStore::HBookFileRegistry&
+iAIDA::AIDA_HBookStore::HBookFileRegistry::theRegistry()
 {
-  static pi::AIDA_HBookStore::HBookFileRegistry registry;
+  static iAIDA::AIDA_HBookStore::HBookFileRegistry registry;
   return registry;
 }
 
 
 int
-pi::AIDA_HBookStore::HBookFileRegistry::nextAvailableLUN( const std::string& fileName )
+iAIDA::AIDA_HBookStore::HBookFileRegistry::nextAvailableLUN( const std::string& fileName )
 {
   if ( m_fileNames.find( fileName ) != m_fileNames.end() ) return 0;
 
@@ -26,7 +26,7 @@ pi::AIDA_HBookStore::HBookFileRegistry::nextAvailableLUN( const std::string& fil
 
 
 void
-pi::AIDA_HBookStore::HBookFileRegistry::releaseLUN( int lun )
+iAIDA::AIDA_HBookStore::HBookFileRegistry::releaseLUN( int lun )
 {
   std::map< int, std::string >::const_iterator iLun = m_allocatedLUNs.find( lun );
   if ( iLun != m_allocatedLUNs.end() ) {

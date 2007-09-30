@@ -56,13 +56,13 @@ static const std::string defaultTuplePluginType = "AIDA_Tuple_HBook";
 static const std::string defaultHistoPluginType = "AIDA_Histogram_HBook"; 
 
 
-pi::AIDA_HBookStore::AIDA_StoreHBook::AIDA_StoreHBook( const std::string& name,
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::AIDA_StoreHBook( const std::string& name,
 							   bool readOnly,
 							   bool createNew,
 							   const std::string& options ):
   m_name( name ),
   m_isClosed( true ),
-  m_optionParser( new pi::AIDA_HBookStore::HBookOptionParser( options ) ),
+  m_optionParser( new iAIDA::AIDA_HBookStore::HBookOptionParser( options ) ),
   m_fileHandler( 0 ),
   m_cache( 0 ),
   m_dirManager( 0 )
@@ -73,27 +73,27 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::AIDA_StoreHBook( const std::string& name,
   histoPluginType = defaultHistoPluginType;
 
   // Initialize HBOOK
-  pi::AIDA_HBookStore::HBook::initialize();
+  iAIDA::AIDA_HBookStore::HBook::initialize();
 
   // Open the file
-  m_fileHandler = new pi::AIDA_HBookStore::HBookFileHandler( m_name,
+  m_fileHandler = new iAIDA::AIDA_HBookStore::HBookFileHandler( m_name,
 								 m_optionParser->recordLength(),
 								 readOnly,
 								 createNew );
   m_isClosed = false;
 
   // Create the memory cache
-  m_cache = new pi::AIDA_HBookStore::HBookMemoryCache( m_fileHandler->zebraName() );
+  m_cache = new iAIDA::AIDA_HBookStore::HBookMemoryCache( m_fileHandler->zebraName() );
 
   // Copy the directory structure from the file into the memory
-  m_dirManager = new pi::AIDA_HBookStore::HBookDirectoryManager( m_fileHandler->zebraName() );
+  m_dirManager = new iAIDA::AIDA_HBookStore::HBookDirectoryManager( m_fileHandler->zebraName() );
 
   // Retrieve the headers of the objects
   collectObjectTypes( "/" );
 }
 
 
-pi::AIDA_HBookStore::AIDA_StoreHBook::~AIDA_StoreHBook()
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::~AIDA_StoreHBook()
 {
   close();
   if ( m_optionParser ) delete m_optionParser;
@@ -107,14 +107,14 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::~AIDA_StoreHBook()
 
 
 const std::string&
-pi::AIDA_HBookStore::AIDA_StoreHBook::name() const
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::name() const
 {
   return m_name;
 }
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::writeObject( const AIDA::IManagedObject& dataObject,
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::writeObject( const AIDA::IManagedObject& dataObject,
 						       const std::string& path )
 {
   if ( m_objectTypes.find( path ) != m_objectTypes.end() ) return false;
@@ -122,7 +122,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::writeObject( const AIDA::IManagedObject& d
     dynamic_cast< AIDA::Dev::IDevManagedObject* >( &( const_cast<AIDA::IManagedObject&>( dataObject ) ) );
   if ( ! object ) return false;
   const std::string& type = object->userLevelClassType();
-  if ( ! pi::AIDA_HBookStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
+  if ( ! iAIDA::AIDA_HBookStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
     return false;
   }
   object->setUpToDate( false );
@@ -154,7 +154,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::writeObject( const AIDA::IManagedObject& d
 
 
 AIDA::IManagedObject*
-pi::AIDA_HBookStore::AIDA_StoreHBook::copyAndWrite( const AIDA::IManagedObject& dataObject,
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::copyAndWrite( const AIDA::IManagedObject& dataObject,
 							const std::string& path )
 {
   if ( m_objectTypes.find( path ) != m_objectTypes.end() ) return 0;
@@ -162,7 +162,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::copyAndWrite( const AIDA::IManagedObject& 
     dynamic_cast< AIDA::Dev::IDevManagedObject* >( &( const_cast<AIDA::IManagedObject&>( dataObject ) ) );
   if ( ! object ) return 0;
   const std::string& type = object->userLevelClassType();
-  if ( ! pi::AIDA_HBookStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
+  if ( ! iAIDA::AIDA_HBookStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
     return 0;
   }
 
@@ -220,7 +220,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::copyAndWrite( const AIDA::IManagedObject& 
 
 
 AIDA::IManagedObject*
-pi::AIDA_HBookStore::AIDA_StoreHBook::retrieveObject( const std::string & path )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::retrieveObject( const std::string & path )
 {
   std::map< std::string, AIDA::Dev::IDevManagedObject* >::iterator iObjectRef = m_objectRefs.find( path );
   if ( iObjectRef == m_objectRefs.end() ) return 0;
@@ -285,12 +285,12 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::retrieveObject( const std::string & path )
     }
 
 
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( directoryAndId.first ) );
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( directoryAndId.first ) );
-    pi::AIDA_HBookStore::HBook::loadObjectIntoMemory( directoryAndId.second );
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( directoryAndId.first ) );
-    const pi::AIDA_HBookStore::HistogramConverter& histogramConverter =
-      pi::AIDA_HBookStore::HistogramConverter::theConverter();
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( directoryAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( directoryAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::loadObjectIntoMemory( directoryAndId.second );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( directoryAndId.first ) );
+    const iAIDA::AIDA_HBookStore::HistogramConverter& histogramConverter =
+      iAIDA::AIDA_HBookStore::HistogramConverter::theConverter();
     if ( type == "IHistogram1D" ) {
       newObject = histogramConverter.createHistogram1DFromHBook( *hf, directoryAndId.second );
     }
@@ -300,7 +300,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::retrieveObject( const std::string & path )
     else if ( type == "IProfile1D" ) {
       newObject = histogramConverter.createProfile1DFromHBook( *hf, directoryAndId.second );
     }
-    pi::AIDA_HBookStore::HBook::deleteFromMemory( directoryAndId.second );
+    iAIDA::AIDA_HBookStore::HBook::deleteFromMemory( directoryAndId.second );
     m_objectRefs[path] = newObject;
   }
 
@@ -319,7 +319,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::retrieveObject( const std::string & path )
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::removeObject( const std::string& path )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::removeObject( const std::string& path )
 {
   if ( m_objectTypes.find( path ) == m_objectTypes.end() ) return false;
   m_objectTypes.erase( path );
@@ -339,7 +339,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::removeObject( const std::string& path )
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::moveObject(const std::string& from,
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::moveObject(const std::string& from,
 						     const std::string& to )
 {
   if ( m_objectTypes.find( from ) == m_objectTypes.end() ) return false;
@@ -351,7 +351,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::moveObject(const std::string& from,
 
 
 std::vector< std::string >
-pi::AIDA_HBookStore::AIDA_StoreHBook::listObjectPaths( const std::string directory,
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::listObjectPaths( const std::string directory,
 							   bool recursive ) const
 {
   std::string dir = directory;
@@ -394,7 +394,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::listObjectPaths( const std::string directo
 }
 
 
-std::vector< std::string > pi::AIDA_HBookStore::AIDA_StoreHBook::listObjectTypes( const std::string directory,
+std::vector< std::string > iAIDA::AIDA_HBookStore::AIDA_StoreHBook::listObjectTypes( const std::string directory,
 										      bool recursive ) const
 {
   std::string dir = directory;
@@ -438,7 +438,7 @@ std::vector< std::string > pi::AIDA_HBookStore::AIDA_StoreHBook::listObjectTypes
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::commit()
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::commit()
 {
   if ( m_isClosed ) return false;
   std::set< std::string > tuplesToUpdate;
@@ -474,7 +474,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::commit()
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::close()
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::close()
 {
   if ( m_isClosed ) return true;
   if ( m_cache ) {
@@ -494,11 +494,11 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::close()
 }
 
 
-bool pi::AIDA_HBookStore::AIDA_StoreHBook::canMoveTuples() const {return false;}
-bool pi::AIDA_HBookStore::AIDA_StoreHBook::canCopyTuples() const {return false;}
+bool iAIDA::AIDA_HBookStore::AIDA_StoreHBook::canMoveTuples() const {return false;}
+bool iAIDA::AIDA_HBookStore::AIDA_StoreHBook::canCopyTuples() const {return false;}
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleHeader( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::writeTupleHeader( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( m_tuples.find( pathInStore ) != m_tuples.end() ) return false;
@@ -519,13 +519,13 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleHeader( AIDA::Dev::ITupleHeader&
     if ( ! m_dirManager->existsDirectory( dirAndId.first ) ) {
       if ( ! m_dirManager->createDirectory( dirAndId.first ) ) return false;
     }
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( dirAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( dirAndId.first ) );
 
     if ( noFloat || header.options().find( flagForRWNtuple ) == std::string::npos ) { // CWN tuples
-      pi::AIDA_HBookStore::HBook::declareCWNTuple( dirAndId.second,
+      iAIDA::AIDA_HBookStore::HBook::declareCWNTuple( dirAndId.second,
 						       dynamic_cast< AIDA::ITuple* >( m_objectRefs[pathInStore] )->title() );
-      pi::AIDA_HBookStore::CWNtuple* cwntuple = new pi::AIDA_HBookStore::CWNtuple( m_cache->directoryInMemory( dirAndId.first ),
+      iAIDA::AIDA_HBookStore::CWNtuple* cwntuple = new iAIDA::AIDA_HBookStore::CWNtuple( m_cache->directoryInMemory( dirAndId.first ),
 											   dirAndId.second );
 
 //-ap      // get plugin loader
@@ -545,17 +545,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleHeader( AIDA::Dev::ITupleHeader&
       std::auto_ptr<AIDA::Dev::IDevTupleFactory> tf( new iAIDA::AIDA_Tuple_native::AIDA_DevTupleFactory() ); 
 
       cwntuple->writeDescription( header, *tf, this );
-      m_tuples.insert( std::make_pair( pathInStore, static_cast<pi::AIDA_HBookStore::IPersistentTuple*>( cwntuple ) ) );
+      m_tuples.insert( std::make_pair( pathInStore, static_cast<iAIDA::AIDA_HBookStore::IPersistentTuple*>( cwntuple ) ) );
       return true;
     }
     else { // RWN tuples
-      if ( ! pi::AIDA_HBookStore::HBook::bookRWNtuple( dirAndId.second,
+      if ( ! iAIDA::AIDA_HBookStore::HBook::bookRWNtuple( dirAndId.second,
 							   dynamic_cast< AIDA::ITuple* >( m_objectRefs[pathInStore] )->title(),
 							   variableNames,
 							   m_cache->directoryInFile( dirAndId.first ),
 							   m_optionParser->bufferSizeForRWN() ) ) return false;
       m_tuples.insert( std::make_pair( pathInStore,
-				       static_cast<pi::AIDA_HBookStore::IPersistentTuple*>( new pi::AIDA_HBookStore::RWNtuple( m_cache->directoryInMemory( dirAndId.first ),
+				       static_cast<iAIDA::AIDA_HBookStore::IPersistentTuple*>( new iAIDA::AIDA_HBookStore::RWNtuple( m_cache->directoryInMemory( dirAndId.first ),
 																       dirAndId.second,
 																       variableNames.size() ) ) ) );
       return true;
@@ -568,7 +568,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleHeader( AIDA::Dev::ITupleHeader&
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::readTupleHeader( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::readTupleHeader( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( m_tuples.find( pathInStore ) != m_tuples.end() ) return true;
@@ -604,27 +604,27 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::readTupleHeader( AIDA::Dev::ITupleHeader& 
     std::auto_ptr<AIDA::Dev::IDevTupleFactory> tf( new iAIDA::AIDA_Tuple_native::AIDA_DevTupleFactory() ); 
 
 
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( dirAndId.first ) );
-    pi::AIDA_HBookStore::HBook::loadObjectIntoMemory( dirAndId.second );
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( dirAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::loadObjectIntoMemory( dirAndId.second );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( dirAndId.first ) );
 
     // Retrieve the title and the number of rows
-    const int numberOfEntries = pi::AIDA_HBookStore::HBook::numberOfEntries( dirAndId.second );
+    const int numberOfEntries = iAIDA::AIDA_HBookStore::HBook::numberOfEntries( dirAndId.second );
     std::string title;
     std::vector<std::string> variableNames;
     std::vector<std::pair<float,float> > columnMinAndMax;
-    pi::AIDA_HBookStore::HBook::getTupleParameters( dirAndId.second, title, variableNames, columnMinAndMax );
+    iAIDA::AIDA_HBookStore::HBook::getTupleParameters( dirAndId.second, title, variableNames, columnMinAndMax );
     dynamic_cast< AIDA::Dev::IDevTuple* >( m_objectRefs[ pathInStore ] )->setTitle( title );
     header.setNumberOfRows( numberOfEntries );
     header.setCurrentRowNumber( -1 );
 
     // Build the descriptions
-    if ( pi::AIDA_HBookStore::HBook::isCWNtuple( dirAndId.second ) ) { // CWN tuple
-      pi::AIDA_HBookStore::CWNtuple* cwntuple = new pi::AIDA_HBookStore::CWNtuple( m_cache->directoryInMemory( dirAndId.first ),
+    if ( iAIDA::AIDA_HBookStore::HBook::isCWNtuple( dirAndId.second ) ) { // CWN tuple
+      iAIDA::AIDA_HBookStore::CWNtuple* cwntuple = new iAIDA::AIDA_HBookStore::CWNtuple( m_cache->directoryInMemory( dirAndId.first ),
 											   dirAndId.second );
       cwntuple->readDescription( header, *tf, this );
-      m_tuples.insert( std::make_pair( pathInStore, static_cast<pi::AIDA_HBookStore::IPersistentTuple*>( cwntuple ) ) );
+      m_tuples.insert( std::make_pair( pathInStore, static_cast<iAIDA::AIDA_HBookStore::IPersistentTuple*>( cwntuple ) ) );
       return true;
     }
     else { // RWN tuple
@@ -637,7 +637,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::readTupleHeader( AIDA::Dev::ITupleHeader& 
 						 0, 0, numberOfEntries );
 	header.setVariableDescription( description, true );
       }
-      m_tuples.insert( std::make_pair( pathInStore, static_cast<pi::AIDA_HBookStore::IPersistentTuple*>( new pi::AIDA_HBookStore::RWNtuple( m_cache->directoryInMemory( dirAndId.first ),
+      m_tuples.insert( std::make_pair( pathInStore, static_cast<iAIDA::AIDA_HBookStore::IPersistentTuple*>( new iAIDA::AIDA_HBookStore::RWNtuple( m_cache->directoryInMemory( dirAndId.first ),
 																		    dirAndId.second,
 																		    variableNames.size() ) ) ) );
       return true;
@@ -648,17 +648,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::readTupleHeader( AIDA::Dev::ITupleHeader& 
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::bindVariable( AIDA::Dev::ITupleHeader& header, int variableIndex )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::bindVariable( AIDA::Dev::ITupleHeader& header, int variableIndex )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->bindVariable( variableIndex );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->bindVariable( variableIndex, pathInStore );
   }
@@ -666,17 +666,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::bindVariable( AIDA::Dev::ITupleHeader& hea
 
 
 void*
-pi::AIDA_HBookStore::AIDA_StoreHBook::variableAddress( AIDA::Dev::ITupleHeader& header, int variableIndex )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::variableAddress( AIDA::Dev::ITupleHeader& header, int variableIndex )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return 0;
     else return iTuple->second->variableAddress( variableIndex );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return 0;
     else {
       void * p = iTuple->second->variableAddress( variableIndex, pathInStore );
@@ -687,17 +687,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::variableAddress( AIDA::Dev::ITupleHeader& 
 
 
 const void*
-pi::AIDA_HBookStore::AIDA_StoreHBook::variableAddress( const AIDA::Dev::ITupleHeader& header, int variableIndex ) const
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::variableAddress( const AIDA::Dev::ITupleHeader& header, int variableIndex ) const
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return 0;
     else return iTuple->second->variableAddress( variableIndex );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::const_iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return 0;
     else  {
       const void * p = iTuple->second->variableAddress( variableIndex, pathInStore );
@@ -708,17 +708,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::variableAddress( const AIDA::Dev::ITupleHe
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::clearBindings( const AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::clearBindings( const AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->clearBindings();
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->clearBindings( pathInStore );
   }
@@ -726,17 +726,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::clearBindings( const AIDA::Dev::ITupleHead
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleRow( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::writeTupleRow( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->writeTupleRow( header.currentRowNumber() );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->writeTupleRow( header.currentRowNumber(), pathInStore );
   }
@@ -744,17 +744,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::writeTupleRow( AIDA::Dev::ITupleHeader& he
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::readTupleRow( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::readTupleRow( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->readTupleRow( header.currentRowNumber() );
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->readTupleRow( header.currentRowNumber(), pathInStore );
   }
@@ -762,17 +762,17 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::readTupleRow( AIDA::Dev::ITupleHeader& hea
 
 
 bool
-pi::AIDA_HBookStore::AIDA_StoreHBook::resetTuple( AIDA::Dev::ITupleHeader& header )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::resetTuple( AIDA::Dev::ITupleHeader& header )
 {
   const std::string& pathInStore = header.pathInStore();
   if ( pathInStore[0] == '/' ) {
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( pathInStore );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->reset();
   }
   else {
     const std::string path = pathInStore.substr( pathInStore.find( "/" ) );
-    std::map< std::string, pi::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
+    std::map< std::string, iAIDA::AIDA_HBookStore::IPersistentTuple* >::iterator iTuple = m_tuples.find( path );
     if ( iTuple == m_tuples.end() ) return false;
     else return iTuple->second->reset( pathInStore );
   }
@@ -780,7 +780,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::resetTuple( AIDA::Dev::ITupleHeader& heade
 
 
 void
-pi::AIDA_HBookStore::AIDA_StoreHBook::collectObjectTypes( const std::string& directory )
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::collectObjectTypes( const std::string& directory )
 {
   AIDA::Dev::IDevManagedObject* dummyObject = 0;
 
@@ -840,13 +840,13 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::collectObjectTypes( const std::string& dir
 
 
 void
-pi::AIDA_HBookStore::AIDA_StoreHBook::commitDelete()
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::commitDelete()
 {
   for ( std::set<std::string>::const_iterator iObj = m_objectsToDelete.begin();
 	iObj != m_objectsToDelete.end(); ++iObj ) {
     std::pair< std::string, int > directoryAndId = directoryAndIdentifier( *iObj );
-    pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( directoryAndId.first ) );
-    pi::AIDA_HBookStore::HBook::deleteObjectFromDiskDirectory( directoryAndId.second );
+    iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInFile( directoryAndId.first ) );
+    iAIDA::AIDA_HBookStore::HBook::deleteObjectFromDiskDirectory( directoryAndId.second );
     std::map< std::string, IPersistentTuple* >::iterator iTuple = m_tuples.find( *iObj );
     if ( iTuple != m_tuples.end() ) {
       delete iTuple->second;
@@ -861,7 +861,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::commitDelete()
 
 
 void
-pi::AIDA_HBookStore::AIDA_StoreHBook::commitAdd()
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::commitAdd()
 {
   for ( std::set<std::string>::const_iterator iObj = m_objectsToAdd.begin();
 	iObj != m_objectsToAdd.end(); ++iObj ) {
@@ -872,9 +872,9 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::commitAdd()
       if ( ! m_dirManager->existsDirectory( directoryAndId.first ) ) {
 	m_dirManager->createDirectory( directoryAndId.first );
       }
-      pi::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( directoryAndId.first ) );
-      const pi::AIDA_HBookStore::HistogramConverter& histogramConverter =
-	pi::AIDA_HBookStore::HistogramConverter::theConverter();
+      iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_cache->directoryInMemory( directoryAndId.first ) );
+      const iAIDA::AIDA_HBookStore::HistogramConverter& histogramConverter =
+	iAIDA::AIDA_HBookStore::HistogramConverter::theConverter();
       if ( type == "IHistogram1D" ) {
 	AIDA::IHistogram1D* h = dynamic_cast<AIDA::IHistogram1D*>(object);
 	if ( h ) histogramConverter.convertToHBook( *h, directoryAndId.second, m_optionParser->areErrorsStored() );
@@ -895,7 +895,7 @@ pi::AIDA_HBookStore::AIDA_StoreHBook::commitAdd()
 
 
 std::pair<std::string, int>
-pi::AIDA_HBookStore::AIDA_StoreHBook::directoryAndIdentifier( const std::string& path ) const
+iAIDA::AIDA_HBookStore::AIDA_StoreHBook::directoryAndIdentifier( const std::string& path ) const
 {
   unsigned int pos = path.size();
   for ( unsigned int iChar = path.size() - 1; iChar >= 0; --iChar ) {

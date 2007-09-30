@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:41:58 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_MARKERSTYLE_H
-#define AIDANATIVE_AIDA_MARKERSTYLE_H
+#ifndef IAIDA_AIDA_MARKERSTYLE_H
+#define IAIDA_AIDA_MARKERSTYLE_H
 
 
 #include "AIDA/IMarkerStyle.h"
@@ -98,5 +98,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_MARKERSTYLE_H
+#endif // IAIDA_AIDA_MARKERSTYLE_H
 

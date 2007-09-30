@@ -17,7 +17,7 @@
 
 # include "DataObject.h"
 
-namespace seal { 
+namespace iAIDA { 
   class IOInput; 
   class IOOutput; 
 }

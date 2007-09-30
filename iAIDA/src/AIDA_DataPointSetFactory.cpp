@@ -3,7 +3,7 @@
 #include "AIDA_Dev/IDevDataPointSetFactory.h"
 #include "AIDA_Dev/IDevDataPointSet.h"
 
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
 #include <exception>
 #include <iostream>
 #define DATAPOINTSET_REPORT_ERROR( XXX ) std::cerr << XXX << std::endl
@@ -32,12 +32,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::st
 								    const std::string& title,
 								    int dimensionOfPoint )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( title, dimensionOfPoint );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -51,12 +51,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    int dimensionOfPoint )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( dimensionOfPoint );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -70,12 +70,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createCopy( const std::string& name,
 									const AIDA::IDataPointSet & original )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.createCopy( original );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -89,12 +89,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::IHistogram1D & h, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( h, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -108,12 +108,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::IHistogram2D & h, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( h, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -127,12 +127,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::IHistogram3D & h, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( h, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -146,12 +146,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::ICloud1D & c, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( c, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -165,12 +165,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::ICloud2D & c, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( c, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -184,12 +184,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::ICloud3D & c, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( c, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -203,12 +203,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::IProfile1D & ph, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( ph, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -222,12 +222,12 @@ AIDA::IDataPointSet*
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::create( const std::string& name,
 								    const AIDA::IProfile2D & ph, const std::string & options )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.create( ph, options );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -242,12 +242,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::add( const std::strin
 								 const AIDA::IDataPointSet& a,
 								 const AIDA::IDataPointSet& b )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.add( a, b, emptyString );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -262,12 +262,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::subtract( const std::
 								      const AIDA::IDataPointSet& a,
 								      const AIDA::IDataPointSet& b )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.subtract( a, b, emptyString );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -282,12 +282,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::multiply( const std::
 								      const AIDA::IDataPointSet& a,
 								      const AIDA::IDataPointSet& b )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.multiply( a, b, emptyString );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -302,12 +302,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::divide( const std::st
 								    const AIDA::IDataPointSet& a,
 								    const AIDA::IDataPointSet& b )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.divide( a, b, emptyString );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -322,12 +322,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::weightedMean( const s
 									  const AIDA::IDataPointSet& a,
 									  const AIDA::IDataPointSet& b )
 {
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
   AIDA::Dev::IDevDataPointSet* p = m_factory.weightedMean( a, b, emptyString );
   return registerObject( p, name );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -347,12 +347,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::weightedMean( const s
 AIDA::IDataPointSet * 
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createY(const std::string & path, const std::string & title, const std::vector<double>  & y, const std::vector<double>  & eyp, const std::vector<double>  & eym) {
  
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
     AIDA::Dev::IDevDataPointSet* p = m_factory.createY(title, y, eyp, eym );
     return registerObject( p, path );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -385,12 +385,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createY(const std::st
 AIDA::IDataPointSet * 
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createX(const std::string & path, const std::string & title, const std::vector<double>  & x, const std::vector<double>  & exp, const std::vector<double>  & exm) { 
  
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
     AIDA::Dev::IDevDataPointSet* p = m_factory.createX(title, x, exp, exm );
     return registerObject( p, path );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -418,12 +418,12 @@ AIDA::IDataPointSet * iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory:
 AIDA::IDataPointSet * 
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createXY(const std::string & path, const std::string & title, const std::vector<double>  & x, const std::vector<double>  & y, const std::vector<double>  & exp, const std::vector<double>  & eyp, const std::vector<double>  & exm, const std::vector<double>  & eym) { 
   
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
     AIDA::Dev::IDevDataPointSet* p = m_factory.createXY(title, x, y, exp, eyp, exm, eym );
     return registerObject( p, path );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );
@@ -451,12 +451,12 @@ iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createXY(const std::s
 AIDA::IDataPointSet * 
 iAIDA::AIDA_DataPointSet_native::AIDA_DataPointSetFactory::createXYZ(const std::string & path, const std::string & title, const std::vector<double>  & x, const std::vector<double>  & y, const std::vector<double>  & z, const std::vector<double>  & exp, const std::vector<double>  & eyp, const std::vector<double>  & ezp, const std::vector<double>  & exm, const std::vector<double>  & eym, const std::vector<double>  & ezm) { 
   
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   try{
 #endif
     AIDA::Dev::IDevDataPointSet* p = m_factory.createXYZ(title, x, y, z, exp, eyp, ezp, exm, eym, ezm );
     return registerObject( p, path );
-#ifdef PI_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_DATAPOINTSET_DATAPOINTSET_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     DATAPOINTSET_REPORT_ERROR( e.what() );

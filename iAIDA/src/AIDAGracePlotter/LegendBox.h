@@ -29,8 +29,8 @@
 // Created by user sang on Mon Aug  5 12:23:42 2002
 // 
 
-#ifndef AIDANATIVE_QPLOTTER_NEW_VIEWER_LEGENDBOX_H
-#define AIDANATIVE_QPLOTTER_NEW_VIEWER_LEGENDBOX_H
+#ifndef IAIDA_QPLOTTER_NEW_VIEWER_LEGENDBOX_H
+#define IAIDA_QPLOTTER_NEW_VIEWER_LEGENDBOX_H
 
 
 #include "MarkerStyle.h"
@@ -93,5 +93,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif //  AIDANATIVE_QPLOTTER_NEW_VIEWER_LEGENDBOX_H
+#endif //  IAIDA_QPLOTTER_NEW_VIEWER_LEGENDBOX_H
 

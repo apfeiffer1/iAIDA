@@ -44,52 +44,52 @@ static int n_func_instance = 0;
 //
 
 double function_adapter0(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder0::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter1(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<1> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder1::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<1> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder1::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter2(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<2> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder2::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<2> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder2::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter3(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<3> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder3::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<3> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder3::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter4(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<4> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder4::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<4> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder4::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter5(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<5> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder5::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<5> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder5::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter6(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<6> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder6::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<6> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder6::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter7(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<7> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder7::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<7> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder7::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter8(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<8> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder8::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<8> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder8::instance();
   return theFunctionAdapter(x,p); 
 }
 double function_adapter9(double *x, double *p) {
-  pi::AIDA_RootConverter::FuncAdapter<9> & theFunctionAdapter =  pi::AIDA_RootConverter::FuncAdapterHolder9::instance();
+  iAIDA::AIDA_RootConverter::FuncAdapter<9> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder9::instance();
   return theFunctionAdapter(x,p); 
 }
   
 
-pi::AIDA_RootConverter::FunctionConverter::FunctionConverter(const pi::AIDA_RootConverter::FunctionConverter &)  
+iAIDA::AIDA_RootConverter::FunctionConverter::FunctionConverter(const iAIDA::AIDA_RootConverter::FunctionConverter &)  
 {
 }
 
-pi::AIDA_RootConverter::FunctionConverter & pi::AIDA_RootConverter::FunctionConverter::operator = (const pi::AIDA_RootConverter::FunctionConverter &rhs) 
+iAIDA::AIDA_RootConverter::FunctionConverter & iAIDA::AIDA_RootConverter::FunctionConverter::operator = (const iAIDA::AIDA_RootConverter::FunctionConverter &rhs) 
 {
    if (this == &rhs) return *this;  // time saving self-test
 
@@ -102,12 +102,12 @@ pi::AIDA_RootConverter::FunctionConverter & pi::AIDA_RootConverter::FunctionConv
 
 
 
-TF1 *  pi::AIDA_RootConverter::FunctionConverter::toRoot(AIDA::IFunction & func, const std::string & name, double xmin, double xmax ) 
+TF1 *  iAIDA::AIDA_RootConverter::FunctionConverter::toRoot(AIDA::IFunction & func, const std::string & name, double xmin, double xmax ) 
 { 
   TF1 * tf = 0;
 
   FP pFunc = 0; 
-  pi::AIDA_RootConverter::BaseFuncAdapter * theFunctionAdapter = 0; 
+  iAIDA::AIDA_RootConverter::BaseFuncAdapter * theFunctionAdapter = 0; 
   // need to create a pointer to the AIDA function (use a global object)
 
   if (n_func_instance >= MAX_FUNC_ADAPTER) { 
@@ -116,43 +116,43 @@ TF1 *  pi::AIDA_RootConverter::FunctionConverter::toRoot(AIDA::IFunction & func,
   }
   switch(n_func_instance) {  
   case 0 : 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder0::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::instance();
     pFunc = function_adapter0; 
     break; 
   case 1 : 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder1::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder1::instance();
     pFunc = function_adapter1; 
     break; 
   case 2: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder2::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder2::instance();
     pFunc = function_adapter2; 
     break; 
   case 3: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder3::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder3::instance();
     pFunc = function_adapter3; 
     break; 
   case 4: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder4::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder4::instance();
     pFunc = function_adapter4; 
     break; 
   case 5: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder5::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder5::instance();
     pFunc = function_adapter5;
     break; 
   case 6: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder6::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder6::instance();
     pFunc = function_adapter6; 
     break; 
   case 7: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder7::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder7::instance();
     pFunc = function_adapter7; 
     break; 
   case 8: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder8::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder8::instance();
     pFunc = function_adapter8; 
     break; 
   case 9: 
-    theFunctionAdapter =  &pi::AIDA_RootConverter::FuncAdapterHolder9::instance();
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder9::instance();
     pFunc = function_adapter9; 
     break; 
   default : 
@@ -174,7 +174,7 @@ TF1 *  pi::AIDA_RootConverter::FunctionConverter::toRoot(AIDA::IFunction & func,
 
 }
 
-void pi::AIDA_RootConverter::BaseFuncAdapter::setFunction(AIDA::IFunction * f)  
+void iAIDA::AIDA_RootConverter::BaseFuncAdapter::setFunction(AIDA::IFunction * f)  
 { 
   m_func = f;
   m_par = m_func->parameters(); 
@@ -182,7 +182,7 @@ void pi::AIDA_RootConverter::BaseFuncAdapter::setFunction(AIDA::IFunction * f)
 
 }
 
-double pi::AIDA_RootConverter::BaseFuncAdapter::operator() (double *x, double *p) { 
+double iAIDA::AIDA_RootConverter::BaseFuncAdapter::operator() (double *x, double *p) { 
   // set parameters 
   if ( p != 0) { 
     for (unsigned int i = 0; i < m_par.size() ; ++i) 

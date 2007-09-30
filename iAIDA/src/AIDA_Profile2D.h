@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDAPROFILE2D
-#define AIDANATIVE_AIDAPROFILE2D 1
+#ifndef IAIDA_AIDAPROFILE2D
+#define IAIDA_AIDAPROFILE2D 1
 
 #include "AIDA_BaseHistogram.h"
 #include "AIDA_Dev/IDevProfile2D.h"
@@ -127,4 +127,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDAPROFILE2D */
+#endif /* ifndef IAIDA_AIDAPROFILE2D */

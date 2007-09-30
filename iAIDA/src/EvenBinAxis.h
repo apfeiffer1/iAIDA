@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_EVENBINAXIS
-#define AIDANATIVE_EVENBINAXIS 1
+#ifndef IAIDA_EVENBINAXIS
+#define IAIDA_EVENBINAXIS 1
 
 // includes
 
@@ -43,4 +43,4 @@ private:
 
 #include "EvenBinAxis.inl"
 
-#endif /* ifndef AIDANATIVE_EVENBINAXIS */
+#endif /* ifndef IAIDA_EVENBINAXIS */

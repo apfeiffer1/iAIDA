@@ -17,7 +17,7 @@
 #include "TupleVariableDescriptionBuilder.h"
 
 
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
 #include <iostream>
 #define TUPLE_REPORT_ERROR( XXX ) std::cerr << XXX << std::endl
 #endif
@@ -79,7 +79,7 @@ iAIDA::AIDA_Tuple_native::AIDA_TupleFactory::create( const std::string& name,
   catch( std::bad_cast ) {
     return 0;
   }
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
   catch( std::exception& e ) {
     TUPLE_REPORT_ERROR( e.what() );
     return 0;
@@ -120,7 +120,7 @@ iAIDA::AIDA_Tuple_native::AIDA_TupleFactory::create( const std::string& name,
   catch( std::bad_cast ) {
     return 0;
   }
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
   catch( std::exception& e ) {
     TUPLE_REPORT_ERROR( e.what() );
     return 0;
@@ -134,7 +134,7 @@ iAIDA::AIDA_Tuple_native::AIDA_TupleFactory::createChained( const std::string& n
 							     const std::string& title,
 							     const std::vector<AIDA::ITuple*>& tupleSet )
 {
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
   try {
 #endif
     std::vector<AIDA::Dev::IDevTuple*> tuples;
@@ -153,7 +153,7 @@ iAIDA::AIDA_Tuple_native::AIDA_TupleFactory::createChained( const std::string& n
       }
     }
     return tuple;
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     TUPLE_REPORT_ERROR( e.what() );
@@ -168,7 +168,7 @@ iAIDA::AIDA_Tuple_native::AIDA_TupleFactory::createChained( const std::string& n
 							     const std::string& title,
 							     const std::vector<std::string>& tupleSet )
 {
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
   try {
 #endif
     std::vector<AIDA::Dev::IDevTuple*> tuples;
@@ -187,7 +187,7 @@ iAIDA::AIDA_Tuple_native::AIDA_TupleFactory::createChained( const std::string& n
       }
     }
     return tuple;
-#ifdef PI_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_AIDA_TUPLE_TUPLE_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     TUPLE_REPORT_ERROR( e.what() );

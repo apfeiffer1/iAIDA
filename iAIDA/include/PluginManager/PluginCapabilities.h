@@ -5,7 +5,7 @@
 
 # include "PluginManager/PluginFactory.h"
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -26,5 +26,5 @@ private:
 //<<<<<< INLINE PUBLIC FUNCTIONS                                        >>>>>>
 //<<<<<< INLINE MEMBER FUNCTIONS                                        >>>>>>
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_PLUGIN_CAPABILITIES_H

@@ -6,7 +6,7 @@
 # include "PluginManager/config.h"
 # include <iterator>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 //<<<<<< PUBLIC CONSTANTS                                               >>>>>>
 //<<<<<< PUBLIC TYPES                                                   >>>>>>
@@ -114,5 +114,5 @@ inline MapUniqueIterator<Map>
 MapUniqueIterator<Map>::operator-- (int)
 { MapUniqueIterator tmp (*this); --*this; return tmp; }
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_MAP_UNIQUE_ITERATOR_H

@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#ifndef PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HBOOK_H
-#define PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HBOOK_H
+#ifndef IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HBOOK_H
+#define IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HBOOK_H
 
 #include <string>
 #include <utility>
 #include <vector>
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 /**

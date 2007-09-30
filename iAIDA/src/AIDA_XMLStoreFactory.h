@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_XMLSTOREFACTORY
-#define AIDANATIVE_XMLSTOREFACTORY 1
+#ifndef IAIDA_XMLSTOREFACTORY
+#define IAIDA_XMLSTOREFACTORY 1
 
 #include <string>
 #include "AIDA_Dev/IStoreFactory.h"
@@ -29,4 +29,4 @@ public:
   }
 }
 
-#endif /* ifndef AIDANATIVE_XMLSTOREFACTORY */
+#endif /* ifndef IAIDA_XMLSTOREFACTORY */

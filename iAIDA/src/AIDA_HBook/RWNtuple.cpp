@@ -1,7 +1,7 @@
 #include "RWNtuple.h"
 #include "HBook.h"
 
-pi::AIDA_HBookStore::RWNtuple::RWNtuple( const std::string& memoryDirectory,
+iAIDA::AIDA_HBookStore::RWNtuple::RWNtuple( const std::string& memoryDirectory,
 					     int id,  unsigned int numberOfVariables ):
   m_dir( memoryDirectory ),
   m_id( id ),
@@ -11,58 +11,58 @@ pi::AIDA_HBookStore::RWNtuple::RWNtuple( const std::string& memoryDirectory,
 
 
 bool
-pi::AIDA_HBookStore::RWNtuple::bindVariable( int )
+iAIDA::AIDA_HBookStore::RWNtuple::bindVariable( int )
 {
   return true;
 }
 
 
 bool
-pi::AIDA_HBookStore::RWNtuple::clearBindings()
+iAIDA::AIDA_HBookStore::RWNtuple::clearBindings()
 {
   return true;
 }
 
 
 bool
-pi::AIDA_HBookStore::RWNtuple::writeTupleRow( int )
+iAIDA::AIDA_HBookStore::RWNtuple::writeTupleRow( int )
 {
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
-  pi::AIDA_HBookStore::HBook::fillRWNtuple( m_id, m_cache );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::fillRWNtuple( m_id, m_cache );
   m_initializedReading = false;
   return true;
 }
 
 
 bool
-pi::AIDA_HBookStore::RWNtuple::readTupleRow( int rowNumber )
+iAIDA::AIDA_HBookStore::RWNtuple::readTupleRow( int rowNumber )
 {
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
   if ( ! m_initializedReading ) {
-    pi::AIDA_HBookStore::HBook::refreshRWNtuplePointers( m_id );
+    iAIDA::AIDA_HBookStore::HBook::refreshRWNtuplePointers( m_id );
     m_initializedReading = true;
   }
-  return pi::AIDA_HBookStore::HBook::fastFillArrayFromRWNtupleRow( m_id, rowNumber + 1, &( m_cache[0] ) );
+  return iAIDA::AIDA_HBookStore::HBook::fastFillArrayFromRWNtupleRow( m_id, rowNumber + 1, &( m_cache[0] ) );
 }
 
 bool
-pi::AIDA_HBookStore::RWNtuple::reset()
+iAIDA::AIDA_HBookStore::RWNtuple::reset()
 {
-  pi::AIDA_HBookStore::HBook::changeDirectory( m_dir );
-  pi::AIDA_HBookStore::HBook::resetTuple( m_id );
+  iAIDA::AIDA_HBookStore::HBook::changeDirectory( m_dir );
+  iAIDA::AIDA_HBookStore::HBook::resetTuple( m_id );
   m_initializedReading = false;
   return true;
 }
 
 
 void*
-pi::AIDA_HBookStore::RWNtuple::variableAddress( int variableIndex )
+iAIDA::AIDA_HBookStore::RWNtuple::variableAddress( int variableIndex )
 {
   return &( m_cache[variableIndex] );
 }
 
 const void*
-pi::AIDA_HBookStore::RWNtuple::variableAddress( int variableIndex ) const
+iAIDA::AIDA_HBookStore::RWNtuple::variableAddress( int variableIndex ) const
 {
   return &( m_cache[variableIndex] );
 }

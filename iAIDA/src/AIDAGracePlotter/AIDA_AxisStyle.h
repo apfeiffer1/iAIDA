@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:45:30 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_AXISSTYLE_H
-#define AIDANATIVE_AIDA_AXISSTYLE_H
+#ifndef IAIDA_AIDA_AXISSTYLE_H
+#define IAIDA_AIDA_AXISSTYLE_H
 
 
 #include "AIDA/IAxisStyle.h"
@@ -99,5 +99,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_AXISSTYLE_H
+#endif // IAIDA_AIDA_AXISSTYLE_H
 

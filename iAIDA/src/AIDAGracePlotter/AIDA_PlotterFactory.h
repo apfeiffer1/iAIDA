@@ -31,8 +31,8 @@
 // Created by user sang on Sun Oct  6 17:25:21 2002
 // 
 
-#ifndef AIDANATIVE_AIDA_PLOTTERFACTORY_H
-#define AIDANATIVE_AIDA_PLOTTERFACTORY_H
+#ifndef IAIDA_AIDA_PLOTTERFACTORY_H
+#define IAIDA_AIDA_PLOTTERFACTORY_H
 
 
 #include "AIDA/IPlotterFactory.h"
@@ -74,5 +74,5 @@ public:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_AIDA_PLOTTERFACTORY_H
+#endif // IAIDA_AIDA_PLOTTERFACTORY_H
 

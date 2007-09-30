@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_MOUNTINFO
-#define AIDANATIVE_MOUNTINFO 1
+#ifndef IAIDA_MOUNTINFO
+#define IAIDA_MOUNTINFO 1
 
 #include <string>
 
@@ -48,4 +48,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_MOUNTINFO */
+#endif /* ifndef IAIDA_MOUNTINFO */

@@ -31,8 +31,8 @@
  * 
  */
 
-#ifndef PI_AIDA_ROOTCONVERTER_FUNCTIONCONVERTER
-#define PI_AIDA_ROOTCONVERTER_FUNCTIONCONVERTER 1
+#ifndef IAIDA_AIDA_ROOTCONVERTER_FUNCTIONCONVERTER
+#define IAIDA_AIDA_ROOTCONVERTER_FUNCTIONCONVERTER 1
 
 
 #include <string>
@@ -48,7 +48,7 @@ namespace AIDA {
    }
  }
 
-namespace pi { 
+namespace iAIDA { 
    namespace AIDA_RootConverter { 
 
 
@@ -137,7 +137,7 @@ typedef boost::details::pool::singleton_default<FuncAdapter<9> > FuncAdapterHold
 
 
 
-   }      // end of namespace pi::AIDA_RootStore
+   }      // end of namespace iAIDA::AIDA_RootStore
 }
 
 #endif /* FUNCTIONCONVERTER */

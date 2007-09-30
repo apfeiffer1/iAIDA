@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDABASEHISTOGRAM
-#define AIDANATIVE_AIDABASEHISTOGRAM 1
+#ifndef IAIDA_AIDABASEHISTOGRAM
+#define IAIDA_AIDABASEHISTOGRAM 1
 
 #include "AIDA/IBaseHistogram.h"
 #include "AIDA_Dev/IDevManagedObject.h"
@@ -78,4 +78,4 @@ private:
 /// Inline methods
 #include "AIDA_BaseHistogram.inl"
 
-#endif /* ifndef AIDANATIVE_AIDABASEHISTOGRAM */
+#endif /* ifndef IAIDA_AIDABASEHISTOGRAM */

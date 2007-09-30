@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_VARIABLEBINAXIS
-#define AIDANATIVE_VARIABLEBINAXIS 1
+#ifndef IAIDA_VARIABLEBINAXIS
+#define IAIDA_VARIABLEBINAXIS 1
 
 // includes
 
@@ -44,4 +44,4 @@ private:
 
 #include "VariableBinAxis.inl"
 
-#endif /* ifndef AIDANATIVE_VARIABLEBINAXIS */
+#endif /* ifndef IAIDA_VARIABLEBINAXIS */

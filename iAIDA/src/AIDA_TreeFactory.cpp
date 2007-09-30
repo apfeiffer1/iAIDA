@@ -24,7 +24,7 @@
 #include <cctype>
 #include <algorithm>
 
-#ifdef PI_TREE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_TREE_NO_EXCEPTIONS_TO_USER
 #include <exception>
 #include <iostream>
 #define TREE_REPORT_ERROR( XXX ) std::cerr << XXX << std::endl
@@ -51,7 +51,7 @@ iAIDA::aida_tree::AIDA_TreeFactory::create( const std::string & storeName,
 						    bool createNew,
 						    const std::string & options )
 {
-#ifdef PI_TREE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_TREE_NO_EXCEPTIONS_TO_USER
   try {
 #endif
 
@@ -99,11 +99,11 @@ iAIDA::aida_tree::AIDA_TreeFactory::create( const std::string & storeName,
       sf_p = new AIDA_MemoryStore::AIDA_MemoryStoreFactory();
 #ifdef HAVE_ROOT
     } else if (m_storeType == "ROOT") {
-      sf_p = new pi::AIDA_RootStore::AIDA_RootStoreFactory();
+      sf_p = new iAIDA::AIDA_RootStore::AIDA_RootStoreFactory();
 #endif
 #ifdef HAVE_CERN
     } else if (m_storeType == "HBOOK") {
-      sf_p = new pi::AIDA_HBookStore::AIDA_HBookStoreFactory();
+      sf_p = new iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory();
 #endif
     } else {
       std::cerr << "WARNING: Unknow store type " << m_storeType << " falling back to XMLStore !!! " << std::endl;
@@ -118,7 +118,7 @@ iAIDA::aida_tree::AIDA_TreeFactory::create( const std::string & storeName,
     }
 
     return new iAIDA::aida_tree::AIDA_Tree( m_store );
-#ifdef PI_TREE_NO_EXCEPTIONS_TO_USER
+#ifdef IAIDA_TREE_NO_EXCEPTIONS_TO_USER
   }
   catch( std::exception& e ) {
     TREE_REPORT_ERROR(">>> Error creating Tree " + storeName + " of type " + storeType + " <<<<\n" 

@@ -8,7 +8,7 @@
 # include <string>
 # include <list>
 
-namespace seal {
+namespace iAIDA {
 //<<<<<< PUBLIC DEFINES                                                 >>>>>>
 
 # if 0 // For doxygen
@@ -70,10 +70,10 @@ namespace seal {
 #  endif
 
 #  define DEFINE_SEAL_MODULE()						\
-     namespace { seal::SimpleModuleDef SEAL_THIS_MODULE; }		\
-     extern "C" SEAL_PLUGIN_API seal::ModuleDef *SEAL_MODULE (void)	\
+     namespace { iAIDA::SimpleModuleDef SEAL_THIS_MODULE; }		\
+     extern "C" SEAL_PLUGIN_API iAIDA::ModuleDef *SEAL_MODULE (void)	\
 	{ return &SEAL_THIS_MODULE; }					\
-     extern "C" SEAL_PLUGIN_API seal::ModuleDef *SEAL_MODULE (void)
+     extern "C" SEAL_PLUGIN_API iAIDA::ModuleDef *SEAL_MODULE (void)
 
 #  define SEAL_MODULE_QUERY_ACTION(cbargs)				\
      static bool SEAL_MODULE_SYM (moduleInitQueryAction, __LINE__) =	\
@@ -99,7 +99,7 @@ namespace seal {
 # else
 
 #  define DEFINE_SEAL_MODULE()						\
-     namespace { seal::SimpleModuleDef SEAL_THIS_MODULE; }		\
+     namespace { iAIDA::SimpleModuleDef SEAL_THIS_MODULE; }		\
      static bool SEAL_MODULE_SYM (moduleInitAction, __LINE__) =		\
 	(SEAL_THIS_MODULE.bind (Module::builtin ()), true)
 
@@ -220,5 +220,5 @@ public:
 //<<<<<< INLINE PUBLIC FUNCTIONS                                        >>>>>>
 //<<<<<< INLINE MEMBER FUNCTIONS                                        >>>>>>
 
-} // namespace seal
+} // namespace iAIDA
 #endif // PLUGIN_MANAGER_MODULE_DEF_H

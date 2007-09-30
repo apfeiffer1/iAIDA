@@ -7,10 +7,10 @@
 # include <sstream>
 #endif
 
-pi::AIDA_HBookStore::HBookOptionParser::HBookOptionParser( const std::string& options ) :
-  m_recordLength( pi::AIDA_HBookStore::HBookOptionParser::DEFAULT_RECORD_LENGTH ),
+iAIDA::AIDA_HBookStore::HBookOptionParser::HBookOptionParser( const std::string& options ) :
+  m_recordLength( iAIDA::AIDA_HBookStore::HBookOptionParser::DEFAULT_RECORD_LENGTH ),
   m_areErrorsStored( true ),
-  m_bufferSizeForRWN( pi::AIDA_HBookStore::HBookOptionParser::DEFAULT_BUFFER_SIZE_FOR_RWN )
+  m_bufferSizeForRWN( iAIDA::AIDA_HBookStore::HBookOptionParser::DEFAULT_BUFFER_SIZE_FOR_RWN )
 {
   std::string::size_type idx;
   const std::string lrec_keyword = "lrec";
@@ -48,21 +48,21 @@ pi::AIDA_HBookStore::HBookOptionParser::HBookOptionParser( const std::string& op
 
 
 int
-pi::AIDA_HBookStore::HBookOptionParser::recordLength() const
+iAIDA::AIDA_HBookStore::HBookOptionParser::recordLength() const
 {
   return m_recordLength;
 }
 
 
 bool
-pi::AIDA_HBookStore::HBookOptionParser::areErrorsStored() const
+iAIDA::AIDA_HBookStore::HBookOptionParser::areErrorsStored() const
 {
   return m_areErrorsStored;
 }
 
 
 int
-pi::AIDA_HBookStore::HBookOptionParser::bufferSizeForRWN() const
+iAIDA::AIDA_HBookStore::HBookOptionParser::bufferSizeForRWN() const
 {
   return m_bufferSizeForRWN;
 }

@@ -128,16 +128,16 @@ all: lib
 
 clean:
 	@echo "Cleaning in src"
-	@rm -f *.${OBJEXT} libAIDA_Native.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT}
+	@rm -f *.${OBJEXT} libiAIDA.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT}
 
 lib: ${OBJS}
-	${SHLIB}libAIDA_Native.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
+	${SHLIB}libiAIDA.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 	@test -e ../lib || mkdir -p ../lib
-	@mv libAIDA_Native.${SHLIBEXT} ../lib/.
+	@mv libiAIDA.${SHLIBEXT} ../lib/.
 
 install: lib
 	test -e @PREFIX_DIR@/lib || mkdir -p @PREFIX_DIR@/lib 
-	${INSTALL_CMD} ../lib/libAIDA_Native.${SHLIBEXT} @PREFIX_DIR@/lib/
+	${INSTALL_CMD} ../lib/libiAIDA.${SHLIBEXT} @PREFIX_DIR@/lib/
 
 %.${OBJEXT}: %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@

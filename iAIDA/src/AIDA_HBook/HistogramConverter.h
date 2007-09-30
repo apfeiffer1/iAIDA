@@ -1,5 +1,5 @@
-#ifndef PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HISTOGRAM_CONVERTER_H
-#define PI_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HISTOGRAM_CONVERTER_H
+#ifndef IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HISTOGRAM_CONVERTER_H
+#define IAIDA_AIDA_HBOOKSTORE_AIDA_HBOOKSTORE_HISTOGRAM_CONVERTER_H
 
 namespace AIDA {
   class IHistogram1D;
@@ -15,7 +15,7 @@ namespace AIDA {
 }
 
 
-namespace pi {
+namespace iAIDA {
   namespace AIDA_HBookStore {
 
 /// Converter class for AIDA histograms to HBook

@@ -21,21 +21,21 @@ static const float negative_infinity = -positive_infinity;
 
 static const std::string emptyString = "";
 
-const pi::AIDA_HBookStore::HistogramConverter&
-pi::AIDA_HBookStore::HistogramConverter::theConverter()
+const iAIDA::AIDA_HBookStore::HistogramConverter&
+iAIDA::AIDA_HBookStore::HistogramConverter::theConverter()
 {
-  static pi::AIDA_HBookStore::HistogramConverter hc;
+  static iAIDA::AIDA_HBookStore::HistogramConverter hc;
   return hc;
 }
 
 
 bool
-pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram1D& h,
+iAIDA::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram1D& h,
 							     int id, bool requestStoreErrors ) const
 {
   bool storeErrors = false;  
   if ( h.axis().isFixedBinning() ) {
-    pi::AIDA_HBookStore::HBook::bookFixedBin1DHisto( id, h.title(),
+    iAIDA::AIDA_HBookStore::HBook::bookFixedBin1DHisto( id, h.title(),
 							 h.axis().bins(),
 							 static_cast< float >( h.axis().lowerEdge() ),
 							 static_cast< float >( h.axis().upperEdge() ) );
@@ -45,7 +45,7 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram1
     std::vector< float > edges( nBins + 1 );
     for ( int i = 0; i < h.axis().bins(); ++i ) edges[i] = h.axis().binLowerEdge( i );
     edges[ nBins ] = h.axis().upperEdge();
-    pi::AIDA_HBookStore::HBook::bookVariableBin1DHisto( id, h.title(), edges );
+    iAIDA::AIDA_HBookStore::HBook::bookVariableBin1DHisto( id, h.title(), edges );
   }
 
       
@@ -62,7 +62,7 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram1
   }
 
 
-  if ( storeErrors ) pi::AIDA_HBookStore::HBook::useErrorsForHisto1D( id );
+  if ( storeErrors ) iAIDA::AIDA_HBookStore::HBook::useErrorsForHisto1D( id );
 
 
   // set contents bin by bin using Olivier fortran routines
@@ -71,16 +71,16 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram1
   const float x1 = static_cast< float >( h.binMean(AIDA::IAxis::UNDERFLOW_BIN) );
   const float w1 = static_cast< float >( h.binHeight(AIDA::IAxis::UNDERFLOW_BIN) );
   const float y = 0;
-  pi::AIDA_HBookStore::HBook::fillHisto( id, x1, y, w1 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, x1, y, w1 );
   const float x2 = static_cast< float >( h.binMean(AIDA::IAxis::OVERFLOW_BIN) );
   const float w2 = static_cast< float >( h.binHeight(AIDA::IAxis::OVERFLOW_BIN) );
-  pi::AIDA_HBookStore::HBook::fillHisto( id, x2, y, w2 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, x2, y, w2 );
   
   const int entries = h.allEntries();
   const float eqBinEntries = static_cast<float> ( h.equivalentBinEntries() );
   const float mean = static_cast<float>( h.mean() );
   const float rms = static_cast<float> ( h.rms() );
-  pi::AIDA_HBookStore::HBook::setHisto1DContents(id, entries, eqBinEntries, mean, rms,heights, errors, storeErrors);   
+  iAIDA::AIDA_HBookStore::HBook::setHisto1DContents(id, entries, eqBinEntries, mean, rms,heights, errors, storeErrors);   
   
       
   return true;
@@ -88,11 +88,11 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram1
 
 
 bool
-pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram2D& h,
+iAIDA::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram2D& h,
 							     int id, bool requestStoreErrors ) const
 {
   bool storeErrors = false; 
-  pi::AIDA_HBookStore::HBook::bookFixedBin2DHisto( id, h.title(),
+  iAIDA::AIDA_HBookStore::HBook::bookFixedBin2DHisto( id, h.title(),
 						       h.xAxis().bins(),
 						       static_cast< float >( h.xAxis().lowerEdge() ),
 						       static_cast< float >( h.xAxis().upperEdge() ),
@@ -116,7 +116,7 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram2
     }
   }
 
-  if ( storeErrors ) pi::AIDA_HBookStore::HBook::useErrorsForHisto2D( id );
+  if ( storeErrors ) iAIDA::AIDA_HBookStore::HBook::useErrorsForHisto2D( id );
 
 
   // set contents bin by bin using Olivier fortran routines
@@ -126,7 +126,7 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram2
   // following 8 fill call from entries 
   const int entries = h.allEntries() - 8;
 
-  pi::AIDA_HBookStore::HBook::setHisto2DContents(id, entries,heights, errors, storeErrors);   
+  iAIDA::AIDA_HBookStore::HBook::setHisto2DContents(id, entries,heights, errors, storeErrors);   
 
   
   // set underflow and overflow (before entries) 
@@ -151,28 +151,28 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram2
    */                 
   
   const float w0 = static_cast<float>( h.binHeight(under,under) ); 
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xlow, ylow, w0 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xlow, ylow, w0 );
   
   const float w1 =  static_cast<float>( h.binHeightX(under ) - h.binHeight( under, under) - h.binHeight(under,over) );
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xlow, yin, w1 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xlow, yin, w1 );
 
   const float w2 = static_cast<float>( h.binHeight(under,over) ); 
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xlow, yup, w2 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xlow, yup, w2 );
 
   const float w3 =  static_cast<float>( h.binHeightY(over ) - h.binHeight( under, over) - h.binHeight(over,over) );
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xin, yup, w3 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xin, yup, w3 );
 
   const float w4 = static_cast<float>( h.binHeight(over,over) ); 
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xup, yup, w4 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xup, yup, w4 );
 
   const float w5 =  static_cast<float>( h.binHeightX(over ) - h.binHeight( over, under) - h.binHeight(over,over) );
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xup, yin, w5 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xup, yin, w5 );
 
   const float w6 = static_cast<float>( h.binHeight(over,under) ); 
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xup, ylow, w6 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xup, ylow, w6 );
 
   const float w7 =  static_cast<float>( h.binHeightY(under) -  h.binHeight( under, under) -  h.binHeight(over,under) ); 
-  pi::AIDA_HBookStore::HBook::fillHisto( id, xin, ylow, w7 );
+  iAIDA::AIDA_HBookStore::HBook::fillHisto( id, xin, ylow, w7 );
 
 
   return true;
@@ -180,12 +180,12 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IHistogram2
 
 
 bool
-pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IProfile1D& h,
+iAIDA::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IProfile1D& h,
 							     int id ) const
 {
   const float lowY = negative_infinity;
   const float highY = positive_infinity;
-  pi::AIDA_HBookStore::HBook::bookFixedBinProfileHisto( id, h.title(),
+  iAIDA::AIDA_HBookStore::HBook::bookFixedBinProfileHisto( id, h.title(),
 							    h.axis().bins(),
 							    static_cast< float >( h.axis().lowerEdge() ),
 							    static_cast< float >( h.axis().upperEdge() ),
@@ -204,7 +204,7 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IProfile1D&
     if ( entries == 1 ) {
       const float y = static_cast<float>( newValue );
       const float w = static_cast<float>( std::abs( y / (newError * newError) ) );
-      pi::AIDA_HBookStore::HBook::fillHisto( id, x, y, w );
+      iAIDA::AIDA_HBookStore::HBook::fillHisto( id, x, y, w );
     }
     else {
       const double newSpread = h.binRms( i );
@@ -215,8 +215,8 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IProfile1D&
 	if ( newSpread != 0 ) w = static_cast< float >( newSpread * newSpread / ( entries * newError * newError ) );
 	else w = static_cast< float >( std::abs( newValue ) / ( newError * newError * entries ) );
       }
-      for ( int n = 0; n < entries - 1; ++n ) pi::AIDA_HBookStore::HBook::fillHisto( id, x, yo, w );
-      pi::AIDA_HBookStore::HBook::fillHisto( id, x, y, w );
+      for ( int n = 0; n < entries - 1; ++n ) iAIDA::AIDA_HBookStore::HBook::fillHisto( id, x, yo, w );
+      iAIDA::AIDA_HBookStore::HBook::fillHisto( id, x, y, w );
     }
   }
   return true;
@@ -224,20 +224,20 @@ pi::AIDA_HBookStore::HistogramConverter::convertToHBook( const AIDA::IProfile1D&
 
 
 AIDA::Dev::IDevHistogram1D*
-pi::AIDA_HBookStore::HistogramConverter::createHistogram1DFromHBook( AIDA::Dev::IDevHistogramFactory& factory,
+iAIDA::AIDA_HBookStore::HistogramConverter::createHistogram1DFromHBook( AIDA::Dev::IDevHistogramFactory& factory,
 									 int id ) const
 {
   std::string title;
   int numberOfXBins, numberOfYBins = 0;
   float lowerEdgeX, lowerEdgeY = 0;
   float upperEdgeX, upperEdgeY = 0;
-  pi::AIDA_HBookStore::HBook::getHistoParameters(id, title, numberOfXBins, lowerEdgeX, upperEdgeX,
+  iAIDA::AIDA_HBookStore::HBook::getHistoParameters(id, title, numberOfXBins, lowerEdgeX, upperEdgeX,
 						     numberOfYBins, lowerEdgeY, upperEdgeY);
   AIDA::Dev::IDevHistogram1D* h = 0;
-  if ( pi::AIDA_HBookStore::HBook::hasVariableBinSizes( id ) ) {
+  if ( iAIDA::AIDA_HBookStore::HBook::hasVariableBinSizes( id ) ) {
     std::vector< double > edges( numberOfXBins + 1 );
     for ( int i = 0; i < numberOfXBins; ++i ) {
-      edges[i] = pi::AIDA_HBookStore::HBook::binLowerEdge( id, i + 1 );
+      edges[i] = iAIDA::AIDA_HBookStore::HBook::binLowerEdge( id, i + 1 );
     }
     edges[numberOfXBins] = upperEdgeX;
     h = factory.createHistogram1D( title, edges, emptyString );
@@ -246,17 +246,17 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram1DFromHBook( AIDA::Dev::
     h = factory.createHistogram1D( title, numberOfXBins, lowerEdgeX, upperEdgeX );
   }
 
-  const int totalEntries = pi::AIDA_HBookStore::HBook::numberOfEntries( id );
+  const int totalEntries = iAIDA::AIDA_HBookStore::HBook::numberOfEntries( id );
   if ( totalEntries == 0 ) return h;
 
   double sumOfWeightsOfAllEntries = 0;
   for ( int i = 0; i <= numberOfXBins + 1; ++i ) {
-    sumOfWeightsOfAllEntries += pi::AIDA_HBookStore::HBook::binContent( id, i );
+    sumOfWeightsOfAllEntries += iAIDA::AIDA_HBookStore::HBook::binContent( id, i );
   }
   const double entriesOverWeight = totalEntries / sumOfWeightsOfAllEntries;
   int entriesInBins = 0;
   for ( int i = 0; i <= numberOfXBins + 1; ++i ) {
-    const float height = pi::AIDA_HBookStore::HBook::binContent( id, i );
+    const float height = iAIDA::AIDA_HBookStore::HBook::binContent( id, i );
     int entries = static_cast<int>( std::floor( height * entriesOverWeight + 0.5 ) );
     int ib = i - 1;
     float lowBinEdgeX, highBinEdgeX;
@@ -272,17 +272,17 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram1DFromHBook( AIDA::Dev::
       entries = totalEntries - entriesInBins;
     }
     else {
-      lowBinEdgeX = pi::AIDA_HBookStore::HBook::binLowerEdge( id, i );
+      lowBinEdgeX = iAIDA::AIDA_HBookStore::HBook::binLowerEdge( id, i );
       if ( i < numberOfXBins ) {
-	highBinEdgeX = pi::AIDA_HBookStore::HBook::binLowerEdge( id, i + 1 );
+	highBinEdgeX = iAIDA::AIDA_HBookStore::HBook::binLowerEdge( id, i + 1 );
       }
       else {
 	highBinEdgeX = upperEdgeX;
       }
     }
     float error;
-    if ( pi::AIDA_HBookStore::HBook::areErrorsStored( id ) ) {
-      error = pi::AIDA_HBookStore::HBook::binContent( id, i );
+    if ( iAIDA::AIDA_HBookStore::HBook::areErrorsStored( id ) ) {
+      error = iAIDA::AIDA_HBookStore::HBook::binContent( id, i );
     }
     else {
       error = std::sqrt( static_cast< float >( std::abs( entries ) ) ) / entriesOverWeight;
@@ -290,20 +290,20 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram1DFromHBook( AIDA::Dev::
     h->setBinContents( ib, entries, height, error, 0.5 * ( lowBinEdgeX + highBinEdgeX ) );
     entriesInBins += entries;
   }
-  h->setRms( pi::AIDA_HBookStore::HBook::histoRms( id ) );
+  h->setRms( iAIDA::AIDA_HBookStore::HBook::histoRms( id ) );
   return h;
 }
 
 
 AIDA::Dev::IDevHistogram2D*
-pi::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::IDevHistogramFactory& factory,
+iAIDA::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::IDevHistogramFactory& factory,
 									 int id ) const
 {
   std::string title;
   int numberOfXBins, numberOfYBins = 0;
   float lowerEdgeX, lowerEdgeY = 0;
   float upperEdgeX, upperEdgeY = 0;
-  pi::AIDA_HBookStore::HBook::getHistoParameters(id, title, numberOfXBins, lowerEdgeX, upperEdgeX,
+  iAIDA::AIDA_HBookStore::HBook::getHistoParameters(id, title, numberOfXBins, lowerEdgeX, upperEdgeX,
 						     numberOfYBins, lowerEdgeY, upperEdgeY);
   AIDA::Dev::IDevHistogram2D* h = factory.createHistogram2D( title,
 							     numberOfXBins,
@@ -312,14 +312,14 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::
 							     numberOfYBins,
 							     lowerEdgeY,
 							     upperEdgeY );
-  const int totalEntries = pi::AIDA_HBookStore::HBook::numberOfEntries( id );
+  const int totalEntries = iAIDA::AIDA_HBookStore::HBook::numberOfEntries( id );
   if ( totalEntries == 0 ) return h;
   // For a 2D histo we cannot have the information whether the errors are stored or NOT :-(
   double sumOfWeightsOfAllEntries = 0;
   double sw = 0;
   for ( int i = 0; i <= numberOfXBins + 1; ++i ) {
     for ( int j = 0; j <= numberOfYBins + 1; ++j ) {
-      float binHeight = pi::AIDA_HBookStore::HBook::binContent( id, i, j );
+      float binHeight = iAIDA::AIDA_HBookStore::HBook::binContent( id, i, j );
       sumOfWeightsOfAllEntries += binHeight;
       if ( i > 0 && i <= numberOfXBins && j > 0 && j <= numberOfYBins ) {
 	sw += binHeight;
@@ -335,7 +335,7 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::
 
   for ( int i = 0; i <= numberOfXBins + 1; ++i ) {
     for ( int j = 0; j <= numberOfYBins + 1; ++j ) {
-      const float height = pi::AIDA_HBookStore::HBook::binContent( id, i, j );
+      const float height = iAIDA::AIDA_HBookStore::HBook::binContent( id, i, j );
       int entries = static_cast<int>( std::floor( height * entriesOverWeight + 0.5 ) );
 
       bool inRangeInX = false;
@@ -352,9 +352,9 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::
 	highBinEdgeX = upperEdgeX + 1;
       }
       else {
-	lowBinEdgeX = pi::AIDA_HBookStore::HBook::binLowerEdges( id, i, 1 ).first;
+	lowBinEdgeX = iAIDA::AIDA_HBookStore::HBook::binLowerEdges( id, i, 1 ).first;
 	if ( i < numberOfXBins ) {
-	  highBinEdgeX = pi::AIDA_HBookStore::HBook::binLowerEdges( id, i + 1, 1 ).first;
+	  highBinEdgeX = iAIDA::AIDA_HBookStore::HBook::binLowerEdges( id, i + 1, 1 ).first;
 	}
 	else {
 	  highBinEdgeX = upperEdgeX;
@@ -376,9 +376,9 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::
 	highBinEdgeY = upperEdgeY + 1;
       }
       else {
-	lowBinEdgeY = pi::AIDA_HBookStore::HBook::binLowerEdges( id, 1, j ).second;
+	lowBinEdgeY = iAIDA::AIDA_HBookStore::HBook::binLowerEdges( id, 1, j ).second;
 	if ( j < numberOfYBins ) {
-	  highBinEdgeY = pi::AIDA_HBookStore::HBook::binLowerEdges( id, 1, j + 1 ).second;
+	  highBinEdgeY = iAIDA::AIDA_HBookStore::HBook::binLowerEdges( id, 1, j + 1 ).second;
 	}
 	else {
 	  highBinEdgeY = upperEdgeY;
@@ -421,37 +421,37 @@ pi::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::Dev::
 
 
 AIDA::Dev::IDevProfile1D*
-pi::AIDA_HBookStore::HistogramConverter::createProfile1DFromHBook( AIDA::Dev::IDevHistogramFactory& factory,
+iAIDA::AIDA_HBookStore::HistogramConverter::createProfile1DFromHBook( AIDA::Dev::IDevHistogramFactory& factory,
 								       int id ) const
 {
   std::string title;
   int numberOfXBins, numberOfYBins = 0;
   float lowerEdgeX, lowerEdgeY = 0;
   float upperEdgeX, upperEdgeY = 0;
-  pi::AIDA_HBookStore::HBook::getHistoParameters(id, title, numberOfXBins, lowerEdgeX, upperEdgeX,
+  iAIDA::AIDA_HBookStore::HBook::getHistoParameters(id, title, numberOfXBins, lowerEdgeX, upperEdgeX,
 						     numberOfYBins, lowerEdgeY, upperEdgeY);
   AIDA::Dev::IDevProfile1D* h = factory.createProfile1D( title, numberOfXBins, lowerEdgeX, upperEdgeX );
-  const int totalEntries = pi::AIDA_HBookStore::HBook::numberOfEntries( id );
+  const int totalEntries = iAIDA::AIDA_HBookStore::HBook::numberOfEntries( id );
   if ( totalEntries == 0 ) return h;
 
   double totalWeight = 0;
   for ( int i = 1; i <= numberOfXBins; ++i ) {
-    const float error = pi::AIDA_HBookStore::HBook::binError( id, i );
+    const float error = iAIDA::AIDA_HBookStore::HBook::binError( id, i );
     if ( error == 0 ) continue;
     const double weight = 1.0 / ( error * error );
     totalWeight += weight;
   }
   if ( totalWeight == 0 ) return h;
-  const float ebe =  pi::AIDA_HBookStore::HBook::histoEbe( id );
+  const float ebe =  iAIDA::AIDA_HBookStore::HBook::histoEbe( id );
   const double entriesPerWeight = ebe / totalWeight;
 
   int entriesInBins = 0;
   for ( int i = 0; i <= numberOfXBins; ++i ) {
-    const float binSpread = pi::AIDA_HBookStore::HBook::binError( id, i );
+    const float binSpread = iAIDA::AIDA_HBookStore::HBook::binError( id, i );
     if ( binSpread == 0 ) continue;
     const double weight = 1.0 / ( binSpread * binSpread );
     int binEntries = static_cast<int>( std::floor( weight * entriesPerWeight + 0.5 ) );
-    const double binHeight = pi::AIDA_HBookStore::HBook::binContent( id, i );
+    const double binHeight = iAIDA::AIDA_HBookStore::HBook::binContent( id, i );
     const double binError = binSpread / std::sqrt( ( weight * entriesPerWeight ) );
     int ib = i - 1;
     float lowBinEdgeX, highBinEdgeX;
@@ -461,9 +461,9 @@ pi::AIDA_HBookStore::HistogramConverter::createProfile1DFromHBook( AIDA::Dev::ID
       highBinEdgeX = lowerEdgeX;
     }
     else {
-      lowBinEdgeX = pi::AIDA_HBookStore::HBook::binLowerEdge( id, i );
+      lowBinEdgeX = iAIDA::AIDA_HBookStore::HBook::binLowerEdge( id, i );
       if ( i < numberOfXBins ) {
-	highBinEdgeX = pi::AIDA_HBookStore::HBook::binLowerEdge( id, i + 1 );
+	highBinEdgeX = iAIDA::AIDA_HBookStore::HBook::binLowerEdge( id, i + 1 );
       }
       else {
 	highBinEdgeX = upperEdgeX;

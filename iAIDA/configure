@@ -407,14 +407,6 @@ class Configuration(object):
         startDir = os.getcwd()
         os.chdir("include")
 
-#         self.checkLinkAndSet("AIDA_Native", "AIDA_DataPointSet_native")
-#         self.checkLinkAndSet("AIDA_Native", "AIDA_Fitter")
-#         self.checkLinkAndSet("AIDA_Native", "AIDA_Function")
-#         self.checkLinkAndSet("AIDA_Native", "AIDA_Histogram_native")
-#         self.checkLinkAndSet("AIDA_Native", "AIDA_MemoryStore")
-#         self.checkLinkAndSet("AIDA_Native", "AIDA_Tuple_native")
-#         self.checkLinkAndSet("AIDA_Native", "DataXML")
-
         os.chdir("../src")
         if self.graceDir :
             self.checkLinkAndSet("AIDAGracePlotter", "GracePlotter")

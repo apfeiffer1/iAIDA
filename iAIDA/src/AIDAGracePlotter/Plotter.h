@@ -31,8 +31,8 @@
 // Created by user sang on Mon Aug 26 17:10:31 2002
 // 
 
-#ifndef AIDANATIVE_QPLOTTER_NEW_VIEWER_PLOTTER_H
-#define AIDANATIVE_QPLOTTER_NEW_VIEWER_PLOTTER_H
+#ifndef IAIDA_QPLOTTER_NEW_VIEWER_PLOTTER_H
+#define IAIDA_QPLOTTER_NEW_VIEWER_PLOTTER_H
 
 
 #include <list>
@@ -146,5 +146,5 @@ private:
 } // end of namespace AidaNative
 
 
-#endif // AIDANATIVE_QPLOTTER_NEW_VIEWER_PLOTTER_H
+#endif // IAIDA_QPLOTTER_NEW_VIEWER_PLOTTER_H
 

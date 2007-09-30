@@ -1,6 +1,6 @@
 // Emacs -*- C++ -*-
-#ifndef AIDANATIVE_AIDA_TUPLE_AIDA_FILTER
-#define AIDANATIVE_AIDA_TUPLE_AIDA_FILTER 1
+#ifndef IAIDA_AIDA_TUPLE_AIDA_FILTER
+#define IAIDA_AIDA_TUPLE_AIDA_FILTER 1
 
 #include "AIDA/IFilter.h"
 #include "AIDA_Tuple_native/IFilterExpressionBase.h"
@@ -37,4 +37,4 @@ private:
   }
 }
 
-#endif /* ifndef AIDANATIVE_AIDA_TUPLE_AIDA_FILTER */
+#endif /* ifndef IAIDA_AIDA_TUPLE_AIDA_FILTER */
