@@ -37,7 +37,7 @@ LIBS = ${EXPAT_LIB}
 
 INCLUDES = ${AIDA_INC} ${BOOST_INC} -I../include
 
-LIBS += -L../lib -lAIDA_Native 
+LIBS += -L../lib -liAIDA 
 
 SRCS = \
 	exaH1.cpp \
