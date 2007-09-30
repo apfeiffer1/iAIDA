@@ -1,5 +1,5 @@
 inline std::vector< std::string >
-pi::AIDA_RootStore::RootPathFormater::formPathNames( const std::string& path ) const
+iAIDA::AIDA_RootStore::RootPathFormatter::formPathNames( const std::string& path ) const
 {
   std::vector<std::string> output;
   std::string currentString;
