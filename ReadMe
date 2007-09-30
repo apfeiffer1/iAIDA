@@ -1,10 +1,35 @@
 
-This package needs the following packages already installed 
+iAIDA is a library implementing the AIDA (http://aida.freehep.org)
+Abstract Interfaces for Data Analysis. The implementation is in
+C++, at some later stage a binding to Python will follow.
+
+iAIDA is based on the (now discontinued) PI (http://cern.ch/pi)
+package. The main aim of iAIDA is to be easy to configure but
+keep the flexibility of PI in terms of providing means to use
+several of the most common I/O formats used in High Energy and
+Nuclear Physics (HENP), such as HBOOK, ROOT and the AIDA native
+compressed XML format.
+
+For more information please consult: http://iaida.dynalias.net
+
+The remainder of the file deals with the installation. For the
+impatient, the recipe is (after unpacking and cd into the unpacked
+dir):
+
+./configure 
+make
+make install
+
+
+The iAIDA package needs the following packages already installed 
 (with their "development" packages as well):
+e2fsprogs (version 1.39-21 tested)
 expat (version 1.95.8 tested)
 Boost (version 1.33.1 tested)
 optionally: xmgrace (versions 5.1.14 and 5.1.20 tested)
 optionally: cernlib (version 2005 tested)
+optionally: root (version 5.17.02 tested)
+
 
 Also AIDA (version 3.2.1) is used, if you have it installed, 
 the package will use (and install) your version, otherwise 
