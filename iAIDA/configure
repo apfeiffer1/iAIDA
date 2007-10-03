@@ -565,11 +565,19 @@ class Configuration(object):
                 lineOut = lineOut.replace("@ROOT_DIR@", self.rootDir)
                 lineOut = lineOut.replace("@ROOT_INC_DIR@", self.rootIncDir)
                 lineOut = lineOut.replace("@ROOT_LIB_DIR@", self.rootLibDir)
+                # make sure we set ROOTSYS _before_ we use root-config ...
+                cmd = 'export ROOTSYS='+self.rootDir+';'
+                cmd += self.rootDir+'/bin/root-config --libs'
+                rLib = os.popen(cmd, 'r')
+                rootLibs = rLib.readlines()[0].strip()
+                rLib.close()
+                lineOut = lineOut.replace('@ROOT_LIBS@',rootLibs)
             else:
                 lineOut = lineOut.replace("@HAVE_ROOT@"   , "")
                 lineOut = lineOut.replace("@ROOT_DIR@", "")
                 lineOut = lineOut.replace("@ROOT_INC_DIR@", "")
                 lineOut = lineOut.replace("@ROOT_LIB_DIR@", "")
+                lineOut = lineOut.replace("@ROOT_LIBS@", "")
 
             if self.cernDir:
                 lineOut = lineOut.replace("@HAVE_CERN@"   , "1")
