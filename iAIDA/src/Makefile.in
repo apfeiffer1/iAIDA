@@ -137,7 +137,7 @@ lib: ${OBJS}
 	${SHLIB}libiAIDA.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 	@test -e ../lib || mkdir -p ../lib
 	@mv libiAIDA.${SHLIBEXT} ../lib/.
-	ar -r ../lib/libiAiDA.${ARLIBEXT} ${OBJS}
+	ar -r ../lib/libiAIDA.${ARLIBEXT} ${OBJS}
 	@touch lib
 
 install: lib
