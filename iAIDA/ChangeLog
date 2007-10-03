@@ -1,3 +1,9 @@
+2007-10-03 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	added test (testHistoName) for problem reported by Giovanni Santin with gcc 3.2.3
+	(not reproducible with later compilers)
+	updated configure and makefiles to use root-config results intead of the command. 
+	create archive lib as well (externals need to be available as archive as well if going to be used)
+	
 2007-09-30 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	Added license (LGPL v3) files (COPYING*) and preamble to all code files.
 	Changed all namespaces and include protections to use iAIDA.
