@@ -150,7 +150,10 @@ class AIDA_Configurator :
             print " -l" + lib,
 
         if self.rootDir:
-           rLib = os.popen(self.rootDir+'/bin/root-config --libs', 'r')
+           # make sure we set ROOTSYS _before_ we use root-config ...
+           cmd = 'export ROOTSYS='+self.rootDir+';'
+           cmd += self.rootDir+'/bin/root-config --libs'
+           rLib = os.popen(cmd, 'r')
            rootLibs = rLib.readlines()[0].strip()
            rLib.close()
            print ' '+rootLibs+' ',
