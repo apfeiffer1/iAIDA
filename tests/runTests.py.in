@@ -38,6 +38,7 @@ class iAIDATester(object):
                          ]
 
         self.tests    = ['testAIDAmem',
+                         'testHistoName',
                          'plottingHistograms']
 
         self.results  = { 'ok'     : 0,
