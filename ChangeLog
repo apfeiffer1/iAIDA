@@ -1,6 +1,7 @@
 2007-10-03 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	added test (testHistoName) for problem reported by Giovanni Santin with gcc 3.2.3
 	(not reproducible with later compilers)
+	updated Makefile to allow parallel building
 	updated configure and makefiles to use root-config results intead of the command. 
 	create archive lib as well (externals need to be available as archive as well if going to be used)
 	
