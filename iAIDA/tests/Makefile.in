@@ -41,6 +41,7 @@ LIBS += -L../lib -liAIDA
 
 SRCS = \
 	testAIDAmem.cpp \
+	testHistoName.cpp \
 
 
 OS=$(shell uname)
