@@ -19,17 +19,17 @@
 #
 
 all: 
-	cd src ; make 
-	cd examples ; make
+	cd src ; $(MAKE) 
+	cd examples ; $(MAKE)
 
 clean:
-	cd src ; make clean
-	cd examples ; make clean
-	cd tests ; make clean
+	cd src ; $(MAKE) clean
+	cd examples ; $(MAKE) clean
+	cd tests ; $(MAKE) clean
 
 install: all
-	cd src ; make install
-	cd include ; make install
+	cd src ; $(MAKE) install
+	cd include ; $(MAKE) install
 	@mkdir -p @PREFIX_DIR@/bin
 	cp bin/aida-config @PREFIX_DIR@/bin/aida-config
 	@if [ -d lib ] ; then \
@@ -41,7 +41,7 @@ tests: all testLog
 	@rm testLog
 
 testLog:
-	@cd tests ; make
+	@cd tests ; $(MAKE)
 	@./tests/runTests.py > ./tests/testLog
 	@cp ./tests/testLog .
 	@echo ""

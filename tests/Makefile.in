@@ -28,6 +28,7 @@ GRACE_INC = -I@GRACE_INC_DIR@
 GRACE_LIB = -L@GRACE_LIB_DIR@ -lgrace_np
 
 HAVE_ROOT = @HAVE_ROOT@
+ROOT_LIBS = @ROOT_LIBS@
 
 HAVE_CERN = @HAVE_CERN@
 
@@ -39,9 +40,13 @@ INCLUDES = ${AIDA_INC} ${BOOST_INC} -I../include
 
 LIBS += -L../lib -liAIDA
 
+# general tests, not specific for an I/O system
 SRCS = \
 	testAIDAmem.cpp \
-	testHistoName.cpp \
+
+# the tests which are root-specific:
+ROOT_TEST_SRCS = testHistoName.cpp \
+
 
 
 OS=$(shell uname)
@@ -80,8 +85,9 @@ endif
 
 ifdef HAVE_ROOT
 ROOT_DIR = @ROOT_DIR@
-SRCS     += 
-LIBS     += `ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --libs`
+LIBS     += ${ROOT_LIBS}
+# add root-specific tests
+SRCS     += ${ROOT_TEST_SRCS}
 endif
 
 ifdef HAVE_CERN

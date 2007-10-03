@@ -39,6 +39,7 @@ ifeq (${OS}, Linux)
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =so
+  ARLIBEXT =a
   CXX_FLAGS = -fPIC -pthread -g -DBADENDS
   LDFLAGS = ${LIB64} -ldl
   SHLIBFLAGS = -shared
@@ -56,6 +57,7 @@ ifeq (${OS}, Darwin)
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =dylib
+  ARLIBEXT =a
   CXX_FLAGS = -fPIC -g -DBADENDS 
   LDFLAGS = -lm -lc
   export MACOSX_DEPLOYMENT_TARGET=10.4
@@ -71,6 +73,7 @@ ifeq (${OS}, CYGWIN_NT-5.1)
   CC=cl
   OBJEXT =obj
   SHLIBEXT =lib
+  ARLIBEXT =a
   SHLIB=lib /nologo /OUT:
   CXX_FLAGS = -EHsc -GR -GX -MD -nologo
   SHLIBFLAGS = 
@@ -128,16 +131,19 @@ all: lib
 
 clean:
 	@echo "Cleaning in src"
-	@rm -f *.${OBJEXT} libiAIDA.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT}
+	@rm -f *.${OBJEXT} libiAIDA.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT} lib
 
 lib: ${OBJS}
 	${SHLIB}libiAIDA.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 	@test -e ../lib || mkdir -p ../lib
 	@mv libiAIDA.${SHLIBEXT} ../lib/.
+	ar -r ../lib/libiAiDA.${ARLIBEXT} ${OBJS}
+	@touch lib
 
 install: lib
 	test -e @PREFIX_DIR@/lib || mkdir -p @PREFIX_DIR@/lib 
 	${INSTALL_CMD} ../lib/libiAIDA.${SHLIBEXT} @PREFIX_DIR@/lib/
+	${INSTALL_CMD} ../lib/libiAIDA.${ARLIBEXT} @PREFIX_DIR@/lib/
 
 %.${OBJEXT}: %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@

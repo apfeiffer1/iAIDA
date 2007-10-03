@@ -28,6 +28,7 @@ GRACE_INC = -I@GRACE_INC_DIR@
 GRACE_LIB = -L@GRACE_LIB_DIR@ -lgrace_np
 
 HAVE_ROOT = @HAVE_ROOT@
+ROOT_LIBS = @ROOT_LIBS@
 
 HAVE_CERN = @HAVE_CERN@
 
@@ -83,7 +84,7 @@ endif
 ifdef HAVE_ROOT
 ROOT_DIR = @ROOT_DIR@
 SRCS     += storeRoot.cpp readRoot.cpp storeRootTup.cpp readRootTup.cpp 
-LIBS     += `ROOTSYS=${ROOT_DIR} ${ROOT_DIR}/bin/root-config --libs`
+LIBS     += ${ROOT_LIBS}
 else  # root has it's own version of libz, so don't use the system one
 ifeq (${OS}, Darwin)
   LIBS += -lz 
