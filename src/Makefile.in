@@ -112,7 +112,7 @@ SRCS     += $(wildcard AIDA_HBook/*.cpp)
 F_SRCS    = $(wildcard AIDA_HBook/*.F)
 OBJS     += ${F_SRCS:.F=.${OBJEXT}}
 CERN_LIB = `${CERN_DIR}/bin/cernlib`
-LIBS     += ${CERN_LIB}
+LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
  ifdef HAVEF77
    LIBS += -lg2c
   else
@@ -149,4 +149,4 @@ install: lib
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@
 
 AIDA_HBook/%.${OBJEXT}: AIDA_HBook/%.F
-	${FC} ${CXX_FLAGS} ${FFLAGS} ${INCLUDES} -c $< -o $@
+	${FC} ${CXX_FLAGS} ${FFLAGS}  -c $< -o $@
