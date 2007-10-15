@@ -334,7 +334,10 @@ class Configuration(object):
             self.cernDir = os.path.abspath( self.cernDir )
             self.cernIncDir = os.path.join(self.cernDir, "include")
             self.cernLibDir = os.path.join(self.cernDir, "lib")
-            if not os.path.exists(os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ) :
+            self.cernBinDir = os.path.join(self.cernDir, "bin")
+            if ( ( not os.path.exists(os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ) ) or
+                 ( not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) ) 
+                 ) :
                 print "\n\nFATAL ERROR: Invalid Cern directory! (no cern in: "+self.cernIncDir+'\n'
                 sys.exit(-1)
             return
@@ -345,7 +348,10 @@ class Configuration(object):
                 self.cernDir = os.path.join("..", path)
             self.cernIncDir = os.path.join(self.cernDir, "include")
             self.cernLibDir = os.path.join(self.cernDir, "lib")
-            if not os.path.exists(os.path.join(self.cernIncDir, "hbook/hcbook.inc") ) :
+            self.cernBinDir = os.path.join(self.cernDir, "bin")
+            if ( ( not os.path.exists(os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ) ) or
+                 ( not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) ) 
+                 ) :
                 self.cernDir = None
             else:
                 break
