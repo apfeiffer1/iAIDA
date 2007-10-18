@@ -70,6 +70,8 @@ class AIDA_Configurator :
 
         self.rootDir = None
 
+        self.cernDir = None
+
         self.setup()
 
         return
@@ -157,6 +159,18 @@ class AIDA_Configurator :
            rootLibs = rLib.readlines()[0].strip()
            rLib.close()
            print ' '+rootLibs+' ',
+
+        if self.cernDir:
+           # make sure we set CERN and CERN_LEVEL _before_ we use root-config ...
+           cernBase = self.cernDir[:self.cernDir.rfind('/')]
+           cernLvl  = self.cernDir[-self.cernDir.rfind('/'):]
+           cmd = 'export CERN='+cernBase+';'
+           cmd += 'export CERN_LEVEL='+cernLvl+';'
+           cmd += self.cernDir+'/bin/cernlib'
+           cLib = os.popen(cmd, 'r')
+           cernLibs = cLib.readlines()[0].strip()
+           cLib.close()
+           print ' '+cernLibs+' ',
 
         print " "
 

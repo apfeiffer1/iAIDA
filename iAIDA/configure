@@ -489,6 +489,9 @@ class Configuration(object):
             lineOut = line
             if self.rootDir and lineOut.find('self.rootDir = None') != -1:
                 lineOut = lineOut.replace('None', '"'+self.rootDir+'"')
+
+            if self.cernDir and lineOut.find('self.cernDir = None') != -1:
+                lineOut = lineOut.replace('None', '"'+self.cernDir+'"')
                 
             mf.write(lineOut)
 
