@@ -1,3 +1,8 @@
+2007-10-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	updated Makefile for tests and examples and aida-config to explicitely use
+	the cernlib if specified. This is needed in case the cernlib installation is
+	using shared libs.
+
 2007-10-03 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	added test (testHistoName) for problem reported by Giovanni Santin with gcc 3.2.3
 	(not reproducible with later compilers)
