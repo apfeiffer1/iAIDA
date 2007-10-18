@@ -111,7 +111,9 @@ CXX_FLAGS += -DHAVE_CERN
 SRCS     += $(wildcard AIDA_HBook/*.cpp)
 F_SRCS    = $(wildcard AIDA_HBook/*.F)
 OBJS     += ${F_SRCS:.F=.${OBJEXT}}
-CERN_LIB = `${CERN_DIR}/bin/cernlib`
+CERN_BASE = $(shell dirname ${CERN_DIR} )
+CERN_LVL  = $(shell basename ${CERN_DIR}  )
+CERN_LIB  = $(shell CERN=${CERN_BASE} CERN_LEVEL=${CERN_LVL} ${CERN_DIR}/bin/cernlib )
 LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
  ifdef HAVEF77
    LIBS += -lg2c

@@ -98,7 +98,9 @@ endif
 
 ifdef HAVE_CERN
 SRCS     += storeHbk.cpp readHbk.cpp storeHbkTup.cpp readHbkTup.cpp 
-CERN_LIB = `${CERN_DIR}/bin/cernlib`
+CERN_BASE = $(shell dirname ${CERN_DIR} )
+CERN_LVL  = $(shell basename ${CERN_DIR}  )
+CERN_LIB  = $(shell CERN=${CERN_BASE} CERN_LEVEL=${CERN_LVL} ${CERN_DIR}/bin/cernlib )
 LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
  ifdef HAVEF77
    LIBS += -lg2c
