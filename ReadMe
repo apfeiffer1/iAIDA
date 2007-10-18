@@ -42,8 +42,8 @@ of any modern linux installation, so there is no local copy.
 To install the package into /usr/local (assuming that the other 
 packages are installed there too):
 
-tar zxf iAIDA-1.0.3.tgz
-cd iAIDA-1.0.3
+tar zxf iAIDA-1.0.4.tgz
+cd iAIDA-1.0.4
 ./configure --prefix=/usr/local
 make
 make install
