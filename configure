@@ -451,6 +451,30 @@ class Configuration(object):
 
     # --------------------------------------------------------------------------------
 
+
+    def findLib(self, libIn):
+
+        locatePipe = os.popen("locate "+libIn, 'r')
+        list = locatePipe.readlines()
+        locatePipe.close()
+
+        foundBase = None
+        for itemIn in list:
+            item = itemIn.strip()
+            base = os.path.abspath( item )
+            base, lib = os.path.split( base )
+            if lib == libIn:
+                realBase = base
+            if os.path.islink(item) :
+                realBase, realLib = os.path.split( os.path.abspath( os.readlink(item) ) )
+            if ( (self.arch.find('64') != -1 ) and
+                 (realBase.find('lib64') == -1 ) ) : continue  # skip non-lib64 on 64 bit archs
+            foundBase = base
+
+        return foundBase
+    
+    # --------------------------------------------------------------------------------
+
     def prepareMakefiles(self):
 
         self.haveF77 = False
@@ -461,6 +485,7 @@ class Configuration(object):
         if self.chkPrg("gfortran"):
             print "using gfortran"
             self.haveGfor = True
+            self.gforLib = self.findLib('gfortran.so')
 
         self.prepareMakefile()
 
