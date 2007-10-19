@@ -1,3 +1,8 @@
+2007-10-19 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	added detection of libgfortran.so in case /usr/lib64 contains only versioned libs
+	added linking with lg2c as cernlib seems to need that 
+	Tagged iAIDA-1.0.6  -----------------------------------------
+
 2007-10-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	fixed path problem in aida-config for cernlib
 	Tagged iAIDA-1.0.5  -----------------------------------------
