@@ -486,7 +486,8 @@ class Configuration(object):
             print "using gfortran"
             self.haveGfor = True
             self.gforLib = self.findLib('gfortran.so')
-
+            print 'gfor lib', self.gforLib
+            
         self.prepareMakefile()
 
         subDirs = ['src', 'include', 'examples', 'tests']
@@ -631,8 +632,10 @@ class Configuration(object):
 
             if self.haveGfor:
                 lineOut = lineOut.replace("@HAVEGFOR@"  , "1")
+                lineOut = lineOut.replace("@GFORLIBPATH@"  , self.gforLib )
             else:
                 lineOut = lineOut.replace("@HAVEGFOR@"  , "")
+                lineOut = lineOut.replace("@GFORLIBPATH@"  , "")
 
                 
             mf.write(lineOut)

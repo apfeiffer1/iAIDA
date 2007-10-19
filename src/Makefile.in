@@ -27,6 +27,7 @@ CERN_INC = -I${CERN_DIR}/include -I../${CERN_DIR}/include
 
 HAVEF77 = @HAVEF77@
 HAVEGFOR = @HAVEGFOR@
+GFOR_LIB_PATH = @GFORLIBPATH@
 
 INCLUDES = ${AIDA_INC} ${BOOST_INC} ${EXPAT_INC} ${ZLIB_INC} ${UUID_INC} -I../include -I.. -I.
 
@@ -120,13 +121,14 @@ LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
   else
    ifdef HAVEGFOR 
     FC = gfortran
-    LIBS += -lgfortran 
+    LIBS += -L${GFOR_LIB_PATH} -lgfortran 
    endif
   endif
   # on Mac, the cernlib from fink needs lg2c ...
-  ifeq (${OS}, Darwin)
+  # also on other systems ... so add this unconditionally
+  # ifeq (${OS}, Darwin)
     LIBS += -lg2c  
-  endif
+  # endif
 endif
 
 all: lib
