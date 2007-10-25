@@ -34,7 +34,7 @@ class iAIDATester(object):
 
         self.examples = ['exaH1', 'exaH2', 'exaH3', 'exaTree',
                          'storeRoot', 'readRoot', 'storeRootTup', 'readRootTup',
-                         'storeHbk', 'readHbk', 'storeHbkTup', 'readHbkTup',
+                         'storeHbk', 'readHbk', 'storeHbkTup', 'readHbkTup', 'storeHbkCWN', 'readHbkCWN',
                          ]
 
         self.tests    = ['testAIDAmem',

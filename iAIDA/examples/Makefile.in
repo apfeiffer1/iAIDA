@@ -97,11 +97,15 @@ endif
 endif
 
 ifdef HAVE_CERN
-SRCS     += storeHbk.cpp readHbk.cpp storeHbkTup.cpp readHbkTup.cpp 
+SRCS     += storeHbk.cpp readHbk.cpp \
+            storeHbkTup.cpp readHbkTup.cpp \
+            storeHbkCWN.cpp readHbkCWN.cpp 
 CERN_BASE = $(shell dirname ${CERN_DIR} )
 CERN_LVL  = $(shell basename ${CERN_DIR}  )
 CERN_LIB  = $(shell CERN=${CERN_BASE} CERN_LEVEL=${CERN_LVL} ${CERN_DIR}/bin/cernlib )
-LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
+LIBS     += ${CERN_LIB}
+BSTATIC    = -Bstatic
+BDYNAMIC   = -Bdynamic
  ifdef HAVEF77
    LIBS += -lg2c
   else
@@ -137,5 +141,5 @@ run:
 
 % : %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
-	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${STATIC} ${LIBS} ${BDYNAMIC} ${LDFLAGS} -o $@
 
