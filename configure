@@ -467,6 +467,8 @@ class Configuration(object):
                 realBase = base
             if os.path.islink(item) :
                 realBase, realLib = os.path.split( os.path.abspath( os.readlink(item) ) )
+            else:
+                realBase, realLib = base, lib
             if ( (self.arch.find('64') != -1 ) and
                  (realBase.find('lib64') == -1 ) ) : continue  # skip non-lib64 on 64 bit archs
             foundBase = base

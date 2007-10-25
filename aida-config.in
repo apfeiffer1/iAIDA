@@ -148,6 +148,12 @@ class AIDA_Configurator :
                   ]
 
         print "-L" + self.iaidaRelDir   + "/lib " ,
+
+        # on 64 bit make sure we link statically when using CERNLIB
+        if ( (self.platf.find('64_') != -1) and
+             (self.cernDir) ):
+           print " -static "
+           
         for lib in libList :
             print " -l" + lib,
 
@@ -171,6 +177,10 @@ class AIDA_Configurator :
            cLib.close()
            print ' '+cernLibs+' ',
 
+        # on 64 bit make sure we link statically when using CERNLIB, reset flag
+        if ( (self.platf.find('64_') != -1) and
+             (self.cernDir) ):
+           print " -dynamix "
         print " "
 
         return
