@@ -89,35 +89,18 @@ LIBS     += ${GRACE_LIB}
 endif
 
 ifdef HAVE_ROOT
-ROOT_DIR = @ROOT_DIR@
-LIBS     += ${ROOT_LIBS}
 # add root-specific tests
 SRCS     += ${ROOT_TEST_SRCS}
 endif
 
 ifdef HAVE_CERN
 SRCS     += 
-CERN_BASE = $(shell dirname ${CERN_DIR} )
-CERN_LVL  = $(shell basename ${CERN_DIR}  )
-CERN_LIB  = $(shell CERN=${CERN_BASE} CERN_LEVEL=${CERN_LVL} ${CERN_DIR}/bin/cernlib )
-LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
- ifdef HAVEF77
-   LIBS += -lg2c
-  else
-   ifdef HAVEGFOR 
-    FC = gfortran
-    LIBS += -L${GFOR_LIB_PATH} -lgfortran -lg2c
-   endif
-  endif
-  # on Mac, the cernlib from fink needs lg2c ...
-  # also on other systems ... so add this unconditionally
-  # ifeq (${OS}, Darwin)
-    LIBS += -lg2c  
-  # endif
 endif
 
 OBJS = ${SRCS:.cpp=.o}
 EXECS = ${SRCS:.cpp=}
+
+LINK_LIBS = $(shell ../bin/aida-config --lib)
 
 all: ${EXECS}
 
@@ -136,5 +119,5 @@ run:
 
 % : %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
-	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${FLAGS} ${INCLUDES} ${LIBS} ${LDFLAGS} -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${FLAGS} ${INCLUDES} ${LINK_LIBS} ${LIBS} ${LDFLAGS} -o $@
 
