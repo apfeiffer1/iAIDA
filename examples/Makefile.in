@@ -74,7 +74,7 @@ ifeq (${OS}, Darwin)
   export MACOSX_DEPLOYMENT_TARGET=10.4
   SHLIBFLAGS = -dynamiclib -single_module -undefined dynamic_lookup
   LDFLAGS = -lssl -bind_at_load
-  LIBS +=  -lexpat -ldl
+  LIBS +=  -lexpat -ldl -lz
 endif
 
 # now all the vars are prepared, now check if we have Grace ...
@@ -87,42 +87,19 @@ LIBS     += ${GRACE_LIB}
 endif
 
 ifdef HAVE_ROOT
-ROOT_DIR = @ROOT_DIR@
 SRCS     += storeRoot.cpp readRoot.cpp storeRootTup.cpp readRootTup.cpp 
-LIBS     += ${ROOT_LIBS}
-else  # root has it's own version of libz, so don't use the system one
-ifeq (${OS}, Darwin)
-  LIBS += -lz 
-endif
 endif
 
 ifdef HAVE_CERN
 SRCS     += storeHbk.cpp readHbk.cpp \
             storeHbkTup.cpp readHbkTup.cpp \
             storeHbkCWN.cpp readHbkCWN.cpp 
-CERN_BASE = $(shell dirname ${CERN_DIR} )
-CERN_LVL  = $(shell basename ${CERN_DIR}  )
-CERN_LIB  = $(shell CERN=${CERN_BASE} CERN_LEVEL=${CERN_LVL} ${CERN_DIR}/bin/cernlib )
-LIBS     += ${CERN_LIB}
-BSTATIC    = -Bstatic
-BDYNAMIC   = -Bdynamic
- ifdef HAVEF77
-   LIBS += -lg2c
-  else
-   ifdef HAVEGFOR 
-    FC = gfortran
-    LIBS += -L${GFOR_LIB_PATH} -lgfortran -lg2c
-   endif
-  endif
-  # on Mac, the cernlib from fink needs lg2c ...
-  # also on other systems ... so add this unconditionally
-  # ifeq (${OS}, Darwin)
-    LIBS += -lg2c  
-  # endif
 endif
 
 OBJS = ${SRCS:.cpp=.o}
 EXECS = ${SRCS:.cpp=}
+
+LINK_LIBS = $(shell `../bin/aida-config --lib`)
 
 all: ${EXECS}
 
@@ -135,11 +112,10 @@ run:
 	for e in ${EXECS} ; do echo "running "$$e ; ./$$e ; done ; \
 	rm -f exa*.aida exa*.hbk 
 
-
 %.o : %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
 
 % : %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
-	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${STATIC} ${LIBS} ${BDYNAMIC} ${LDFLAGS} -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${LINK_LIBS} ${LDFLAGS} -o $@
 
