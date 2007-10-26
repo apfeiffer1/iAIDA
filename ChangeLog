@@ -1,3 +1,9 @@
+2007-10-29 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	if cernlib is configured on a 64 bit architecture, the executables are now linked
+	statically, this fixes the problem with the ColumnWiseNtuples in HBook. The Root
+	libs (if configured) need to be static as well.
+	Tagged iAIDA-1.0.7  -----------------------------------------
+	
 2007-10-19 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	added detection of libgfortran.so in case /usr/lib64 contains only versioned libs
 	added linking with lg2c as cernlib seems to need that 
