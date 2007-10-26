@@ -529,7 +529,7 @@ class Configuration(object):
                 lineOut = lineOut.replace('None', '"g77"')
                 
             if self.haveGfor and lineOut.find('self.haveGfor = None') != -1:
-                lineOut = lineOut.replace('None', '"gfortran"')
+                lineOut = lineOut.replace('None', '"-L'+self.gforLib+'"')
                 
             mf.write(lineOut)
 
