@@ -189,20 +189,20 @@ class Configuration(object):
             print "\n\nFATAL ERROR: Expat installation not found in:", pathList, '\n'
             sys.exit(-1)
             
-        if self.arch == 'x86_64':
-            # check if libexpat.so is available (only libexpat.so.0 is available
-            # on x86_64 machines in 32 bit mode. Set a symlink for these in our
-            # lib/ dir ...
-            if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
-                expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
-                if not os.path.exists( expatLibName0 ) :
-                    print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
-                    sys.exit(-1)
-                else:
-                    if not os.path.exists('lib'): os.makedirs('lib')
-                    os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
-                    self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
-                    print "(symlink for libexpat set) ",
+#         if self.arch == 'x86_64':
+#             # check if libexpat.so is available (only libexpat.so.0 is available
+#             # on x86_64 machines in 32 bit mode. Set a symlink for these in our
+#             # lib/ dir ...
+#             if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
+#                 expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
+#                 if not os.path.exists( expatLibName0 ) :
+#                     print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
+#                     sys.exit(-1)
+#                 else:
+#                     if not os.path.exists('lib'): os.makedirs('lib')
+#                     os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
+#                     self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
+#                     print "(symlink for libexpat set) ",
         return
 
     # --------------------------------------------------------------------------------
@@ -454,9 +454,13 @@ class Configuration(object):
 
     def findLib(self, libIn):
 
-        locatePipe = os.popen("locate "+libIn, 'r')
-        list = locatePipe.readlines()
-        locatePipe.close()
+        findPipe = os.popen('FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib/gcc -name libgfortran.so','r')
+        list = findPipe.readlines()
+        findPipe.close()
+        
+        #locatePipe = os.popen("locate "+libIn, 'r')
+        #list = locatePipe.readlines()
+        #locatePipe.close()
 
         foundBase = None
         for itemIn in list:

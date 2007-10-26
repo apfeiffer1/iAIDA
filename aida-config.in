@@ -146,17 +146,6 @@ class AIDA_Configurator :
 
         libList = [ "iAIDA"
                   ]
-
-        # make sure these are _outside_ the (static on 64bit) CERNLIB part...
-        if self.rootDir:
-           # make sure we set ROOTSYS _before_ we use root-config ...
-           cmd = 'export ROOTSYS='+self.rootDir+';'
-           cmd += self.rootDir+'/bin/root-config --libs'
-           rLib = os.popen(cmd, 'r')
-           rootLibs = rLib.readlines()[0].strip()
-           rLib.close()
-           print ' '+rootLibs+' ',
-
         print "-L" + self.iaidaRelDir   + "/lib " ,
 
         # on 64 bit make sure we link statically when using CERNLIB
@@ -183,6 +172,17 @@ class AIDA_Configurator :
         if ( (self.platf.find('_64') != -1) and
              (self.cernDir) ):
            print " -dynamic -lz -lexpat -lg2c ",
+
+
+        # make sure these are _outside_ the (static on 64bit) CERNLIB part...
+        if self.rootDir:
+           # make sure we set ROOTSYS _before_ we use root-config ...
+           cmd = 'export ROOTSYS='+self.rootDir+';'
+           cmd += self.rootDir+'/bin/root-config --libs'
+           rLib = os.popen(cmd, 'r')
+           rootLibs = rLib.readlines()[0].strip()
+           rLib.close()
+           print ' '+rootLibs+' ',
 
         # this print statement has to be LAST
         print " "

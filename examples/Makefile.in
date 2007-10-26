@@ -99,7 +99,7 @@ endif
 OBJS = ${SRCS:.cpp=.o}
 EXECS = ${SRCS:.cpp=}
 
-LINK_LIBS = $(shell `../bin/aida-config --lib`)
+LINK_LIBS = $(shell ../bin/aida-config --lib)
 
 all: ${EXECS}
 
