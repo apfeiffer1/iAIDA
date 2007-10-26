@@ -126,9 +126,9 @@ LIBS     += -Bstatic ${CERN_LIB} -Bdynamic
   endif
   # on Mac, the cernlib from fink needs lg2c ...
   # also on other systems ... so add this unconditionally
-  # ifeq (${OS}, Darwin)
+  ifeq (${OS}, Darwin)
     LIBS += -lg2c  
-  # endif
+  endif
 endif
 
 all: lib
