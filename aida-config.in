@@ -170,7 +170,7 @@ class AIDA_Configurator :
            cLib.close()
            print ' '+cernLibs+' ',
            if self.haveGfor : 
-                print ' -lgfortran ',
+                print ' ' + self.haveGfor + ' -lgfortran ',
            if self.haveF77 :
                 print ' -lg2c ',
 
