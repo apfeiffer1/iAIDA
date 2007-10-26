@@ -66,7 +66,7 @@ class AIDA_Configurator :
         self.versionPython = "2.4.2"
         self.versionBoost  = "1.33.1"
 
-        self.platf = plat
+        self.platf = os.uname()[-1]
 
         self.rootDir = None
 
@@ -147,16 +147,7 @@ class AIDA_Configurator :
         libList = [ "iAIDA"
                   ]
 
-        print "-L" + self.iaidaRelDir   + "/lib " ,
-
-        # on 64 bit make sure we link statically when using CERNLIB
-        if ( (self.platf.find('64_') != -1) and
-             (self.cernDir) ):
-           print " -static "
-           
-        for lib in libList :
-            print " -l" + lib,
-
+        # make sure these are _outside_ the (static on 64bit) CERNLIB part...
         if self.rootDir:
            # make sure we set ROOTSYS _before_ we use root-config ...
            cmd = 'export ROOTSYS='+self.rootDir+';'
@@ -165,6 +156,16 @@ class AIDA_Configurator :
            rootLibs = rLib.readlines()[0].strip()
            rLib.close()
            print ' '+rootLibs+' ',
+
+        print "-L" + self.iaidaRelDir   + "/lib " ,
+
+        # on 64 bit make sure we link statically when using CERNLIB
+        if ( (self.platf.find('_64') != -1) and
+             (self.cernDir) ):
+           print " -static ",
+           
+        for lib in libList :
+            print " -l" + lib,
 
         if self.cernDir:
            # make sure we set CERN and CERN_LEVEL _before_ we use root-config ...
@@ -178,9 +179,12 @@ class AIDA_Configurator :
            print ' '+cernLibs+' ',
 
         # on 64 bit make sure we link statically when using CERNLIB, reset flag
-        if ( (self.platf.find('64_') != -1) and
+        # and add the other libs ...
+        if ( (self.platf.find('_64') != -1) and
              (self.cernDir) ):
-           print " -dynamix "
+           print " -dynamic -lz -lexpat -lg2c ",
+
+        # this print statement has to be LAST
         print " "
 
         return
