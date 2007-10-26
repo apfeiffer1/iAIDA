@@ -525,7 +525,7 @@ class Configuration(object):
             if self.cernDir and lineOut.find('self.cernDir = None') != -1:
                 lineOut = lineOut.replace('None', '"'+self.cernDir+'"')
                 
-            if self.haveF77 and lineOut.find('self.haveF77 = None') != -1:
+            if self.haveF77 and lineOut.find('self.haveF77  = None') != -1:
                 lineOut = lineOut.replace('None', '"g77"')
                 
             if self.haveGfor and lineOut.find('self.haveGfor = None') != -1:
