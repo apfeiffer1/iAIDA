@@ -117,5 +117,5 @@ run:
 
 % : %.cpp
 	${CXX} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} -c $< -o $@.${OBJEXT}
-	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${LINK_LIBS} ${LDFLAGS} -o $@
+	${CXX} ${CXX_FLAGS} ${CXXFLAGS} $@.${OBJEXT} ${INCLUDES} ${LINK_LIBS} ${LIBS} ${LDFLAGS} -o $@
 

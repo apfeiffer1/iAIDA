@@ -171,7 +171,7 @@ class AIDA_Configurator :
         # and add the other libs ...
         if ( (self.platf.find('_64') != -1) and
              (self.cernDir) ):
-           print " -dynamic -lz -lexpat -lg2c ",
+           print " -dynamic ",
 
 
         # make sure these are _outside_ the (static on 64bit) CERNLIB part...
