@@ -495,7 +495,7 @@ class Configuration(object):
             print "using gfortran"
             self.haveGfor = True
             self.gforLib = self.findLib('gfortran.so')
-            print 'gfor lib', self.gforLib
+            # print 'gfor lib', self.gforLib
             
         self.prepareMakefile()
 
