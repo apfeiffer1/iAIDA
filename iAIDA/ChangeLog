@@ -1,3 +1,7 @@
+2007-11-07 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	improved checking of cernlib, added more diagnostics info for use
+	Tagged iAIDA-1.0.8  -----------------------------------------
+	
 2007-10-29 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	if cernlib is configured on a 64 bit architecture, the executables are now linked
 	statically, this fixes the problem with the ColumnWiseNtuples in HBook. The Root
