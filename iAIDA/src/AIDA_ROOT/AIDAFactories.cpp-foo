@@ -1,0 +1,96 @@
+//  This file is part of the AIDA library
+//  Copyright (C) 2002 by the AIDA team.  All rights reserved.
+//  This library is free software and under the terms of the
+//  GNU Library General Public License described in the LGPL.txt 
+
+
+#include "AIDA/IAnalysisFactory.h"
+#include "AIDA_ROOT/TreeFactoryAIDA.h"
+#include "AIDA_ROOT/AIDA_HistogramFactory.h"
+
+using namespace AIDA;
+
+namespace AIDA_ROOT {
+
+
+class AnalysisFactory : public AIDA::IAnalysisFactory {
+
+public: 
+  /// Destructor.
+  virtual ~AnalysisFactory() { /* nop */; }
+
+  ITreeFactory * createTreeFactory() { return new TreeFactoryAIDA; }
+
+  IHistogramFactory * createHistogramFactory(ITree & tree) {   
+    // to be implemented
+    return 0; 
+  }
+
+  /**
+   * Create an IDataPointSetFactory.
+   * @param tree The ITree which created IDataPointSet will be associated to.
+   * @return     The IDataPointSetFactory.
+   *
+   */
+    IDataPointSetFactory * createDataPointSetFactory(ITree & tree) { return 0; }
+
+  /**
+   * Create an ITupleFactory.
+   * @param tree The ITree which created tuples will be associated to.
+   * @return     The ITupleFactory.
+   *
+   */
+    ITupleFactory * createTupleFactory(ITree & tree) { return 0; }
+
+  /**
+   * Create an IFunctionFactory.
+   * @param tree The ITree which created functions will be associated to.
+   * @return     The IFunctionFactory.
+   *
+   */
+    IFunctionFactory * createFunctionFactory(ITree & tree) { return 0; }
+
+    /**
+     * Create an IPlotterFactory.
+     * Due to the fact that the plotter factory may activate a GUI
+     * tookit, the process arguments (passed to the main function)
+     * could be passed to the plotter factory. Most of the GUI
+     * toolkit ask for them (Motif, gtk, Qt, FLTK).
+     */
+           
+                                           
+      
+          
+    IPlotterFactory * createPlotterFactory(int argc = 0, char * * args = 0) { return 0; }
+
+  /**
+   * Create an IFitFactory.
+   * @return     The IFitFactory.
+   *
+   */
+    IFitFactory * createFitFactory() { return 0; }
+
+}; // class
+}  // namespace AIDA_ROOT
+
+
+
+/**
+ * To hook an AIDA implementation.
+ * For example :
+ *   #include <AIDA/IAnalysisFactory.h>
+ *   ...
+ *   IAnalysisFactory* analysisFactory = AIDA_createAnalysisFactory();
+ *   ...
+ */
+
+/*LM: comment this global functions: conflict if using plugin, should be moved 
+ *    to a different library
+
+extern "C" {
+  AIDA::IAnalysisFactory* AIDA_createAnalysisFactory() {
+    std::cout << "loading AIDA_ROOT AnalysisFactory plugin" <<std:: endl;
+    return new AIDA_ROOT::AnalysisFactory;
+  }
+}
+*/

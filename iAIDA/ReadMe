@@ -1,0 +1,126 @@
+
+iAIDA is a library implementing the AIDA (http://aida.freehep.org)
+Abstract Interfaces for Data Analysis. The implementation is in
+C++, at some later stage a binding to Python will follow.
+
+iAIDA is based on the (now discontinued) PI (http://cern.ch/pi)
+package. The main aim of iAIDA is to be easy to configure but
+keep the flexibility of PI in terms of providing means to use
+several of the most common I/O formats used in High Energy and
+Nuclear Physics (HENP), such as HBOOK, ROOT and the AIDA native
+compressed XML format.
+
+For more information please consult: http://iaida.dynalias.net
+
+The remainder of the file deals with the installation. For the
+impatient, the recipe is (after unpacking and cd into the unpacked
+dir):
+
+./configure 
+make
+make install
+
+
+The iAIDA package needs the following packages already installed 
+(with their "development" packages as well):
+e2fsprogs (version 1.39-21 tested)
+expat (version 1.95.8 tested)
+Boost (version 1.33.1 tested)
+optionally: xmgrace (versions 5.1.14 and 5.1.20 tested)
+optionally: cernlib (version 2005 tested)
+optionally: root (version 5.17.02 tested)
+
+
+Also AIDA (version 3.2.1) is used, if you have it installed, 
+the package will use (and install) your version, otherwise 
+it uses (and installs) a local copy from inside the package.
+
+In the same way, if you don't have Boost installed, the package
+will use the headers from a local copy. Expat is normally part
+of any modern linux installation, so there is no local copy.
+
+To install the package into /usr/local (assuming that the other 
+packages are installed there too):
+
+tar zxf iAIDA-1.0.7.tgz
+cd iAIDA-1.0.7
+./configure --prefix=/usr/local
+make
+make install
+
+The configure script will tell you if it doesn't find one of 
+the needed packages, if you have installed it in another place, 
+you can tell the script to find it where you have installed it, 
+for example:
+
+./configure --prefix=${HOME}/install \
+      --with-boost=/my/path/to/boost \
+      --with-grace=${GRACE_DIR}
+
+For more information on how to use it, just type :
+
+./configure --help
+
+to see a list of options and examples.
+
+The package has been successfully build and run on the following
+platforms:
+Mac OS X (10.4.7) with gcc 4.0.1
+Scientific Linux 3.0 (SLC3) with gcc 3.2.3
+Scientific Linux 4.0 (SLC4) with gcc 3.4.6
+SuSE 10.2 with gcc 4.1.2 (gfortran)
+
+As of version 0.1.4 the package optionally can store and read
+histograms also in HBOOK format (if you have CERNLIB installed 
+before building the package).
+
+As of version 0.2.0 the package optionally can store and read
+histograms also in ROOT format.
+
+
+
+Note for building on Mac OS X (10.4.x):
+---------------------------------------
+
+You can download and install xmgrace from the Fink project,
+the package will then be installed in the /sw directory (or
+wherever you install Fink software). Simply use the configure
+option to tell the package where xmgrace is installed:
+
+./configure --prefix=../install/ --with-grace=/sw
+
+
+
+Note for building on SL(C)4 (gcc345) on AMD64 with HBOOK:
+-----------------------------------------------------------
+
+At present there is a problem with column-wise HBOOK ntuples on 
+64 bit machines (such as AMD64 bit). If you need that feature,
+you will have to use a 32bit build of CERNLIB to use HBook with 
+iAIDA. After installing this, you need to configure and build 
+the iAIDA libs with the following commands (after unpacking the 
+tarball):
+
+
+linux32 ./configure --prefix <your/path/to/prefix> \
+   --with-cernlib <your/path/to/cernlib/in/ia32/mode> 
+linux32 make CXXFLAGS='-m32'
+linux32 make CXXFLAGS='-m32' install
+
+
+If you can live with row-wise HBOOK ntuples, simply use the
+'--RWN' option to the creation of the tuple (the last argument
+in the tupleFactory->create() call).
+
+
+
+Note for building on SL(C)4 (gcc345) on AMD64 with xmgrace:
+-----------------------------------------------------------
+
+When you build grace, you have to set CFLAGS to -fPIC
+before, otherwise you will get a linker error when building 
+the iAIDA lib. The following worked for me:
+CFLAGS=-fPIC ./configure ...
+CFLAGS=-fPIC make 
+
+

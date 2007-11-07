@@ -1,0 +1,28 @@
+# need definition of SEAL
+SEAL=$(shell echo `$(SCRAM) tool tag SEAL SEAL_BASE`)
+
+
+
+# dictionary for PyAIDA
+
+DICT_FILES	    = $(LOCALTOP)/$(THISDIR)/AFCreator.h  $(LOCALTOP)/$(THISDIR)/CastConverter.h 
+#DICT_FILES          += $(AIDA_BASE)/src/cpp/AIDA/AIDA.h
+
+AFCreator_h_DICT_OPTS       = --select=$(LOCALTOP)/$(THISDIR)/selection.xml
+#AIDA_h_DICT_OPTS       = --select=$(LOCALTOP)/$(THISDIR)/selection.xml
+
+
+dictcapabilities = dictcapabilities.cpp
+rflxcapabilities = rflxcapabilities.cpp
+
+
+<external ref=seal  use=Dictionary/DictionaryGenerator></external>
+<external ref=seal  use=Dictionary/ReflectionBuilder></external>
+<external ref=seal  use=Dictionary/Reflection></external>
+<external ref=seal  use=Dictionary/SealSTL></external>
+
+<use name=AnalysisServices/AIDA_AnalysisFactory></use>
+
+
+
+

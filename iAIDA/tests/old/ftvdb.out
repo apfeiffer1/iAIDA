@@ -1,0 +1,32 @@
+Testing the TupleVariableDescriptionBuilder class
+Analysing the string : float  a, b; int c;;  ; Tuple{ float a; int b} d,e; bool f; float g; Tuple{int n; Tuple{float a} t1; Tuple{float b} t2, t3 }h
+Variables : 
+a : float
+b : float
+c : int
+d : Tuple{ float a, int b}
+e : Tuple{ float a, int b}
+f : bool
+g : float
+h : Tuple{int n, Tuple{float a} t1, Tuple{float b} t2, t3 }
+Building a description chain. 
+Description : 
+a : float
+b : float
+c : int
+d : AIDA::ITuple
+  a : float
+  b : int
+e : AIDA::ITuple
+  a : float
+  b : int
+f : bool
+g : float
+h : AIDA::ITuple
+  n : int
+  t1 : AIDA::ITuple
+    a : float
+  t2 : AIDA::ITuple
+    b : float
+  t3 : AIDA::ITuple
+    b : float

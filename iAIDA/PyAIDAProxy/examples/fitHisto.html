@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>Fitting Histograms</title>
+    <style type="text/CSS">
+      <!--
+      h1 {color: darkgreen}
+      h2 {color: darkgreen}
+      h3 {color: darkblue}
+      h4 {color: darkred}
+      -->
+    </style>
+  </head>
+
+  <body	bgcolor="#ffffff">
+      <h2>Fitting Histograms and plotting the result</h2>
+      
+      <h3>Description</h3>
+      <p>
+
+      <h3>Python program</h3>
+      <p>Click to retrieve <a href="fitHisto.py">the Python script</a> of the example.</p>
+
+      <p>After having <a href="howtosetup.html">setup</a> correctly your environment, you can run the example typing :<br />
+	<kbd>python -i fitHisto.py
+	</kbd> </p>
+
+      <h3>Program flow</h3>
+      <ol>
+        <li>The Python module <em>AidaProxy</em> is imported. This module loads
+          the dictionary for the PI classes, making them available in the Python
+          environment in the global namespace.</li> 
+        <li>One histogram is filled with a random distribution composed by
+          two gaussian, a narrow one representing a signal and a wide one, representing
+          the background. </li>
+        <li>The histogram is fitted, using the AIDA fit interface. First a single
+          gaussian fit is performed. The sequence of fitting is the following: 
+          <ul>
+            <li>A Gaussian function is created, using the keyword &quot;G&quot;</li>
+            <li>The function parameters are set to reasonable values</li>
+            <li>The fitter is created, using the default Chi2 method</li>
+            <li>The fit is performed passing the histogram and the function as
+              parameters</li>
+            <li>The FitResult object is returned from the fit, containing the
+              resulting parameter values, errors and chi2</li>
+          </ul>
+		  <li>A double gaussian fit is performed, after having created a new function
+		    &quot;G+G&quot;</li>
+          <li>A Maximum binned likelihood fit is performed using the same double
+            gaussian function. The fit method is changed using the <em>setFitMethod(&quot;PoissonML&quot;)
+            </em>of the Fitter interface.</li>
+          <li>The histogram is viewed in a ROOT canvas together with  the three fitted functions. In red the Gaussian resulting from the first Chi2 fit, in green the double gaussian resulting from the Chi2 fit and in blue the double Gaussian resulting from the Maximum Likelihood fit. 
+<p> To plot in ROOT the module rootPlotter2.py is used. There the histograms and functions of AIDA are converted in ROOT objects. The dictionary to the ROOT classes using PyLCGDict (SealRootDict) is used .</li> 
+         <li>The histogram and the fitted functions are also plotted in HippoDraw. </li>
+
+      </ol>
+
+  </body>
+</html>
+

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>Creating histograms and plotting in a ROOT Canvas</title>
+    <style type="text/CSS">
+      <!--
+      h1 {color: darkgreen}
+      h2 {color: darkgreen}
+      h3 {color: darkblue}
+      h4 {color: darkred}
+      -->
+    </style>
+  </head>
+
+  <body	bgcolor="#ffffff">
+      <h2>Creating and filling AIDA histograms and plotting them in a ROOT Canvas
+        using PyROOT</h2>
+      
+      <h3>Description</h3>
+      <p>Histograms of 1 and 2 dimensions are created ("booked"), and filled
+        with different random number distributions available from the Python
+        random package and then plotted in a Root canvas.
+
+      <h3>Python program</h3>
+      <p>Click to retrieve <a href="rootDemo.py">the Python script</a> of the example.</p>
+
+      <p>After having <a href="howtosetup.html">setup</a> correctly your environment, you can run the example typing :<br />
+	<kbd>python -i rootDemo.py
+	</kbd> </p>
+
+      <h3>Program flow</h3>
+      <ol>
+        <li>The Python module <em>AidaProxy</em> is imported. This module loads the dictionary for the PI classes, making them available in the Python environment in the global namespace.</li> 
+        <li>1D and 2D Histograms are booked </li>
+	<li>The histograms are filled with random data. The random data are generated with gaussian, exponential, log normal, gamma distributions using functions available from the Python random package</li>
+	<li>The Python module <em>rootPlotter</em> is imported. The module imports first the Python binding to ROOT, <em>PyROOT</em>. The rootPlotter module  defines a python class, RootPlotter, which implements the plotting of AIDA histograms in a Root canvas, using <em>PyROOT</em> </li>
+	<li>An instance of the RootPlotter class is created. This class creates a Root canvas. </li>
+	<li> The canvas is divided in 2 x 3 zones</li>
+	<li> The histograms are plotted in each zone. The histograms are copied, in the <em>rootPlotter</em> module from AIDA to Root object and then drawn in the canvas.</li>   
+      </ol>
+
+  </body>
+</html>
+

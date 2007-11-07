@@ -1,0 +1,36 @@
+
+#include "FML/SimplexMinimizer.h"
+#include "FML/MinimizerPlugin.h"
+
+#include "Minuit2/MnSimplex.h"
+
+
+#include <iostream> 
+
+namespace fml { 
+
+ROOT::Minuit2::MnApplication * SimplexMinimizer::createMinimizer(const ROOT::Minuit2::MnUserParameters & par) { 
+  if (!getFCN() ) return 0; 
+  if (printLevel() >= 3)  
+    std::cout << "Create SIMPLEX minimizer - with strategy " << controlParameters().strategy() << std::endl; 
+  ROOT::Minuit2::MnSimplex * minimizer = new ROOT::Minuit2::MnSimplex( *getFCN(), par, controlParameters().strategy()); 
+  return minimizer;
+}
+
+
+static Util::Plugin<Minimizer, SimplexMinimizer> simplexMinimizer_plugin("simplex");
+
+  /* 
+const MinimizerControlParams& SimplexMinimizer::defaultControlParameters() const
+{
+  MinimizerControlParams c;
+
+  c.setMaxIter(100000000);  // But much bigger value 
+  std::cout << "set control parameters for SimplexMinimizer" << std::endl;
+  
+  return  _update_current_default_parameters(c);
+}
+*/
+
+
+}

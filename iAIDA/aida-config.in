@@ -1,0 +1,309 @@
+#!/usr/bin/env python
+
+#
+#    Copyright 2007 Andreas Pfeiffer
+#
+#
+#  This file is part of iAIDA.
+#
+#  iAIDA is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as 
+#  published by the Free Software Foundation, either version 3 of 
+#  the License.
+#
+#  iAIDA is distributed in the hope that it will be useful, but 
+#  WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public 
+#  License along with iAIDA.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import os, os.path, sys, string
+
+# History:
+# ap, 06-nov-2005  : update for slc4, and gcc 344/40; add detection of h/w arch
+# ap, 16-mar-2005  : add optional platform switch to let the user override the
+#                    automatic detection of the platform
+# ap, 29-jun-2004  : add check for Scientific Linux 3.0.2, more detailled check
+#                    on the g++ version to find 3.2.3 correctly, error printouts
+#                    for unknown opSys and/or compiler, improved checks for AIDA
+#                    dir, added PYTHONPATH and python shared libs to runtime env.
+# ap, some time ago: script created
+
+
+# --------------------------------------------------------------------------------
+
+def usage ():
+   print """
+
+usage: aida-config [<options>] 
+
+where the optional <options> can be one of the following:
+
+       -?, -h, --help : print this text
+       -v, --version  : print version info
+
+       -i, --includes : print out the list for the include directories: '-I...'
+       -c, --cflags   : presently as -i or --includes
+       -l, --libs     : print out the list for the libraries : '-L... -l.. -l.. ...'
+       -r, --runtime  : print out the list to be added to the SharedLib Path : '<path-to-shared-libs>'
+
+       --platform=<platform> : use <platform> for Platform string, overrides automatic determination
+
+"""
+
+# --------------------------------------------------------------------------------
+
+class AIDA_Configurator :
+
+    def __init__(self, platf="") :
+
+        self.iaidaVersion   = "iAIDA-1.0.0"
+        self.aidaVersion = "3.2.1"
+
+        self.versionPython = "2.4.2"
+        self.versionBoost  = "1.33.1"
+
+        self.platf = os.uname()[-1]
+
+        self.rootDir = None
+
+        self.cernDir = None
+
+        self.haveF77  = None
+        self.haveGfor = None
+
+        self.setup()
+
+        return
+
+    def setup(self) :
+
+        myPath = os.path.realpath(sys.argv[0]) 
+        pathToSelf, name = os.path.split( myPath )
+
+        words = string.split(pathToSelf, "/")
+        self.topDir = string.join( words[:-1], "/")
+
+        # check if topDir exists and if it contains this script :-)
+        if ( not os.path.exists(self.topDir) ) :
+            # ... not existing, check for environment var IAIDA_DIR:
+            try:
+                self.topDir = os.environ["IAIDA_DIR"]  # the path to /where/ever/app/releases where iAIDA is in ...
+            except KeyError:
+                sys.stderr.write("\nERROR:\n")
+                sys.stderr.write("\tEnvironment variable IAIDA_DIR is not set and the estimated directory not accessible.\n")
+                sys.stderr.write("\tPlease make sure you define IAIDA_DIR to point to your installation of iAIDA. For more information\n")
+                sys.stderr.write("\tsee http://iaida.dynalias.net \n\n")
+                sys.stderr.write("\t(checked dir:" + self.topDir + ")\n\n")
+                sys.exit(-1)
+            except:
+                raise
+
+        # Now we should check where AIDA is in this tree :
+        self.extDir = os.path.join(self.topDir)
+
+        self.iaidaRelDir   = os.path.realpath( self.topDir )
+
+        self.aidaTopDir     =  self.extDir + "/AIDA"
+        if not os.path.exists( self.aidaTopDir ) :
+           self.aidaTopDir  =  self.extDir + "/include"
+        self.aidaVersStr    =  str(self.aidaVersion)
+        self.aidaDefaultDir =  self.aidaTopDir + "/" + self.aidaVersion + "/share/src/cpp"
+        self.aidaDefaultDir = os.path.realpath( self.aidaDefaultDir )
+
+        if not os.path.exists( self.aidaDefaultDir ) :
+           self.aidaDefaultDir =  self.aidaTopDir
+           self.aidaDefaultDir = os.path.realpath( self.aidaDefaultDir )
+
+        return
+
+# --------------------------------------------------------------------------------
+
+    def showInclude(self) :
+
+        aidaDir = ""
+        try : 
+            aidaDir = os.environ["AIDA_DIR"]
+        except:
+            # not in environment, use "default installation from CERN cell
+            aidaDir = self.aidaDefaultDir
+            # check if it exists ...
+            if ( not os.path.exists(aidaDir) ) :
+                sys.stderr.write("\nERROR:\n")
+                sys.stderr.write("\tEnvironment variable AIDA_DIR is not set and the default AFS directory not accessible.\n")
+                sys.stderr.write("\tPlease make sure you have the AIDA interfaces installed. For more information\n")
+                sys.stderr.write("\tsee http://aida.freehep.org\n\n")
+                sys.stderr.write("\t(checked dir:" + aidaDir + ")\n\n")
+                return
+
+        print " -I" + aidaDir
+
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def showLibs(self) :
+
+        libList = [ "iAIDA"
+                  ]
+        print "-L" + self.iaidaRelDir   + "/lib " ,
+
+        # on 64 bit make sure we link statically when using CERNLIB
+        if ( (self.platf.find('_64') != -1) and
+             (self.cernDir) ):
+           print " -static ",
+           
+        for lib in libList :
+            print " -l" + lib,
+
+        if self.cernDir:
+           # make sure we set CERN and CERN_LEVEL _before_ we use root-config ...
+           cernBase,cernLvl = os.path.split(self.cernDir)
+           cmd = 'export CERN='+cernBase+';'
+           cmd += 'export CERN_LEVEL='+cernLvl+';'
+           cmd += self.cernDir+'/bin/cernlib'
+           cLib = os.popen(cmd, 'r')
+           cernLibs = cLib.readlines()[0].strip()
+           cLib.close()
+           print ' '+cernLibs+' ',
+           if self.haveGfor : 
+                print ' ' + self.haveGfor + ' -lgfortran ',
+           if self.haveF77 :
+                print ' -lg2c ',
+
+        # on 64 bit make sure we link statically when using CERNLIB, reset flag
+        # and add the other libs ...
+        if ( (self.platf.find('_64') != -1) and
+             (self.cernDir) ):
+           print " -dynamic ",
+
+
+        # make sure these are _outside_ the (static on 64bit) CERNLIB part...
+        if self.rootDir:
+           # make sure we set ROOTSYS _before_ we use root-config ...
+           cmd = 'export ROOTSYS='+self.rootDir+';'
+           cmd += self.rootDir+'/bin/root-config --libs'
+           rLib = os.popen(cmd, 'r')
+           rootLibs = rLib.readlines()[0].strip()
+           rLib.close()
+           print ' '+rootLibs+' ',
+
+        # this print statement has to be LAST
+        print " "
+
+        return
+
+
+    # --------------------------------------------------------------------------------
+
+    def showRuntime(self, arg) :
+
+        # todo: cleanup PATH before setting: remove "old" versions in path 
+
+        cmd = "export "
+        sep = "="
+
+        if ( string.find(arg, "csh") != -1 ) :
+            cmd = "setenv "
+            sep = " "
+
+        setLDpath = cmd 
+        setLDpath += " LD_LIBRARY_PATH" + sep + '"' + self.iaidaRelDir + "/lib:"
+
+        setDLDpath = cmd 
+        setDLDpath += " DYLD_LIBRARY_PATH" + sep + '"' + self.iaidaRelDir + "/lib:"
+
+        if self.rootDir:
+           setLDpath  += self.rootDir + "/lib:"
+           setDLDpath += self.rootDir + "/lib:"
+           print cmd + " ROOTSYS"  + sep + '"' + self.rootDir+ '";'
+
+        # add only if it is already defined, otherwise [t]csh will choke :-(((
+        if (os.environ.has_key("LD_LIBRARY_PATH") ) :
+            setLDpath += '${LD_LIBRARY_PATH}'            
+        setLDpath += '";'
+        print setLDpath
+
+        if os.uname()[0] == 'Darwin' :    # special for Mac OS X
+           # add only if it is already defined, otherwise [t]csh will choke :-(((
+           if (os.environ.has_key("DYLD_LIBRARY_PATH") ) :
+              setDLDpath += '${DYLD_LIBRARY_PATH}'            
+           setDLDpath += '";'
+           print setDLDpath
+
+        setPyPath = cmd + " PYTHONPATH"  + sep + '"'
+        setPyPath += self.iaidaRelDir + "/python:"
+        # add only if it is already defined, otherwise [t]csh will choke :-(((
+        if (os.environ.has_key("PYTHONPATH") ) :
+            setPyPath += '${PYTHONPATH}'
+        setPyPath += '";'
+        print setPyPath
+
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def showVersion(self) :
+
+        print "AIDA version ", self.aidaVersStr
+
+        return
+
+# ================================================================================
+
+if __name__ == "__main__" :
+
+    # --------------------------------------------------------------------------------
+    # check if we got any flags:
+    # --------------------------------------------------------------------------------
+
+    import getopt
+    try:
+        optlist, args = getopt.getopt(sys.argv[1:], "?hviIcClLr:R:", 
+                                 ['help', 'version', 'includes', 'cflags', 'libs', 'runtime=', 'platform='])
+
+        plat = None
+        run  = None
+        inc  = False
+        lib  = False
+        ver  = False
+
+        for o, a in optlist:
+            if o in ("-?", "-h", "--help"):
+                usage()
+                sys.exit()
+            elif o in ("--platform",) :
+                plat = a
+            elif o in ("-v", "--version",):
+                ver = True
+            elif o in ("-i", '-I', "--includes",):
+                inc = True
+            elif o in ("-c", '-C', "--cflags",):
+                inc = True
+            elif o in ("-l", '-L', "--libs",):
+                lib = True
+            elif o in ("-r", '-R', "--runtime",):
+                run = a
+            else:
+                print "\nunknown option:",o,"\n"
+                usage()
+
+            conf = AIDA_Configurator(plat)
+            if ver :
+                conf.showVersion()
+                sys.exit()
+            if inc :
+                conf.showInclude()
+            if lib :
+                conf.showLibs()
+            if run :
+                conf.showRuntime(run)
+
+    except :
+        raise 
+
+
+
