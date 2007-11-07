@@ -335,10 +335,13 @@ class Configuration(object):
             self.cernIncDir = os.path.join(self.cernDir, "include")
             self.cernLibDir = os.path.join(self.cernDir, "lib")
             self.cernBinDir = os.path.join(self.cernDir, "bin")
-            if ( ( not os.path.exists(os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ) ) or
-                 ( not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) ) 
-                 ) :
-                print "\n\nFATAL ERROR: Invalid Cern directory! (no cern in: "+self.cernIncDir+'\n'
+            if not os.path.exists( os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ):
+                print "\n\nFATAL ERROR: Invalid Cern directory! (no hbook/hcbook.icn in: "+self.cernIncDir+'\n'
+                sys.exit(-1)
+            if not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) :
+                print "\n\nFATAL ERROR: Invalid Cern directory! (no cernlib in: "+self.cernBinDir
+                print "             This is likely due to an incomplete installation of CERNLIB, please fix this before continuing! "
+                print ''
                 sys.exit(-1)
             return
 
