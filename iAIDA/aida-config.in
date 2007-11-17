@@ -169,7 +169,7 @@ class AIDA_Configurator :
            cernLibs = cLib.readlines()[0].strip()
            cLib.close()
            print ' '+cernLibs+' ',
-           if self.haveGfor : 
+           if self.haveGfor and not self.haveF77 : 
                 print ' ' + self.haveGfor + ' -lgfortran ',
            if self.haveF77 :
                 print ' -lg2c ',
@@ -178,7 +178,7 @@ class AIDA_Configurator :
         # and add the other libs ...
         if ( (self.platf.find('_64') != -1) and
              (self.cernDir) ):
-           print " -dynamic ",
+           print " -dynamic -lexpat -lz ",
 
 
         # make sure these are _outside_ the (static on 64bit) CERNLIB part...
