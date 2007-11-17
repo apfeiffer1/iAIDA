@@ -189,20 +189,28 @@ class Configuration(object):
             print "\n\nFATAL ERROR: Expat installation not found in:", pathList, '\n'
             sys.exit(-1)
             
-#         if self.arch == 'x86_64':
-#             # check if libexpat.so is available (only libexpat.so.0 is available
-#             # on x86_64 machines in 32 bit mode. Set a symlink for these in our
-#             # lib/ dir ...
-#             if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
-#                 expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
-#                 if not os.path.exists( expatLibName0 ) :
-#                     print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
-#                     sys.exit(-1)
-#                 else:
-#                     if not os.path.exists('lib'): os.makedirs('lib')
-#                     os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
-#                     self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
-#                     print "(symlink for libexpat set) ",
+        self.setExpat32Link()
+
+        return
+        
+    # --------------------------------------------------------------------------------
+
+    def setExpat32Link(self):
+
+        if self.cernDir:
+            # check if libexpat.so is available (only libexpat.so.0 is available
+            # on x86_64 machines in 32 bit mode. Set a symlink for these in our
+            # lib/ dir ...
+            if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
+                expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
+                if not os.path.exists( expatLibName0 ) :
+                    print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
+                    sys.exit(-1)
+                else:
+                    if not os.path.exists('lib'): os.makedirs('lib')
+                    os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
+                    self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
+                    print "(symlink for libexpat set) ",
         return
 
     # --------------------------------------------------------------------------------
@@ -382,19 +390,6 @@ class Configuration(object):
             print "not found, using local version."
         sys.stdout.flush()
         
-        print "checking for Expat ",
-        self.findExpatDir()
-        print "found in ", self.expatDir
-        sys.stdout.flush()
-
-        #if os.uname()[0] == "CYGWIN_NT-5.1" :
-        print "checking for zlib, uuid ",
-        self.findOther()
-        print "found zlib in", self.zlibDir,
-        sys.stdout.flush()
-        print ' uuid in', self.uuidDir
-        sys.stdout.flush()
-                
         print "checking for Grace ",
         self.findGraceDir()
         if self.graceDir:
@@ -419,6 +414,21 @@ class Configuration(object):
             print "not found, will not use HBOOK."
         sys.stdout.flush()
         
+        # check for these only after checking for CERNLIB to make sure
+        # we know if we have to set the links for the compat libs on 64bit h/w
+        print "checking for Expat ",
+        self.findExpatDir()
+        print "found in ", self.expatDir
+        sys.stdout.flush()
+
+        #if os.uname()[0] == "CYGWIN_NT-5.1" :
+        print "checking for zlib, uuid ",
+        self.findOther()
+        print "found zlib in", self.zlibDir,
+        sys.stdout.flush()
+        print ' uuid in', self.uuidDir
+        sys.stdout.flush()
+                
         return
 
     # --------------------------------------------------------------------------------
