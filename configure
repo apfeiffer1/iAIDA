@@ -197,7 +197,7 @@ class Configuration(object):
 
     def setExpat32Link(self):
 
-        if self.cernDir:
+        if self.arch != 'x86_64' and self.cernDir:
             # check if libexpat.so is available (only libexpat.so.0 is available
             # on x86_64 machines in 32 bit mode. Set a symlink for these in our
             # lib/ dir ...
@@ -460,7 +460,7 @@ class Configuration(object):
         info = chk.readlines()
         chk.close()
         # print "checking for", prg, 'gave:',info
-        return info != []
+        return ( (info != []) and (info[0][:7+len(prg)] != 'no '+prg+' in ') )
 
     # --------------------------------------------------------------------------------
 
