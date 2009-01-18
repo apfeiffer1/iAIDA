@@ -1,3 +1,12 @@
+2009-01-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed issue with std::abs(int) on Fedora-9 with gcc4.3 by including <cstdlib>
+	(thanks to Anton Lechner for reporting this)
+	Tagged iAIDA-1.0.12  -----------------------------------------
+
+2008-08-01 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed issue with g77/gfortran compilers on SuSE 10.1
+	Tagged iAIDA-1.0.11  -----------------------------------------
+
 2008-07-01 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	Fixed wrong detection of g77/gfortran compilers
 	Tagged iAIDA-1.0.10  -----------------------------------------
