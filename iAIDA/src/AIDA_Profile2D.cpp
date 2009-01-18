@@ -25,6 +25,8 @@
 #include "AIDA/IAnnotation.h"
 #include <typeinfo>
 #include <cmath>
+#include <cstdlib> // to get std::abs(int) on Fedora9 wiht gcc 4.3
+
 #include <set>
 #include "AnnotationNumberFormater.h"
 
