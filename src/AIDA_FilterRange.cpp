@@ -23,6 +23,7 @@
 #include "AIDA_Dev/ITupleHeader.h"
 #include <typeinfo>
 #include <cmath>
+#include <cstdlib> // to get std::abs(int) on Fedora9 wiht gcc 4.3
 
 iAIDA::AIDA_Tuple_native::AIDA_FilterRange::AIDA_FilterRange( CompiledExpressionManager& manager,
 							       const std::string& expression,
