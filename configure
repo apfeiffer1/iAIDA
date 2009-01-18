@@ -465,9 +465,9 @@ class Configuration(object):
     # --------------------------------------------------------------------------------
 
 
-    def findGForLib(self, libIn):
+    def findLib(self, libIn):
 
-        findPipe = os.popen('FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib -name libgfortran.so 2>/dev/null','r')
+        findPipe = os.popen('FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib/gcc -name libgfortran.so','r')
         list = findPipe.readlines()
         findPipe.close()
         
@@ -497,16 +497,15 @@ class Configuration(object):
     def prepareMakefiles(self):
 
         self.haveF77 = False
+        if self.chkPrg("f77") or self.chkPrg("g77") :
+            print "using g77/f77"
+            self.haveF77 = True
         self.haveGfor = False
-        if self.cernDir :
-            if self.chkPrg("f77") or self.chkPrg("g77") :
-                print "using g77/f77"
-                self.haveF77 = True
-            if self.chkPrg("gfortran"):
-                print "using gfortran"
-                self.haveGfor = True
-                self.gforLib = self.findGForLib('gfortran.so')
-                # print 'gfor lib', self.gforLib
+        if self.chkPrg("gfortran"):
+            print "using gfortran"
+            self.haveGfor = True
+            self.gforLib = self.findLib('gfortran.so')
+            # print 'gfor lib', self.gforLib
             
         self.prepareMakefile()
 
