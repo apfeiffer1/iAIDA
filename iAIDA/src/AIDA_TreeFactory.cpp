@@ -125,6 +125,8 @@ iAIDA::aida_tree::AIDA_TreeFactory::create( const std::string & storeName,
     } else if (m_storeType == "HBOOK") {
       sf_p = new iAIDA::AIDA_HBookStore::AIDA_HBookStoreFactory();
 #endif
+	  } else if (m_storeType == "XML" || m_storeType == "AIDA") {
+      sf_p = new AIDA_XMLStore::AIDA_XMLStoreFactory();
     } else {
       std::cerr << "WARNING: Unknow store type " << m_storeType << " falling back to XMLStore !!! " << std::endl;
       sf_p = new AIDA_XMLStore::AIDA_XMLStoreFactory();
