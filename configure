@@ -469,13 +469,23 @@ class Configuration(object):
 
         arch64 = ""
         if self.arch.find('64') : arch64 = '64'
-        findPipe = os.popen('FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib'+arch64+' -name libgfortran.so 2>/dev/null','r')
+        cmd = 'FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib'+arch64+' -name libgfortran.so 2>/dev/null'
+        findPipe = os.popen(cmd, 'r')
         list = findPipe.readlines()
         findPipe.close()
+        if not list or len(list) == 0:
+            cmd = cmd.replace('../lib64 ', '../lib ')
+            print 'piping ', cmd
+            findPipe = os.popen(cmd, 'r')
+            list = findPipe.readlines()
+            findPipe.close()
+        print list
         
         #locatePipe = os.popen("locate "+libIn, 'r')
         #list = locatePipe.readlines()
         #locatePipe.close()
+
+        print list
 
         foundBase = None
         for itemIn in list:
@@ -485,7 +495,7 @@ class Configuration(object):
 
             if libIn in lib:
                 realBase = base
-
+            print "here:", item, base, lib, libIn
             if os.path.islink(item) :
                 itemLinked = os.readlink(item)
                 realLib = itemLinked
