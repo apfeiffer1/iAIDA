@@ -34,6 +34,8 @@
 
 #include <cctype>
 
+#include <string.h>
+
 #ifdef __x86_64
 #define HBK_FLOAT_OR_DOUBLE double
 #else
@@ -155,10 +157,10 @@ iAIDA::AIDA_HBookStore::HBook::openDirectAccessFile(const int& LUN, const std::s
   int recLen = recordLength;
   const bool returnRecordLength = (recordLength <= 0);
   switch (mode) {
-  case iAIDA::AIDA_HBookStore::HBook::NEW:       { std::strcpy(tmode, "N"); break; }
-  case iAIDA::AIDA_HBookStore::HBook::READ_ONLY: { std::strcpy(tmode, " "); break; }
-  case iAIDA::AIDA_HBookStore::HBook::UPDATE:    { std::strcpy(tmode, "U"); break; }
-  case iAIDA::AIDA_HBookStore::HBook::EXCHANGE:  { std::strcpy(tmode, "X"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::NEW:       { strcpy(tmode, "N"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::READ_ONLY: { strcpy(tmode, " "); break; }
+  case iAIDA::AIDA_HBookStore::HBook::UPDATE:    { strcpy(tmode, "U"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::EXCHANGE:  { strcpy(tmode, "X"); break; }
   default: return false;
   }
   int failed = 0;
@@ -276,12 +278,12 @@ iAIDA::AIDA_HBookStore::HBook::getNextObjectInDiskDirectory(int& id,
   char cTypeToFind[2]               =  " ";
   char cFoundTitle[HBook::MAXLEN+2] = {'\0'};
   switch (typeToFind) {
-  case iAIDA::AIDA_HBookStore::HBook::HISTO1D:   { std::strcpy(cTypeToFind, "1"); break; }
-  case iAIDA::AIDA_HBookStore::HBook::HISTO2D:   { std::strcpy(cTypeToFind, "2"); break; }
-  case iAIDA::AIDA_HBookStore::HBook::PROFILE:   { std::strcpy(cTypeToFind, "1"); break; } // "P" not possible
-  case iAIDA::AIDA_HBookStore::HBook::NTUPLE:    { std::strcpy(cTypeToFind, "N"); break; }
-  case iAIDA::AIDA_HBookStore::HBook::DIRECTORY: { std::strcpy(cTypeToFind, "D"); break; }
-  case iAIDA::AIDA_HBookStore::HBook::UNKNOWN:   { std::strcpy(cTypeToFind, " "); break; } // look for everything
+  case iAIDA::AIDA_HBookStore::HBook::HISTO1D:   { strcpy(cTypeToFind, "1"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::HISTO2D:   { strcpy(cTypeToFind, "2"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::PROFILE:   { strcpy(cTypeToFind, "1"); break; } // "P" not possible
+  case iAIDA::AIDA_HBookStore::HBook::NTUPLE:    { strcpy(cTypeToFind, "N"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::DIRECTORY: { strcpy(cTypeToFind, "D"); break; }
+  case iAIDA::AIDA_HBookStore::HBook::UNKNOWN:   { strcpy(cTypeToFind, " "); break; } // look for everything
   }
   hlnext_(&id, cFoundType, cFoundTitle, cTypeToFind, 1, HBook::MAXLEN, 1);
   std::string sFoundType = cFoundType;
@@ -726,7 +728,7 @@ iAIDA::AIDA_HBookStore::HBook::refreshRWNtuplePointers( const int& id )
 {
   int  tid      = id;
   char caller[] = "pi";
-  int  len      = std::strlen(caller);
+  int  len      = strlen(caller);
   hgnpar_(&tid, caller, len);
 }
 
