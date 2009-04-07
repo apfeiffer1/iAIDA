@@ -1,0 +1,28 @@
+
+<use name=AnalysisServices/DataXML>
+<external ref=SEAL use=Foundation/SealBase> </external>
+<external ref=SEAL use=Foundation/SealIOTools> </external>
+<external ref=SEAL use=Foundation/SealUtil> </external>
+<external ref=SEAL use=Foundation/SealZip> </external>
+
+<external ref=zlib></external>
+<external ref=bz2lib></external>
+
+#CPPFLAGS += -I/afs/cern.ch/sw/lcg/app/releases/SEAL/SEAL_1_3_3/src/Foundation/SealZip
+#LDFLAGS += -llcg_SealZip 
+#LDFLAGS += -L/afs/cern.ch/sw/lcg/external/bz2lib/1.0.2/rh73_gcc32/lib -lbz2
+
+<bin name=test_DataXML_gen file=gen.cpp></bin>
+<bin name=test_DataXML_read file=readTest.cpp></bin>
+<bin name=test_DataXML_read2 file=readTest2.cpp></bin>
+<bin name=test_DataXML_readWrite file=readWriteTest.cpp></bin>
+<bin name=test_DataXML_writeBzip file=writeBzip.cpp></bin>
+<bin name=test_DataXML_writeGzip file=writeGzip.cpp></bin>
+<bin name=test_DataXML_writeZ file=writeZ.cpp></bin>
+<bin name=test_DataXML_writeZip file=writeZip.cpp></bin>
+
+<bin name=test_DataXML_readBzip file=readBzip.cpp></bin>
+<bin name=test_DataXML_readGzip file=readGzip.cpp></bin>
+
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>How to setup PI Python</title>
+    <style type="text/CSS">
+      <!--
+      h1 {color: darkgreen}
+      h2 {color: darkgreen}
+      h3 {color: darkblue}
+      h4 {color: darkred}
+      -->
+    </style>
+  </head>
+
+  <body	bgcolor="#ffffff">
+      
+      <h3>How to setup the Python environment for PI</h3>
+      <p>Before running a PI python script you need to set few environment variables as the <em>LD_LIBRARY_PATH</em> and the <em>PYTHONPATH</em>. 
+<p> If you are using scram, and you have already created your PI project Workspace (see <a href="http://lcg-pi.web.cern.ch/lcg-pi/gettingStarted.html">Getting Started with PI</a> ) you just need to do : <p>
+	<kbd>eval `scram runtime -sh`  (for Bash shell) 	</kbd> </p>
+or for csh/tcsh shell : <p>
+	<kbd>eval `scram runtime -csh`   	</kbd> </p>
+
+Otherwise, outside scram, but with access to /afs/cern.ch , you can run the following scripts, which you can download from the links. 
+
+<p><kbd>. <a href=prepare.sh> prepare.sh</a></kbd>  (for Bash shell) 
+<p><kbd> source  <a href=prepare.csh> prepare.csh</a></kbd> (for csh/tcsh ) 
+
+
+  </body>
+</html>
+

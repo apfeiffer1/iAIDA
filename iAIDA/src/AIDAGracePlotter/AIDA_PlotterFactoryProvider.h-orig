@@ -1,0 +1,68 @@
+// -*- C++ -*-
+
+#ifndef AIDANATIVE_AIDA_PLOTTERFACTORYPROVIDER_H
+#define AIDANATIVE_AIDA_PLOTTERFACTORYPROVIDER_H
+
+/////////////////////////////////////////////////////////////////////////
+//                                                                     //
+//  This library is free software; you can redistribute it and/or      //
+//  modify it under the terms of the GNU Lesser General Public         //
+//  License as published by the Free Software Foundation; either       //
+//  version 2.1 of the License, or (at your option) any later version. //
+//                                                                     //
+//  This library is distributed in the hope that it will be useful,    //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of     //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU   //
+//  Lesser General Public License for more details.                    //
+//                                                                     //
+//  You should have received a copy of the GNU Lesser General Public   //
+//  License along with this library (see file COPYING); if not, write  //
+//  to the Free Software Foundation, Inc., 59 Temple Place, Suite      //
+//  330, Boston, MA 02111-1307 USA, or contact the author.             //
+//                                                                     //
+/////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ * \file Header file for class AIDA_PlotterFactoryProvider
+ *
+ * (c) Copyright CERN, Geneva
+ *
+ */
+
+
+#include "AIDA_Dev/IPlotterFactoryProvider.h"
+
+
+
+namespace AIDA {
+class IPlotterFactory;
+}
+
+
+
+namespace AidaNative {
+namespace AIDA_Plotter_Grace {
+
+
+
+/**
+ * Implementation of AIDA::IPlotterFactory based on Grace
+ */
+
+class AIDA_PlotterFactoryProvider : public virtual AIDA::Dev::IPlotterFactoryProvider
+{
+public:
+  AIDA::IPlotterFactory* createFactory(int argc = 0, char** args = 0);
+
+};
+
+
+
+} // end of namespace AIDA_Plotter_Grace
+} // end of namespace AidaNative
+
+
+
+
+#endif 

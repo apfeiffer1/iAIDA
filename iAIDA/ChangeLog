@@ -1,0 +1,79 @@
+2009-04-07 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed issue with gfortran.so being a relative symlink in configure
+	Fixed compiler issues with AIDA_HBook/HBook.cpp for gcc 4.3
+	(thanks to Alberto Ribon for reporting this)
+	Tagged iAIDA-1.0.13  -----------------------------------------
+	
+2009-01-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed issue with std::abs(int) on Fedora-9 with gcc4.3 by including <cstdlib>
+	(thanks to Anton Lechner for reporting this)
+	Tagged iAIDA-1.0.12  -----------------------------------------
+
+2008-08-01 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed issue with g77/gfortran compilers on SuSE 10.1
+	Tagged iAIDA-1.0.11  -----------------------------------------
+
+2008-07-01 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed wrong detection of g77/gfortran compilers
+	Tagged iAIDA-1.0.10  -----------------------------------------
+
+2008-06-01 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed missing libs in aida-config when using CERNLIB on 64bit h/w, 
+	fixed problem with libexpat when using -m32 on 64bit archs
+	Tagged iAIDA-1.0.9  -----------------------------------------
+
+2007-11-07 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	improved checking of cernlib, added more diagnostics info for use
+	Tagged iAIDA-1.0.8  -----------------------------------------
+	
+2007-10-29 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	if cernlib is configured on a 64 bit architecture, the executables are now linked
+	statically, this fixes the problem with the ColumnWiseNtuples in HBook. The Root
+	libs (if configured) need to be static as well.
+	Tagged iAIDA-1.0.7  -----------------------------------------
+	
+2007-10-19 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	added detection of libgfortran.so in case /usr/lib64 contains only versioned libs
+	added linking with lg2c as cernlib seems to need that 
+	Tagged iAIDA-1.0.6  -----------------------------------------
+
+2007-10-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	fixed path problem in aida-config for cernlib
+	Tagged iAIDA-1.0.5  -----------------------------------------
+
+2007-10-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	updated Makefile for tests and examples and aida-config to explicitely use
+	the cernlib if specified. This is needed in case the cernlib installation is
+	using shared libs.
+	Tagged iAIDA-1.0.4  -----------------------------------------
+
+2007-10-03 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	added test (testHistoName) for problem reported by Giovanni Santin with gcc 3.2.3
+	(not reproducible with later compilers)
+	updated Makefile to allow parallel building
+	updated configure and makefiles to use root-config results intead of the command. 
+	create archive lib as well (externals need to be available as archive as well if going to be used)
+	
+2007-09-30 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Added license (LGPL v3) files (COPYING*) and preamble to all code files.
+	Changed all namespaces and include protections to use iAIDA.
+	Fixed typo in class and file name of RootPathFormatter
+	
+2007-09-28 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	src/AIDA_ROOT/Profile1D.h, src/AIDA_ROOT/Profile2D.h: added conversion to double
+	for args to std::sqrt as suggested by Giovanni Santin. Needed for gcc323.
+
+
+2007-09-27 Andreas Pfeiffer (apfeiffer1@gmail.com)     
+	Tagged iAIDA-0.2.3   ------------------------------------------
+
+2007-09-27 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	aida-config.in, configure: updated handling of Root libs when linking
+	as the libs need to be present for linking when using aida-config --libs
+	(includes not needed).
+	src/AIDA_ROOT/Profile1D.cpp, src/AIDA_ROOT/Profile2D.cpp: added std:: to calls of sqrt
+	src/NormGaussModelFunction.cpp: added std:: to calls of sqrt, added include <cmath>
+	
+2007-09-27 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	start of log with version 0.2.3
+	

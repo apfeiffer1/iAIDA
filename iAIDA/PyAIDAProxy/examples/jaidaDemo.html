@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>JAIDA Plotting</title>
+    <style type="text/CSS">
+      <!--
+      h1 {color: darkgreen}
+      h2 {color: darkgreen}
+      h3 {color: darkblue}
+      h4 {color: darkred}
+      -->
+    </style>
+  </head>
+
+  <body	bgcolor="#ffffff">
+      <h2>Creating and filling AIDA objects and plotting them in JAIDA</h2>
+      
+      <h3>Description</h3>
+      <p>1D and 2D Histograms, Clouds (Unbinned histogram), Profile 1D and 2D, DataPointSets and functions are created and plotted using JAIDA.</p> 
+ 
+
+      <h3>Python program</h3>
+      <p>Click to retrieve <a href="jaidaDemo.py">the Python script</a> of the example.</p>
+
+      <p>After having <a href="howtosetup.html">setup</a> correctly your environment for PI, you need also to set theenvironment to use JAIDA, by typing (Bash shell): 
+	 <br/>	<kbd>
+	 . setup_JAida.sh <br />
+	</kbd> 
+<p>
+afterwards, you can run the example typing :<br />
+	<kbd>python -i jaidaDemo.py
+	</kbd> </p>
+
+      <h3>Program flow</h3>
+      <ol>
+        <li>The Python module <em>AidaProxy</em> is imported. This module loads the dictionary for the PI classes, making them available in the Python environment in the global namespace.</li> 
+        <li>1D and 2D HIstograms, Clouds and Profile are booked </li>
+	<li>The histograms, clouds and profiles  are filled with various random data using functions available from the Python random package</li>
+	<li>The JAIDA plotter is created using the pi_aida class Plotter which implements the AIDA IPlotter interface. This class loads a JAIDA plotter plug-in.</li>
+	<li>Using the AIDA Plotter interface a zone containing 3x3 regions is created </li>
+	<li>The 1D and 2D HIstograms, Clouds and Profile are plotted in various regions. For the clouds an automatic binning is used for plotting</li>
+	<li>The 1D histogram is fitted with a gaussian function </li>
+	<li>The resulting fitted function is plotted on top of the histogram</li>
+	<li>A xy DataPointSet is created from the Profile1D data and plotted</li> 
+	<li>A DataPoint Set created from a 1D vector of points with asymmetric errors is created and plotted</li>  
+      </ol>
+
+  </body>
+</html>
+

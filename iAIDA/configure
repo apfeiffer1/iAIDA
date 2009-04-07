@@ -1,0 +1,776 @@
+#!/usr/bin/env python
+
+#
+#    Copyright 2007 Andreas Pfeiffer
+#
+#
+#  This file is part of iAIDA.
+#
+#  iAIDA is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as 
+#  published by the Free Software Foundation, either version 3 of 
+#  the License.
+#
+#  iAIDA is distributed in the hope that it will be useful, but 
+#  WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public 
+#  License along with iAIDA.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+import os, sys
+
+# ================================================================================
+
+class Configuration(object):
+
+    def __init__(self):
+        self.topDir = os.path.join(os.getcwd(), "..")
+
+        self.arch = os.uname()[-1].lower()
+
+        self.aidaDir = None
+        self.aidaIncDir = None
+        self.localAida = False
+        self.localBoost = False
+
+        self.boostDir = None
+        self.boostIncDir = None
+        self.boostLibDir = None
+
+        self.zlibDir = None
+        self.zlibIncDir = None
+        self.zlibLibDir = None
+
+        self.uuidDir = None
+        self.uuidIncDir = None
+        self.uuidLibDir = None
+        
+        self.expatDir = None
+        self.expatIncDir = None
+        self.expatLibDir = None
+        
+        self.graceDir = None
+        self.graceIncDir = None
+        self.graceLibDir = None
+        
+        self.rootDir = None
+        self.rootLibDir = None
+        self.rootIncDir = None
+
+        self.cernDir = None
+        self.cernLibDir = None
+        self.cernIncDir = None
+
+        self.prefix = "/usr/local"
+
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def setPrefix(self, pref):
+
+        self.prefix = os.path.normpath(os.path.abspath(pref))
+        print "prefix set to :", self.prefix
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def findAidaDir(self):
+
+        # if user has set this, don't search
+        if self.aidaDir :
+            self.aidaIncDir = os.path.join(self.aidaDir)
+            if not os.path.exists( os.path.join(self.aidaIncDir, "AIDA", "AIDA.h") ) :
+                print "\n\nFATAL ERROR: Invalid AIDA directory! (no ADIA/AIDA.h in " + self.aidaIncDir+'\n'
+                sys.exit(-1)
+            return
+
+        aidaVers = "3.2.1"
+        if os.environ.has_key("AIDA_DIR"):
+            self.aidaDir = os.environ["AIDA_DIR"]
+            self.aidaIncDir = os.path.join(self.aidaDir, "src", "cpp")
+            if os.path.exists( os.path.join(self.aidaIncDir, "AIDA", "AIDA.h") ) :
+                return
+    
+        self.aidaDir = os.path.join(self.prefix)
+        self.aidaIncDir = os.path.join(self.aidaDir, "AIDA", aidaVers, "share", "src", "cpp")
+        if not os.path.exists( os.path.join(self.aidaIncDir, "AIDA", "AIDA.h") ) :
+            self.aidaDir = None
+            
+        if not self.aidaDir:
+            # print "AIDA installation not found, will use local one"
+            os.system("mkdir -p include/AIDA")
+            os.system("cp ext/AIDA/*.h include/AIDA/.")
+            self.localAida = True
+            
+        return None
+
+    # --------------------------------------------------------------------------------
+
+    def findBoostDir(self):
+
+        if self.localBoost : return
+
+        # if user has set this, don't search
+        if self.boostDir :
+            self.boostDir = os.path.abspath(self.boostDir)
+            self.boostIncDir = os.path.join(self.boostDir, "include")
+            vDir = os.listdir(self.boostIncDir)[0]
+            self.boostIncDir = os.path.join(self.boostIncDir, vDir)
+            self.boostLibDir = os.path.join(self.boostDir, "lib")
+            if not os.path.exists(os.path.join(self.boostIncDir, "boost", "shared_ptr.hpp") ) :
+                print "\n\nFATAL ERROR: Invalid Boost directory! (no boost/shared_ptr.hpp in: "+self.boostIncDir+'\n'
+                sys.exit(-1)
+            return
+
+        boostVers = "1_33_1"
+        for path in [self.prefix, "/usr", "/usr/local"]:
+            self.boostDir = os.path.abspath( os.path.join(path) )
+            if path == self.prefix:
+                self.boostDir = os.path.join("..", path)
+            self.boostIncDir = os.path.join(self.boostDir, "include", "boost-"+boostVers)
+
+            if not os.path.exists(os.path.join(self.boostIncDir, "boost", "shared_ptr.hpp") ) :
+                self.boostIncDir = os.path.join(self.boostDir, "include")
+                if not os.path.exists(os.path.join(self.boostIncDir, "boost", "shared_ptr.hpp") ) :
+                    self.boostDir = None
+                else:
+                    break
+
+        if not self.boostDir:
+            # raise str("FATAL: Boost installation not found")
+            self.localBoostDir = "include/Boost-1.33.1"
+            if not os.path.exists( self.localBoostDir ) :
+                os.makedirs(self.localBoostDir)
+            if len( os.listdir(self.localBoostDir) ) > 0: return # already set up ...
+            startDir = os.getcwd()
+            os.chdir(self.localBoostDir)
+            # print "in ", os.getcwd()
+            os.system('tar zxf ../../ext/boost1331inc.tgz')
+            os.chdir(startDir)
+            self.localBoost = True
+            # print "using local version of boost"
+        else:
+            self.boostLibDir = os.path.join(self.boostDir, "lib")
+
+        return
+        
+    # --------------------------------------------------------------------------------
+
+    def findExpatDir(self):
+
+        # if user has set this, don't search
+        if self.expatDir :
+            self.expatDir = os.path.abspath( self.expatDir )
+            self.expatIncDir = os.path.join(self.expatDir, "include")
+            self.expatLibDir = os.path.join(self.expatDir, "lib")
+            if not os.path.exists(os.path.join(self.expatIncDir, "expat.h") ) :
+                print "\n\nFATAL ERROR: Invalid Expat directory! (no expat in: "+self.expatIncDir+'\n'
+                sys.exit(-1)
+            return
+
+        expatVers = "1.95.8"
+        pathList = [self.prefix, "/", "/usr", "/usr/local"]
+        for path in pathList:
+            self.expatDir = os.path.abspath( os.path.join(path) )
+            if path == self.prefix:
+                self.expatDir = os.path.join("..", path)
+            self.expatIncDir = os.path.join(self.expatDir, "include")
+            self.expatLibDir = os.path.join(self.expatDir, "lib")
+            if not os.path.exists(os.path.join(self.expatIncDir, "expat.h") ) :
+                self.expatDir = None
+            else:
+                break
+
+        if not self.expatDir:
+            print "\n\nFATAL ERROR: Expat installation not found in:", pathList, '\n'
+            sys.exit(-1)
+            
+        self.setExpat32Link()
+
+        return
+        
+    # --------------------------------------------------------------------------------
+
+    def setExpat32Link(self):
+
+        if self.arch != 'x86_64' and self.cernDir:
+            # check if libexpat.so is available (only libexpat.so.0 is available
+            # on x86_64 machines in 32 bit mode. Set a symlink for these in our
+            # lib/ dir ...
+            if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
+                expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
+                if not os.path.exists( expatLibName0 ) :
+                    print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
+                    sys.exit(-1)
+                else:
+                    if not os.path.exists('lib'): os.makedirs('lib')
+                    os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
+                    self.expatLibDir = os.path.join( os.getcwd(), 'lib' )
+                    print "(symlink for libexpat set) ",
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def findOther(self):
+        self.zlibDir = self.findDir("zlib", self.zlibDir, self.zlibIncDir, self.zlibLibDir )
+        self.uuidDir = self.findDir("uuid", self.uuidDir, self.uuidIncDir, self.uuidLibDir )
+        return
+    
+    # --------------------------------------------------------------------------------
+
+    def findDir(self, pkg, topDir, incDir, libDir):
+
+        # if user has set this, don't search
+        if topDir :
+            topDir = os.path.abspath( topDir )
+            incDir = os.path.join(topDir, "include")
+            if topDir == '/': incDir = '/usr/include'
+            libDir = os.path.join(topDir, "lib")
+            if ( not os.path.exists(os.path.join(incDir, pkg+".h") ) and
+                 not os.path.exists(os.path.join(incDir, pkg, pkg+".h") ) ) :
+                print "\n\nFATAL ERROR: Invalid "+pkg+" directory! (no "+pkg+".h in: "+incDir+'\n'
+                if pkg == 'uuid':
+                    print "Please install the e2fsprogs-devel package !\n"
+                else:
+                    print "Please install the " +pkg+ "-devel package !\n"
+                    
+                sys.exit(-1)
+            return topDir
+
+        pathList = [self.prefix, "/", "/usr", "/usr/local"]
+        for path in pathList:
+            topDir = os.path.abspath( os.path.join(path) )
+            if path == self.prefix:
+                topDir = os.path.join("..", path)
+            incDir = os.path.join(topDir, "include")
+            if topDir == '/': incDir = '/usr/include'
+
+            libDir = os.path.join(topDir, "lib")
+            # print "checking for ", pkg, incDir
+            if ( os.path.exists(os.path.join(incDir, pkg+".h") ) ) :
+                break
+            elif ( os.path.exists(os.path.join(incDir, pkg, pkg+".h") ) ) :
+                break
+            else:
+                topDir = None
+
+        if not topDir:
+            print "\n\nFATAL ERROR: "+pkg+" header file(s) not found in: ", pathList, '\n'
+            sys.exit(-1)
+        
+        return topDir
+        
+    # --------------------------------------------------------------------------------
+
+    def findGraceDir(self):
+
+        # if user has set this, don't search
+        if self.graceDir :
+            self.graceDir = os.path.abspath( self.graceDir )
+            self.graceIncDir = os.path.join(self.graceDir, "include")
+            self.graceLibDir = os.path.join(self.graceDir, "lib")
+            if not os.path.exists(os.path.join(self.graceIncDir, "grace_np.h") ) :
+                print "\n\nFATAL ERROR: Invalid Grace directory! (no grace in: "+self.graceIncDir+'\n'
+                sys.exit(-1)
+            return
+
+        graceVers = "5.1.14"
+        for path in [self.prefix, "/usr", "/usr/local", "/usr/X11R6"]:
+            self.graceDir = os.path.abspath( os.path.join(path) )
+            self.graceIncDir = os.path.join(self.graceDir, "include")
+            self.graceLibDir = os.path.join(self.graceDir, "lib")
+            if not os.path.exists(os.path.join(self.graceIncDir, "grace_np.h") ) :
+                self.graceDir = None
+            else:
+                break
+            self.graceDir = os.path.join(path,"grace")
+            self.graceIncDir = os.path.join(self.graceDir, "include")
+            self.graceLibDir = os.path.join(self.graceDir, "lib")
+            if not os.path.exists(os.path.join(self.graceIncDir, "grace_np.h") ) :
+                self.graceDir = None
+            else:
+                break
+            
+        return
+        
+    # --------------------------------------------------------------------------------
+
+    def findRootDir(self):
+
+        # if user has set this, don't search
+        if self.rootDir :
+            self.rootDir = os.path.abspath( self.rootDir )
+            self.rootIncDir = os.path.join(self.rootDir, "include")
+            self.rootLibDir = os.path.join(self.rootDir, "lib")
+            if not os.path.exists(os.path.join(self.rootDir, 'bin', "root-config") ) :
+                self.rootDir = os.path.abspath( self.rootDir ) 
+                self.rootIncDir = os.path.join(self.rootDir, 'root', "include")
+                self.rootLibDir = os.path.join(self.rootDir, 'root', "lib")
+                if not os.path.exists(os.path.join(self.rootDir, 'bin', 'root-config') ) :
+                    print "\n\nFATAL ERROR: Invalid Root directory! (no TObject in: "+self.rootIncDir+'\n'
+                    sys.exit(-1)
+            return
+
+        for path in [self.prefix, "/usr", "/usr/local", "/usr/X11R6"]:
+            self.rootDir = os.path.abspath( os.path.join(path) )
+            self.rootIncDir = os.path.join(self.rootDir, "include")
+            self.rootLibDir = os.path.join(self.rootDir, "lib")
+            if not os.path.exists(os.path.join(self.rootDir, 'bin', "root-config") ) :
+                self.rootDir = None
+            else:
+                break
+            self.rootDir = os.path.join(path,"root")
+            self.rootIncDir = os.path.join(self.rootDir, "include")
+            self.rootLibDir = os.path.join(self.rootDir, "lib")
+            if not os.path.exists(os.path.join(self.rootIncDir, 'bin', "root-config") ) :
+                self.rootDir = None
+            else:
+                break
+            
+        return
+        
+    # --------------------------------------------------------------------------------
+
+    def findCernlibDir(self):
+
+        # if user has set this, don't search
+        if self.cernDir :
+            self.cernDir = os.path.abspath( self.cernDir )
+            self.cernIncDir = os.path.join(self.cernDir, "include")
+            self.cernLibDir = os.path.join(self.cernDir, "lib")
+            self.cernBinDir = os.path.join(self.cernDir, "bin")
+            if not os.path.exists( os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ):
+                print "\n\nFATAL ERROR: Invalid Cern directory! (no hbook/hcbook.icn in: "+self.cernIncDir+'\n'
+                sys.exit(-1)
+            if not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) :
+                print "\n\nFATAL ERROR: Invalid Cern directory! (no cernlib in: "+self.cernBinDir
+                print "             This is likely due to an incomplete installation of CERNLIB, please fix this before continuing! "
+                print ''
+                sys.exit(-1)
+            return
+
+        for path in [self.prefix, "/usr", "/usr/local"]:
+            self.cernDir = os.path.abspath( os.path.join(path) )
+            if path == self.prefix:
+                self.cernDir = os.path.join("..", path)
+            self.cernIncDir = os.path.join(self.cernDir, "include")
+            self.cernLibDir = os.path.join(self.cernDir, "lib")
+            self.cernBinDir = os.path.join(self.cernDir, "bin")
+            if ( ( not os.path.exists(os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ) ) or
+                 ( not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) ) 
+                 ) :
+                self.cernDir = None
+            else:
+                break
+
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def checkSetup(self):
+
+        print "checking for AIDA  ",
+        self.findAidaDir()
+        if self.aidaDir:
+            print "found in ", self.aidaDir
+        else:
+            print "not found, using local version."
+        sys.stdout.flush()
+        
+        print "checking for Boost ",
+        sys.stdout.flush()
+        self.findBoostDir()
+        if self.boostDir:
+            print "found in ", self.boostDir
+        else:
+            print "not found, using local version."
+        sys.stdout.flush()
+        
+        print "checking for Grace ",
+        self.findGraceDir()
+        if self.graceDir:
+            print "found in ", self.graceDir
+        else:
+            print "not found, will not build Plotter."
+        sys.stdout.flush()
+
+        print "checking for ROOT ",
+        self.findRootDir()
+        if self.rootDir:
+            print "found in ", self.rootDir
+        else:
+            print "not found, will not use ROOT."
+        sys.stdout.flush()
+        
+        print "checking for CENRLIB ",
+        self.findCernlibDir()
+        if self.cernDir:
+            print "found in ", self.cernDir
+        else:
+            print "not found, will not use HBOOK."
+        sys.stdout.flush()
+        
+        # check for these only after checking for CERNLIB to make sure
+        # we know if we have to set the links for the compat libs on 64bit h/w
+        print "checking for Expat ",
+        self.findExpatDir()
+        print "found in ", self.expatDir
+        sys.stdout.flush()
+
+        #if os.uname()[0] == "CYGWIN_NT-5.1" :
+        print "checking for zlib, uuid ",
+        self.findOther()
+        print "found zlib in", self.zlibDir,
+        sys.stdout.flush()
+        print ' uuid in', self.uuidDir
+        sys.stdout.flush()
+                
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def checkLinkAndSet(self, src, link):
+        if not os.path.exists(link) :
+            os.symlink(src,link)
+
+        return
+
+    # --------------------------------------------------------------------------------
+        
+    def setupSymlinks(self):
+
+        startDir = os.getcwd()
+        os.chdir("include")
+
+        os.chdir("../src")
+        if self.graceDir :
+            self.checkLinkAndSet("AIDAGracePlotter", "GracePlotter")
+        
+        os.chdir(startDir)
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def chkPrg(self, prg):
+        chk = os.popen('which '+prg+' 2>/dev/null')
+        info = chk.readlines()
+        chk.close()
+        # print "checking for", prg, 'gave:',info
+        return ( (info != []) and (info[0][:7+len(prg)] != 'no '+prg+' in ') )
+
+    # --------------------------------------------------------------------------------
+
+
+    def findGForLib(self, libIn):
+
+        arch64 = ""
+        if self.arch.find('64') : arch64 = '64'
+        cmd = 'FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib'+arch64+' -name libgfortran.so 2>/dev/null'
+        findPipe = os.popen(cmd, 'r')
+        list = findPipe.readlines()
+        findPipe.close()
+        if not list or len(list) == 0:
+            cmd = cmd.replace('../lib64 ', '../lib ')
+            print 'piping ', cmd
+            findPipe = os.popen(cmd, 'r')
+            list = findPipe.readlines()
+            findPipe.close()
+        print list
+        
+        #locatePipe = os.popen("locate "+libIn, 'r')
+        #list = locatePipe.readlines()
+        #locatePipe.close()
+
+        print list
+
+        foundBase = None
+        for itemIn in list:
+            item = itemIn.strip()
+            basePath = os.path.abspath( item )
+            base, lib = os.path.split( basePath )
+
+            if libIn in lib:
+                realBase = base
+            print "here:", item, base, lib, libIn
+            if os.path.islink(item) :
+                itemLinked = os.readlink(item)
+                realLib = itemLinked
+                if '/' not in itemLinked:
+                    realBase, libLink = os.path.split( os.path.abspath(item) )
+                else:
+                    realBase, realLib = os.path.split( os.path.abspath( os.readlink(item) ) )
+            else:
+                realBase, realLib = base, lib
+            if ( (self.arch.find('64') != -1 ) and
+                 (realBase.find('lib64') == -1 ) ) : continue  # skip non-lib64 on 64 bit archs
+
+            foundBase = base
+
+        return foundBase
+    
+    # --------------------------------------------------------------------------------
+
+    def prepareMakefiles(self):
+
+        self.haveF77 = False
+        self.haveGfor = False
+        if self.cernDir :
+            if self.chkPrg("f77") or self.chkPrg("g77") :
+                print "using g77/f77"
+                self.haveF77 = True
+            if self.chkPrg("gfortran"):
+                print "using gfortran"
+                self.haveGfor = True
+                self.gforLib = self.findGForLib('gfortran.so')
+                print 'gfor lib', self.gforLib
+            
+        self.prepareMakefile()
+
+        subDirs = ['src', 'include', 'examples', 'tests']
+        for actDir in subDirs:
+            os.chdir(actDir)
+            self.prepareMakefile()
+            if actDir == 'tests':
+                self.prepareRunTests()
+            os.chdir("..")
+
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def prepareAidaConfig(self):
+
+        print "preparing aida-config  in ", os.getcwd()
+
+        mfi = open("aida-config.in",'r')
+        lines = mfi.readlines()
+        mfi.close()
+
+        mf = open("bin/aida-config", 'w')
+        for line in lines:
+            lineOut = line
+            if self.rootDir and lineOut.find('self.rootDir = None') != -1:
+                lineOut = lineOut.replace('None', '"'+self.rootDir+'"')
+
+            if self.cernDir and lineOut.find('self.cernDir = None') != -1:
+                lineOut = lineOut.replace('None', '"'+self.cernDir+'"')
+                
+            if self.haveF77 and lineOut.find('self.haveF77  = None') != -1:
+                lineOut = lineOut.replace('None', '"g77"')
+                
+            if self.haveGfor and lineOut.find('self.haveGfor = None') != -1:
+                lineOut = lineOut.replace('None', '"-L'+self.gforLib+'"')
+                
+            mf.write(lineOut)
+
+        mf.close()
+        os.system("chmod +x ./bin/aida-config")
+
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def prepareRunTests(self):
+
+        print "preparing runTests.py in ", os.getcwd()
+
+        mfi = open("runTests.py.in",'r')
+        lines = mfi.readlines()
+        mfi.close()
+
+        mf = open("runTests.py", 'w')
+        for line in lines:
+            lineOut = line
+            lineOut = lineOut.replace("@PREFIX_DIR@" , os.path.abspath(self.prefix) )
+                
+            mf.write(lineOut)
+
+        mf.close()
+        os.system("chmod +x runTests.py")
+        
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def prepareMakefile(self):
+
+        print "preparing Makefile in ", os.getcwd()
+
+        mfi = open("Makefile.in",'r')
+        lines = mfi.readlines()
+        mfi.close()
+
+        mf = open("Makefile", 'w')
+        for line in lines:
+            lineOut = line
+
+            lineOut = lineOut.replace("@PREFIX_DIR@" , os.path.abspath(self.prefix) )
+
+            if self.aidaDir:
+                lineOut = lineOut.replace("@AIDA_INC_DIR@" , self.aidaIncDir)
+            else:
+                lineOut = lineOut.replace("@AIDA_INC_DIR@" , "../include")
+                
+            if self.boostDir:
+                lineOut = lineOut.replace("@BOOST_INC_DIR@", self.boostIncDir)
+                lineOut = lineOut.replace("@BOOST_LIB_DIR@", self.boostLibDir)
+            else:
+                lineOut = lineOut.replace("@BOOST_INC_DIR@" , '../'+self.localBoostDir)
+                lineOut = lineOut.replace("@BOOST_LIB_DIR@" , "../lib")
+
+            #if os.uname()[0] == "CYGWIN_NT-5.1" :
+            lineOut = lineOut.replace("@ZLIB_DIR@", self.zlibDir)
+            lineOut = lineOut.replace("@UUID_DIR@", self.uuidDir)
+
+            lineOut = lineOut.replace("@EXPAT_DIR@", self.expatDir)
+            lineOut = lineOut.replace("@EXPAT_INC_DIR@", self.expatIncDir)
+            lineOut = lineOut.replace("@EXPAT_LIB_DIR@", self.expatLibDir)
+
+            if self.graceDir:
+                lineOut = lineOut.replace("@HAVE_GRACE@"   , "1")
+                lineOut = lineOut.replace("@GRACE_DIR@", self.graceDir)
+                lineOut = lineOut.replace("@GRACE_INC_DIR@", self.graceIncDir)
+                lineOut = lineOut.replace("@GRACE_LIB_DIR@", self.graceLibDir)
+            else:
+                lineOut = lineOut.replace("@HAVE_GRACE@"   , "")
+                lineOut = lineOut.replace("@GRACE_DIR@", "")
+                lineOut = lineOut.replace("@GRACE_INC_DIR@", "")
+                lineOut = lineOut.replace("@GRACE_LIB_DIR@", "")
+
+            if self.rootDir:
+                lineOut = lineOut.replace("@HAVE_ROOT@"   , "1")
+                lineOut = lineOut.replace("@ROOT_DIR@", self.rootDir)
+                lineOut = lineOut.replace("@ROOT_INC_DIR@", self.rootIncDir)
+                lineOut = lineOut.replace("@ROOT_LIB_DIR@", self.rootLibDir)
+                # make sure we set ROOTSYS _before_ we use root-config ...
+                cmd = 'export ROOTSYS='+self.rootDir+';'
+                cmd += self.rootDir+'/bin/root-config --libs'
+                rLib = os.popen(cmd, 'r')
+                rootLibs = rLib.readlines()[0].strip()
+                rLib.close()
+                lineOut = lineOut.replace('@ROOT_LIBS@',rootLibs)
+            else:
+                lineOut = lineOut.replace("@HAVE_ROOT@"   , "")
+                lineOut = lineOut.replace("@ROOT_DIR@", "")
+                lineOut = lineOut.replace("@ROOT_INC_DIR@", "")
+                lineOut = lineOut.replace("@ROOT_LIB_DIR@", "")
+                lineOut = lineOut.replace("@ROOT_LIBS@", "")
+
+            if self.cernDir:
+                lineOut = lineOut.replace("@HAVE_CERN@"   , "1")
+                lineOut = lineOut.replace("@CERN_DIR@", self.cernDir)
+                lineOut = lineOut.replace("@CERN_INC_DIR@", self.cernIncDir)
+                lineOut = lineOut.replace("@CERN_LIB_DIR@", self.cernLibDir)
+            else:
+                lineOut = lineOut.replace("@HAVE_CERN@"   , "")
+                lineOut = lineOut.replace("@CERN_DIR@", "")
+                lineOut = lineOut.replace("@CERN_INC_DIR@", "")
+                lineOut = lineOut.replace("@CERN_LIB_DIR@", "")
+
+            if self.haveF77 and not self.haveGfor:
+                lineOut = lineOut.replace("@HAVEF77@"   , "1")
+            else:
+                lineOut = lineOut.replace("@HAVEF77@"   , "")
+
+            if self.haveGfor:
+                lineOut = lineOut.replace("@HAVEGFOR@"  , "1")
+                lineOut = lineOut.replace("@GFORLIBPATH@"  , self.gforLib )
+            else:
+                lineOut = lineOut.replace("@HAVEGFOR@"  , "")
+                lineOut = lineOut.replace("@GFORLIBPATH@"  , "")
+
+                
+            mf.write(lineOut)
+
+        mf.close()
+            
+        return
+
+# ================================================================================
+
+def usage() :
+
+    print "configure options:"
+    print """
+--prefix=<path/to/your/installation/area> (default: /usr/local/)
+--with-boost=<your/path/to/boost>         (default: <prefix>)
+--with-aida=<your/path/to/aida>           (default: <prefix>)
+--with-expat=<your/path/to/expat>         (default: <prefix>)
+--with-zlib=<your/path/to/zlib>           (default: <prefix>)
+--with-uuid=<your/path/to/uuid>           (default: <prefix>)
+--with-grace=<your/path/to/grace>         (default: <prefix>)
+--with-root=<your/path/to/root>           (default: <prefix>)
+--with-cernlib=<your/path/to/CERNLIB>     (default: <prefix>)
+    example: 
+./configure --with-boost ~/work/install/boost-1.33.1/ --with-aida ~/work/install/AIDA/3.2.1
+"""
+    return
+
+# ================================================================================
+
+def main():
+
+    import getopt
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "h",
+                                   ["help", "prefix=",
+                                    "with-aida=", "with-boost=", "with-expat=",
+                                    "with-zlib=", "with-uuid=",
+                                    "with-grace=", 'with-cernlib=', 'with-root='])
+    except getopt.GetoptError, e :
+        # print help information and exit:
+        print str(e)
+        usage()
+        sys.exit(2)
+
+    config = Configuration()
+
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            usage()
+            sys.exit()
+
+        if o in ("--with-aida",):
+            config.aidaDir = a
+
+        if o in ("--with-boost",):
+            config.boostDir = a
+
+        if o in ("--with-expat",):
+            config.expatDir = a
+
+        if o in ("--with-zlib",):
+            config.zlibDir = a
+
+        if o in ("--with-uuid",):
+            config.uuidDir = a
+
+        if o in ("--with-grace",):
+            config.graceDir = a
+
+        if o in ("--with-root",):
+            config.rootDir = a
+            
+        if o in ("--with-cernlib",):
+            config.cernDir = a
+            
+        if o in ("--prefix",):
+            config.setPrefix(a)
+
+    config.checkSetup()
+    config.prepareMakefiles()
+    config.prepareAidaConfig()
+    config.setupSymlinks()
+
+    return
+
+# ================================================================================
+
+if __name__ == "__main__" :
+    main()
+    
