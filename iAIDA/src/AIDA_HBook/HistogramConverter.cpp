@@ -305,7 +305,7 @@ iAIDA::AIDA_HBookStore::HistogramConverter::createHistogram1DFromHBook( AIDA::De
       error = iAIDA::AIDA_HBookStore::HBook::binContent( id, i );
     }
     else {
-      error = std::sqrt( static_cast< float >( std::abs( entries ) ) ) / entriesOverWeight;
+      error = std::sqrt( std::abs( static_cast< float >( entries ) ) ) / entriesOverWeight;
     }
     h->setBinContents( ib, entries, height, error, 0.5 * ( lowBinEdgeX + highBinEdgeX ) );
     entriesInBins += entries;
@@ -420,7 +420,7 @@ iAIDA::AIDA_HBookStore::HistogramConverter::createHistogram2DFromHBook( AIDA::De
 	swyy += height * meanBinY * meanBinY;
       }
 
-      const float error = std::sqrt( static_cast< float >( std::abs( entries ) ) ) / entriesOverWeight;
+      const float error = std::sqrt( std::abs( static_cast< float >( entries ) ) ) / entriesOverWeight;
       h->setBinContents( ib, jb, entries, height, error, meanBinX, meanBinY );
       entriesInBins += entries;
     }
