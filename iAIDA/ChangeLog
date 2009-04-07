@@ -1,3 +1,9 @@
+2009-04-07 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	Fixed issue with gfortran.so being a relative symlink in configure
+	Fixed compiler issues with AIDA_HBook/HBook.cpp for gcc 4.3
+	(thanks to Alberto Ribon for reporting this)
+	Tagged iAIDA-1.0.13  -----------------------------------------
+	
 2009-01-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	Fixed issue with std::abs(int) on Fedora-9 with gcc4.3 by including <cstdlib>
 	(thanks to Anton Lechner for reporting this)
