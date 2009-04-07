@@ -465,9 +465,11 @@ class Configuration(object):
     # --------------------------------------------------------------------------------
 
 
-    def findLib(self, libIn):
+    def findGForLib(self, libIn):
 
-        findPipe = os.popen('FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib/gcc -name libgfortran.so','r')
+        arch64 = ""
+        if self.arch.find('64') : arch64 = '64'
+        findPipe = os.popen('FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib'+arch64+' -name libgfortran.so 2>/dev/null','r')
         list = findPipe.readlines()
         findPipe.close()
         
@@ -478,16 +480,24 @@ class Configuration(object):
         foundBase = None
         for itemIn in list:
             item = itemIn.strip()
-            base = os.path.abspath( item )
-            base, lib = os.path.split( base )
-            if lib == libIn:
+            basePath = os.path.abspath( item )
+            base, lib = os.path.split( basePath )
+
+            if libIn in lib:
                 realBase = base
+
             if os.path.islink(item) :
-                realBase, realLib = os.path.split( os.path.abspath( os.readlink(item) ) )
+                itemLinked = os.readlink(item)
+                realLib = itemLinked
+                if '/' not in itemLinked:
+                    realBase, libLink = os.path.split( os.path.abspath(item) )
+                else:
+                    realBase, realLib = os.path.split( os.path.abspath( os.readlink(item) ) )
             else:
                 realBase, realLib = base, lib
             if ( (self.arch.find('64') != -1 ) and
                  (realBase.find('lib64') == -1 ) ) : continue  # skip non-lib64 on 64 bit archs
+
             foundBase = base
 
         return foundBase
@@ -497,15 +507,16 @@ class Configuration(object):
     def prepareMakefiles(self):
 
         self.haveF77 = False
-        if self.chkPrg("f77") or self.chkPrg("g77") :
-            print "using g77/f77"
-            self.haveF77 = True
         self.haveGfor = False
-        if self.chkPrg("gfortran"):
-            print "using gfortran"
-            self.haveGfor = True
-            self.gforLib = self.findLib('gfortran.so')
-            # print 'gfor lib', self.gforLib
+        if self.cernDir :
+            if self.chkPrg("f77") or self.chkPrg("g77") :
+                print "using g77/f77"
+                self.haveF77 = True
+            if self.chkPrg("gfortran"):
+                print "using gfortran"
+                self.haveGfor = True
+                self.gforLib = self.findGForLib('gfortran.so')
+                print 'gfor lib', self.gforLib
             
         self.prepareMakefile()
 
@@ -650,7 +661,7 @@ class Configuration(object):
                 lineOut = lineOut.replace("@CERN_INC_DIR@", "")
                 lineOut = lineOut.replace("@CERN_LIB_DIR@", "")
 
-            if self.haveF77:
+            if self.haveF77 and not self.haveGfor:
                 lineOut = lineOut.replace("@HAVEF77@"   , "1")
             else:
                 lineOut = lineOut.replace("@HAVEF77@"   , "")
