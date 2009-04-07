@@ -475,17 +475,13 @@ class Configuration(object):
         findPipe.close()
         if not list or len(list) == 0:
             cmd = cmd.replace('../lib64 ', '../lib ')
-            print 'piping ', cmd
             findPipe = os.popen(cmd, 'r')
             list = findPipe.readlines()
             findPipe.close()
-        print list
         
         #locatePipe = os.popen("locate "+libIn, 'r')
         #list = locatePipe.readlines()
         #locatePipe.close()
-
-        print list
 
         foundBase = None
         for itemIn in list:
@@ -495,7 +491,6 @@ class Configuration(object):
 
             if libIn in lib:
                 realBase = base
-            print "here:", item, base, lib, libIn
             if os.path.islink(item) :
                 itemLinked = os.readlink(item)
                 realLib = itemLinked
