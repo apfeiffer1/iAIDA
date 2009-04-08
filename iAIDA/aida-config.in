@@ -171,7 +171,7 @@ class AIDA_Configurator :
            print ' '+cernLibs+' ',
            if self.haveGfor and not self.haveF77 : 
                 print ' ' + self.haveGfor + ' -lgfortran ',
-           if self.haveF77 :
+           if self.haveF77 and not self.haveGfor :
                 print ' -lg2c ',
 
         # on 64 bit make sure we link statically when using CERNLIB, reset flag
