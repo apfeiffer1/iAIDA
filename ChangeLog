@@ -1,3 +1,7 @@
+2009-04-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	aida-config.in: remove -lg2c if we're using gfortran
+	Tagged iAIDA-1.0.15 ------------------------------------------
+	
 2009-04-07 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	Fixed issue with gfortran.so being a relative symlink in configure
 	Fixed compiler issues with AIDA_HBook/HBook.cpp for gcc 4.3
