@@ -515,13 +515,20 @@ class Configuration(object):
         self.haveGfor = False
         if self.cernDir :
             if self.chkPrg("f77") or self.chkPrg("g77") :
-                print "using g77/f77"
                 self.haveF77 = True
             if self.chkPrg("gfortran"):
-                print "using gfortran"
                 self.haveGfor = True
                 self.gforLib = self.findGForLib('gfortran.so')
                 print 'gfor lib', self.gforLib
+
+            # there can only be one ... 
+            if self.haveF77 and self.haveGfor:
+                self.haveF77 = False
+
+            if self.haveGfor:
+                print "using gfortran"
+            if self.haveF77:
+                print "using g77/f77"
             
         self.prepareMakefile()
 
