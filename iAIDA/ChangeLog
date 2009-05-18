@@ -1,3 +1,9 @@
+2009-05-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	configure: fix an issue on SLC5 when both fortran compilers were present, 
+	the linking of the examples/tests was not correct (using g77 instead of
+	gfortran). Fixed to use gfortran if both are present.
+	Tagged iAIDA-1.0.16 ------------------------------------------
+	
 2009-04-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	aida-config.in: remove -lg2c if we're using gfortran
 	Tagged iAIDA-1.0.15 ------------------------------------------
