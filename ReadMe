@@ -26,7 +26,7 @@ The iAIDA package needs the following packages already installed
 e2fsprogs (version 1.39-21 tested)
 expat (version 1.95.8 tested)
 Boost (version 1.33.1 tested)
-optionally: xmgrace (versions 5.1.14 and 5.1.20 tested)
+optionally: xmgrace (versions 5.1.22 tested)
 optionally: cernlib (version 2005 tested)
 optionally: root (version 5.17.02 tested)
 
@@ -42,8 +42,8 @@ of any modern linux installation, so there is no local copy.
 To install the package into /usr/local (assuming that the other 
 packages are installed there too):
 
-tar zxf iAIDA-1.0.7.tgz
-cd iAIDA-1.0.7
+tar zxf iAIDA-1.0.17.tgz
+cd iAIDA-1.0.17
 ./configure --prefix=/usr/local
 make
 make install
@@ -65,9 +65,10 @@ to see a list of options and examples.
 
 The package has been successfully build and run on the following
 platforms:
-Mac OS X (10.4.7) with gcc 4.0.1
-Scientific Linux 3.0 (SLC3) with gcc 3.2.3
-Scientific Linux 4.0 (SLC4) with gcc 3.4.6
+Mac OS X (10.4) with gcc 4.0.1
+Mac OS X (10.5) with gcc 4.0.1
+Scientific Linux 4. (SLC4) with gcc 3.4.6
+Scientific Linux 5. (SLC4) with gcc 3.4.6, gcc 4.3.1
 SuSE 10.2 with gcc 4.1.2 (gfortran)
 
 As of version 0.1.4 the package optionally can store and read
@@ -76,7 +77,6 @@ before building the package).
 
 As of version 0.2.0 the package optionally can store and read
 histograms also in ROOT format.
-
 
 
 Note for building on Mac OS X (10.4.x):
@@ -91,8 +91,20 @@ option to tell the package where xmgrace is installed:
 
 
 
-Note for building on SL(C)4 (gcc345) on AMD64 with HBOOK:
------------------------------------------------------------
+Note for building on SL(C)5 (gcc432) on 64bit machines with HBOOK:
+------------------------------------------------------------------
+
+The gcc4.3 compiler as shipped by RedHat on the SL(C) 5 has a broken
+gfortran compiler, so you need to install the gcc 4.3 compiler from 
+the LCG AA (or build your own from the GCC sources). Then you have 
+to download and install the CERNLIB for x86_64-slc5-gcc43-opt from
+LCG AA. Before building iAIDA you need to make sure that the correct
+gcc 4.3 compiler is in your PATH.
+
+
+
+Note for building on SL(C)4 and SL(C)5 (gcc345) on 64bit machines with HBOOK:
+-----------------------------------------------------------------------------
 
 At present there is a problem with column-wise HBOOK ntuples on 
 64 bit machines (such as AMD64 bit). If you need that feature,
@@ -114,8 +126,8 @@ in the tupleFactory->create() call).
 
 
 
-Note for building on SL(C)4 (gcc345) on AMD64 with xmgrace:
------------------------------------------------------------
+Note for building on SL(C)4 and SL(C)5 (gcc345) on 64bit with xmgrace:
+----------------------------------------------------------------------
 
 When you build grace, you have to set CFLAGS to -fPIC
 before, otherwise you will get a linker error when building 
