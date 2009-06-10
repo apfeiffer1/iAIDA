@@ -51,11 +51,7 @@
 // Created by user sang on Wed Sep 25 11:56:41 2002
 // 
 
-#ifdef __sun
 # include <stdlib.h>
-#endif
-
-
 
 #include "Layout.h"
 

@@ -51,9 +51,9 @@
 // Created by user sang on Mon Aug 26 17:10:31 2002
 // 
 
-#ifdef __sun
 # include <stdlib.h>
-#endif
+
+#include <cmath>
 
 #include <iostream>
 
