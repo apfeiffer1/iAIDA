@@ -1,3 +1,9 @@
+2009-06-10 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	AIDAGracePlotter/Layout.cpp, AIDAGracePlotter/Plotter.cpp: fix compiler problems
+	with gcc 4.3 (on SLC5)
+	ReadMe: update for latest version (1.0.17)
+	Tagged iAIDA-1.0.17 ------------------------------------------
+	
 2009-05-18 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	configure: fix an issue on SLC5 when both fortran compilers were present, 
 	the linking of the examples/tests was not correct (using g77 instead of
