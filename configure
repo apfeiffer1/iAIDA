@@ -66,6 +66,8 @@ class Configuration(object):
 
         self.prefix = "/usr/local"
 
+        self.useFortran = None
+
         return
 
     # --------------------------------------------------------------------------------
@@ -74,6 +76,15 @@ class Configuration(object):
 
         self.prefix = os.path.normpath(os.path.abspath(pref))
         print "prefix set to :", self.prefix
+        return
+
+    # --------------------------------------------------------------------------------
+
+    def setFortran(self, ftn):
+
+        # last one wins ... 
+        self.useFortran = ftn
+        print "selected fortran compiler is :", self.useFortran
         return
 
     # --------------------------------------------------------------------------------
@@ -519,14 +530,24 @@ class Configuration(object):
             if self.chkPrg("gfortran"):
                 self.haveGfor = True
                 self.gforLib = self.findGForLib('gfortran.so')
-                print 'gfor lib', self.gforLib
+                # print 'gfor lib', self.gforLib
 
             # there can only be one ... 
             if self.haveF77 and self.haveGfor:
                 self.haveF77 = False
 
+            # but override if user is asking for it:
+            if self.useFortran:
+                if self.useFortran == 'g77' :
+                    self.haveF77  = True
+                    self.haveGfor = False
+                if self.useFortran == 'gfortran' :
+                    self.haveGfor = True
+                    self.haveF77  = False
+
             if self.haveGfor:
                 print "using gfortran"
+                if not self.gforLib : print "ERROR: gfortran selected, but no libgfortran.so found !!!"
             if self.haveF77:
                 print "using g77/f77"
             
@@ -723,7 +744,8 @@ def main():
                                    ["help", "prefix=",
                                     "with-aida=", "with-boost=", "with-expat=",
                                     "with-zlib=", "with-uuid=",
-                                    "with-grace=", 'with-cernlib=', 'with-root='])
+                                    "with-grace=", 'with-cernlib=', 'with-root=',
+                                    "use-f77", 'use-gfortran'])
     except getopt.GetoptError, e :
         # print help information and exit:
         print str(e)
@@ -763,6 +785,12 @@ def main():
             
         if o in ("--prefix",):
             config.setPrefix(a)
+
+        if o in ("--use-f77",):
+            config.setFortran('g77')
+
+        if o in ("--use-gfortran",):
+            config.setFortran('gfortran')
 
     config.checkSetup()
     config.prepareMakefiles()
