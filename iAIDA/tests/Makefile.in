@@ -46,13 +46,12 @@ INCLUDES = ${AIDA_INC} ${BOOST_INC} -I../include
 LIBS += -L../lib -liAIDA
 
 # general tests, not specific for an I/O system
-SRCS = \
+SRCS = $F \
 	testAIDAmem.cpp \
+	
 
 # the tests which are root-specific:
 ROOT_TEST_SRCS = testHistoName.cpp \
-
-
 
 OS=$(shell uname)
 
@@ -84,6 +83,7 @@ endif
 ifdef HAVE_GRACE
 CXX_FLAGS += -DHAVE_GRACE
 SRCS     += plottingHistograms.cpp
+SRCS     += plot.cpp
 INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
 endif
@@ -105,7 +105,7 @@ LINK_LIBS = $(shell ../bin/aida-config --lib)
 all: ${EXECS}
 
 clean:
-	rm -f ${OBJS} ${EXECS}
+	rm -f ${OBJS} ${EXECS} *.log
 
 run:
 	export DYLD_LIBRARY_PATH=../src:${DYLD_LIBRARY_PATH} ; \
