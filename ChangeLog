@@ -1,3 +1,14 @@
+2011-04-09 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	configure: incorporated patch for gfortran from issue ID: 3172767
+	examples/samplingFromHistogram.cpp: added new example to show sampling from IHistogram1D (code from Guy)
+	examples/storeRoot.cpp: added more histograms to check things
+	examples/readRoot.cpp: added readback of either two histo1ds or one histo1d, one profile1d
+	examples/exaTree.cpp: added more histograms for checks
+	examples/Makefile.in: update MACOSX_DEPLOYMENT_TARGET to 10.5 to build properly on 10.6
+	tests/Makefile.in: add logs to cleanup, add a few tests including one from commandline
+	ReadMe: update for latest version (1.0.18)
+	Tagged iAIDA-1.0.18 (rev )------------------------------------------
+
 2009-06-10 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	AIDAGracePlotter/Layout.cpp, AIDAGracePlotter/Plotter.cpp: fix compiler problems
 	with gcc 4.3 (on SLC5)
