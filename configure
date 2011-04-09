@@ -480,44 +480,17 @@ class Configuration(object):
 
         arch64 = ""
         if self.arch.find('64') : arch64 = '64'
-        cmd = 'FOO=`which gfortran`; BAR=`dirname $FOO`; find $BAR/../lib'+arch64+' -name libgfortran.so 2>/dev/null'
+        cmd = 'gfortran -print-libgcc-file-name 2>/dev/null'
         findPipe = os.popen(cmd, 'r')
         list = findPipe.readlines()
         findPipe.close()
-        if not list or len(list) == 0:
-            cmd = cmd.replace('../lib64 ', '../lib ')
-            findPipe = os.popen(cmd, 'r')
-            list = findPipe.readlines()
-            findPipe.close()
-        
-        #locatePipe = os.popen("locate "+libIn, 'r')
-        #list = locatePipe.readlines()
-        #locatePipe.close()
 
-        foundBase = None
-        for itemIn in list:
-            item = itemIn.strip()
-            basePath = os.path.abspath( item )
-            base, lib = os.path.split( basePath )
+	item = list[0]
+	item = item.strip()
+	basePath = os.path.abspath( item )
+	base, lib = os.path.split( basePath )
+	return base
 
-            if libIn in lib:
-                realBase = base
-            if os.path.islink(item) :
-                itemLinked = os.readlink(item)
-                realLib = itemLinked
-                if '/' not in itemLinked:
-                    realBase, libLink = os.path.split( os.path.abspath(item) )
-                else:
-                    realBase, realLib = os.path.split( os.path.abspath( os.readlink(item) ) )
-            else:
-                realBase, realLib = base, lib
-            if ( (self.arch.find('64') != -1 ) and
-                 (realBase.find('lib64') == -1 ) ) : continue  # skip non-lib64 on 64 bit archs
-
-            foundBase = base
-
-        return foundBase
-    
     # --------------------------------------------------------------------------------
 
     def prepareMakefiles(self):
