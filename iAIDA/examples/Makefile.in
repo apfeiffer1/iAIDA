@@ -71,7 +71,7 @@ ifeq (${OS}, Darwin)
   OBJEXT=o
   SHLIBEXT=dylib
   CXX_FLAGS += -fPIC -g 
-  export MACOSX_DEPLOYMENT_TARGET=10.4
+  export MACOSX_DEPLOYMENT_TARGET=10.5
   SHLIBFLAGS = -dynamiclib -single_module -undefined dynamic_lookup
   LDFLAGS = -lssl -bind_at_load
   LIBS +=  -lexpat -ldl -lz
