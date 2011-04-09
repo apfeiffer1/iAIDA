@@ -485,11 +485,11 @@ class Configuration(object):
         list = findPipe.readlines()
         findPipe.close()
 
-	item = list[0]
-	item = item.strip()
-	basePath = os.path.abspath( item )
-	base, lib = os.path.split( basePath )
-	return base
+        item = list[0]
+        item = item.strip()
+        basePath = os.path.abspath( item )
+        base, lib = os.path.split( basePath )
+        return base
 
     # --------------------------------------------------------------------------------
 
