@@ -26,7 +26,10 @@ int main( int, char** )
   boost::shared_ptr<AIDA::IHistogramFactory> factory( af->createHistogramFactory(*tree) );
 
   // Creating a histogram managed by the tree (cannot be smart pointers) 
-  AIDA::IHistogram1D * h1p = factory->createHistogram1D("Example histogram.", 50, 0, 50);
+  AIDA::IHistogram1D * h1p = factory->createHistogram1D("1", "Example histogram.", 50, 0, 50);
+  AIDA::IHistogram1D * h2p = factory->createHistogram1D("2", "Example histogram.", 50, 0, 50);
+  AIDA::IHistogram1D * h3p = factory->createHistogram1D("7", "Example histogram.", 50, 0, 50);
+  AIDA::IHistogram1D * h4p = factory->createHistogram1D("10", "Example histogram.", 50, 0, 50);
   AIDA::IProfile1D *  p1p = factory->createProfile1D( "Example profile.", 50, 0, 50 );
 
   AIDA::IHistogram1D & h1 = *h1p;
@@ -36,7 +39,10 @@ int main( int, char** )
   std::srand( 0 );
   for ( int i = 0; i < 1000; ++i ) {
     double x = 50 * static_cast<double>( std::rand() ) / RAND_MAX;
-    h1.fill( x, 0.5 );
+    h1.fill( x, 1. );
+    h2p->fill( x+5, 1. );
+    h3p->fill( x*2, 1. );
+    h4p->fill( x/2, 1. );
     p1.fill( x, -10., 0.5 );
     p1.fill( x,  10., 0.5 );
   }

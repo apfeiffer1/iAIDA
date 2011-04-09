@@ -36,6 +36,9 @@ private:
   typedef AIDA::IHistogram1D* H1P;
   typedef AIDA::IProfile1D* P1P;
   H1P h1p;
+  H1P h2p;
+  H1P h3p;
+  H1P h4p;
   P1P p1p;
 };
 
@@ -61,10 +64,23 @@ void ExaH1::close() {
 
 void ExaH1::book() {
   // Creating the histograms. Remeber hbook needs stringified numbers as "names"
-  h1p = factory->createHistogram1D("10", "Example histogram.", 50, 0, 50 );
+  h1p = factory->createHistogram1D("1", "Example histogram.", 50, 0, 50 );
   if (h1p == 0) {
     std::cerr << "ERROR booking histogram" << std::endl;
   }
+  h2p = factory->createHistogram1D("2", "Example histogram.", 50, 0, 50 );
+  if (h2p == 0) {
+    std::cerr << "ERROR booking histogram" << std::endl;
+  }
+  h3p = factory->createHistogram1D("7", "Example histogram.", 50, 0, 50 );
+  if (h3p == 0) {
+    std::cerr << "ERROR booking histogram" << std::endl;
+  }
+  h4p = factory->createHistogram1D("10", "Example histogram.", 50, 0, 50 );
+  if (h4p == 0) {
+    std::cerr << "ERROR booking histogram" << std::endl;
+  }
+
   p1p = factory->createProfile1D("20", "Example profile.", 50, 0, 50 );
   if (h1p == 0) {
     std::cerr << "ERROR booking histogram" << std::endl;
@@ -77,7 +93,10 @@ void ExaH1::fill() {
   std::srand( 0 );
   for ( int i = 0; i < 1000; ++i ) {
     double x = 50 * static_cast<double>( std::rand() ) / RAND_MAX;
-    h1p->fill( x, 0.5 );
+    h1p->fill(   x, 1. );
+    h2p->fill( x+5, 1. );
+    h3p->fill( 2*x, 1. );
+    h4p->fill( x/2, 1. );
     p1p->fill( x, -10., 0.5 );
     p1p->fill( x,  10., 0.5 );
   }
