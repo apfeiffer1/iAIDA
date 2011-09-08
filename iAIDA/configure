@@ -20,7 +20,7 @@
 #  License along with iAIDA.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import os, sys
+import os, sys, glob, re
 
 # ================================================================================
 
@@ -33,13 +33,15 @@ class Configuration(object):
 
         self.aidaDir = None
         self.aidaIncDir = None
+        
         self.localAida = False
         self.localBoost = False
 
         self.boostDir = None
         self.boostIncDir = None
         self.boostLibDir = None
-
+        self.boostInfo = []
+        
         self.zlibDir = None
         self.zlibIncDir = None
         self.zlibLibDir = None
@@ -68,6 +70,10 @@ class Configuration(object):
 
         self.useFortran = None
 
+        self.searchPathList = [self.prefix, "/", "/usr", "/usr/local"]
+        if 'Darwin' in os.uname():  # check on Mac if MacPorts stuff is available ... 
+            if os.path.exists('/opt/local') : self.searchPathList.append('/opt/local')
+
         return
 
     # --------------------------------------------------------------------------------
@@ -76,6 +82,10 @@ class Configuration(object):
 
         self.prefix = os.path.normpath(os.path.abspath(pref))
         print "prefix set to :", self.prefix
+
+        if self.prefix not in self.searchPathList:
+            self.searchPathList.append(self.prefix)
+
         return
 
     # --------------------------------------------------------------------------------
@@ -95,8 +105,7 @@ class Configuration(object):
         if self.aidaDir :
             self.aidaIncDir = os.path.join(self.aidaDir)
             if not os.path.exists( os.path.join(self.aidaIncDir, "AIDA", "AIDA.h") ) :
-                print "\n\nFATAL ERROR: Invalid AIDA directory! (no ADIA/AIDA.h in " + self.aidaIncDir+'\n'
-                sys.exit(-1)
+                self.errorExit("FATAL ERROR: Invalid AIDA directory! (no ADIA/AIDA.h in " + self.aidaIncDir+')', 'AIDA')
             return
 
         aidaVers = "3.2.1"
@@ -121,6 +130,38 @@ class Configuration(object):
 
     # --------------------------------------------------------------------------------
 
+    def errorExit(self, msg, pkg=None):
+        print '\n\n'+msg
+        if pkg:
+            print '\n ... you may need to install the package for ', pkg,', possibly also the development (-devel) package for this.'
+            if pkg == 'uuid':
+                print ' ... if you do not find the uuid package itself, check for the e2fsprogs-devel package.'
+            print '     please refer to your system admin tool on how to do this.'
+
+        sys.exit(-1)
+        
+    # --------------------------------------------------------------------------------
+
+    def getBoostVersion(self):
+
+        versPath = os.path.join(self.boostIncDir, 'boost', 'version.hpp')
+        if self.localBoost:
+            versPath = os.path.join(self.localBoostDir, 'boost', 'version.hpp')
+            
+        bv = open( versPath, 'r')
+        lines = bv.readlines()
+        bv.close()
+
+        vers = int( re.search( '#define\s*BOOST_VERSION\s*(\d+)', "".join(lines) ).group(1) )
+
+        #  BOOST_VERSION % 100 is the patch level
+        #  BOOST_VERSION / 100 % 1000 is the minor version
+        #  BOOST_VERSION / 100000 is the major version
+
+        return vers
+
+    # --------------------------------------------------------------------------------
+
     def findBoostDir(self):
 
         if self.localBoost : return
@@ -129,16 +170,26 @@ class Configuration(object):
         if self.boostDir :
             self.boostDir = os.path.abspath(self.boostDir)
             self.boostIncDir = os.path.join(self.boostDir, "include")
-            vDir = os.listdir(self.boostIncDir)[0]
-            self.boostIncDir = os.path.join(self.boostIncDir, vDir)
+            if not os.path.exists(os.path.join(self.boostIncDir, 'boost')):
+                vDir = glob.glob( self.boostDir+'/*/boost' )
+                self.boostIncDir = os.path.join( os.path.split(vDir[0])[:-1] )
+
             self.boostLibDir = os.path.join(self.boostDir, "lib")
-            if not os.path.exists(os.path.join(self.boostIncDir, "boost", "shared_ptr.hpp") ) :
-                print "\n\nFATAL ERROR: Invalid Boost directory! (no boost/shared_ptr.hpp in: "+self.boostIncDir+'\n'
-                sys.exit(-1)
+            if not os.path.exists(os.path.join(self.boostIncDir, "boost", "version.hpp") ) :
+                self.errorExit("FATAL ERROR: Invalid Boost directory! (no boost/version.hpp in: "+self.boostIncDir+')','boost')
+            if not os.path.exists(os.path.join(self.boostDir, "lib")) :
+                self.errorExit("FATAL ERROR: Invalid Boost directory! (no lib dir found in: "+self.boostDir+')', 'boost')
+            else:
+                self.boostLibDir = os.path.join(self.boostDir, "lib")
+                boostIosLibs = glob.glob(self.boostLibDir+'/libboost_iostrea*')
+                if not boostIosLibs:
+                    self.errorExit("FATAL ERROR: Invalid Boost directory! (no boost_iostream libs found in: "+self.boostLibDir+')', 'boost')
+                else:
+                    self.boostInfo.append('iostreams')
             return
 
         boostVers = "1_33_1"
-        for path in [self.prefix, "/usr", "/usr/local"]:
+        for path in self.searchPathList:
             self.boostDir = os.path.abspath( os.path.join(path) )
             if path == self.prefix:
                 self.boostDir = os.path.join("..", path)
@@ -152,18 +203,14 @@ class Configuration(object):
                     break
 
         if not self.boostDir:
-            # raise str("FATAL: Boost installation not found")
             self.localBoostDir = "include/Boost-1.33.1"
             if not os.path.exists( self.localBoostDir ) :
                 os.makedirs(self.localBoostDir)
-            if len( os.listdir(self.localBoostDir) ) > 0: return # already set up ...
-            startDir = os.getcwd()
-            os.chdir(self.localBoostDir)
-            # print "in ", os.getcwd()
-            os.system('tar zxf ../../ext/boost1331inc.tgz')
-            os.chdir(startDir)
+            if len( os.listdir(self.localBoostDir) ) == 0: # empty dir found, set things up ... 
+                startDir = os.getcwd()
+                os.system('tar zxf ../../ext/boost1331inc.tgz')
+                os.chdir(startDir)
             self.localBoost = True
-            # print "using local version of boost"
         else:
             self.boostLibDir = os.path.join(self.boostDir, "lib")
 
@@ -179,13 +226,11 @@ class Configuration(object):
             self.expatIncDir = os.path.join(self.expatDir, "include")
             self.expatLibDir = os.path.join(self.expatDir, "lib")
             if not os.path.exists(os.path.join(self.expatIncDir, "expat.h") ) :
-                print "\n\nFATAL ERROR: Invalid Expat directory! (no expat in: "+self.expatIncDir+'\n'
-                sys.exit(-1)
+                self.errorExit("FATAL ERROR: Invalid Expat directory! (no expat in: "+self.expatIncDir+')', 'expat')
             return
 
         expatVers = "1.95.8"
-        pathList = [self.prefix, "/", "/usr", "/usr/local"]
-        for path in pathList:
+        for path in self.searchPathList:
             self.expatDir = os.path.abspath( os.path.join(path) )
             if path == self.prefix:
                 self.expatDir = os.path.join("..", path)
@@ -197,8 +242,7 @@ class Configuration(object):
                 break
 
         if not self.expatDir:
-            print "\n\nFATAL ERROR: Expat installation not found in:", pathList, '\n'
-            sys.exit(-1)
+            self.errorExit("FATAL ERROR: Expat installation not found in: ["+','.join(self.searchPathList)+']', 'expat')
             
         self.setExpat32Link()
 
@@ -215,8 +259,7 @@ class Configuration(object):
             if not os.path.exists( os.path.join(self.expatLibDir, 'libexpat.so') ):
                 expatLibName0 = os.path.normpath( os.path.join(self.expatLibDir, 'libexpat.so.0') )
                 if not os.path.exists( expatLibName0 ) :
-                    print "\n\nFATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'\n'
-                    sys.exit(-1)
+                    self.errorExit("FATAL ERROR: libexpat.so.0 not found in "+self.expatLibDir+'', 'expat')
                 else:
                     if not os.path.exists('lib'): os.makedirs('lib')
                     os.system('cd lib ; rm -f libexpat.so; ln -s '+expatLibName0+ ' libexpat.so')
@@ -243,17 +286,12 @@ class Configuration(object):
             libDir = os.path.join(topDir, "lib")
             if ( not os.path.exists(os.path.join(incDir, pkg+".h") ) and
                  not os.path.exists(os.path.join(incDir, pkg, pkg+".h") ) ) :
-                print "\n\nFATAL ERROR: Invalid "+pkg+" directory! (no "+pkg+".h in: "+incDir+'\n'
-                if pkg == 'uuid':
-                    print "Please install the e2fsprogs-devel package !\n"
-                else:
-                    print "Please install the " +pkg+ "-devel package !\n"
+                self.errorExit("FATAL ERROR: Invalid "+pkg+" directory! (no "+pkg+".h in: "+incDir+')', pkg)
                     
                 sys.exit(-1)
             return topDir
 
-        pathList = [self.prefix, "/", "/usr", "/usr/local"]
-        for path in pathList:
+        for path in self.searchPathList:
             topDir = os.path.abspath( os.path.join(path) )
             if path == self.prefix:
                 topDir = os.path.join("..", path)
@@ -270,8 +308,7 @@ class Configuration(object):
                 topDir = None
 
         if not topDir:
-            print "\n\nFATAL ERROR: "+pkg+" header file(s) not found in: ", pathList, '\n'
-            sys.exit(-1)
+            self.errorExit("FATAL ERROR: "+pkg+" header file(s) not found in: "+','.join(self.searchPathList)+'', pkg)
         
         return topDir
         
@@ -285,8 +322,7 @@ class Configuration(object):
             self.graceIncDir = os.path.join(self.graceDir, "include")
             self.graceLibDir = os.path.join(self.graceDir, "lib")
             if not os.path.exists(os.path.join(self.graceIncDir, "grace_np.h") ) :
-                print "\n\nFATAL ERROR: Invalid Grace directory! (no grace in: "+self.graceIncDir+'\n'
-                sys.exit(-1)
+                self.errorExit("FATAL ERROR: Invalid Grace directory! (no grace in: "+self.graceIncDir+'\n', 'xmgrace')
             return
 
         graceVers = "5.1.14"
@@ -322,8 +358,7 @@ class Configuration(object):
                 self.rootIncDir = os.path.join(self.rootDir, 'root', "include")
                 self.rootLibDir = os.path.join(self.rootDir, 'root', "lib")
                 if not os.path.exists(os.path.join(self.rootDir, 'bin', 'root-config') ) :
-                    print "\n\nFATAL ERROR: Invalid Root directory! (no TObject in: "+self.rootIncDir+'\n'
-                    sys.exit(-1)
+                    self.errorExit("FATAL ERROR: Invalid Root directory! (no TObject in: "+self.rootIncDir+'\n', 'root')
             return
 
         for path in [self.prefix, "/usr", "/usr/local", "/usr/X11R6"]:
@@ -355,13 +390,11 @@ class Configuration(object):
             self.cernLibDir = os.path.join(self.cernDir, "lib")
             self.cernBinDir = os.path.join(self.cernDir, "bin")
             if not os.path.exists( os.path.join(self.cernIncDir, "hbook", "hcbook.inc") ):
-                print "\n\nFATAL ERROR: Invalid Cern directory! (no hbook/hcbook.icn in: "+self.cernIncDir+'\n'
-                sys.exit(-1)
+                self.errorExit("FATAL ERROR: Invalid Cern directory! (no hbook/hcbook.inc in: "+self.cernIncDir+'\n', 'CERNLIB')
             if not os.path.exists(os.path.join(self.cernBinDir, "cernlib") ) :
-                print "\n\nFATAL ERROR: Invalid Cern directory! (no cernlib in: "+self.cernBinDir
-                print "             This is likely due to an incomplete installation of CERNLIB, please fix this before continuing! "
-                print ''
-                sys.exit(-1)
+                msg  = "FATAL ERROR: Invalid Cern directory! (no cernlib in: "+self.cernBinDir+')\n'
+                msg += "             This is likely due to an incomplete installation of CERNLIB, please fix this before continuing! "
+                self.errorExit(msg, 'cernlib')
             return
 
         for path in [self.prefix, "/usr", "/usr/local"]:
@@ -396,9 +429,10 @@ class Configuration(object):
         sys.stdout.flush()
         self.findBoostDir()
         if self.boostDir:
-            print "found in ", self.boostDir
+            print "found in ", self.boostDir,
         else:
-            print "not found, using local version."
+            print "not found, using local version.",
+        print self.getBoostVersion()
         sys.stdout.flush()
         
         print "checking for Grace ",
@@ -614,6 +648,7 @@ class Configuration(object):
             if self.boostDir:
                 lineOut = lineOut.replace("@BOOST_INC_DIR@", self.boostIncDir)
                 lineOut = lineOut.replace("@BOOST_LIB_DIR@", self.boostLibDir)
+                lineOut = lineOut.replace("@HAVE_BOOST@", "1")
             else:
                 lineOut = lineOut.replace("@BOOST_INC_DIR@" , '../'+self.localBoostDir)
                 lineOut = lineOut.replace("@BOOST_LIB_DIR@" , "../lib")

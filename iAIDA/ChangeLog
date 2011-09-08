@@ -1,3 +1,15 @@
+2011-09-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
+    If Boost iostream libs are found on the system, enable their use so we can 
+	use the gzip and bzlib2 compression (the latter is the default now). The 
+	corresponding option string for the tree-creation is "gzip" and "bzip", respectively.
+	configure: add discovery of boost installation with boost_iostream library
+	src/AIDA_StoreXML.[h|cpp],AIDA_XMLStoreFactory.h,AIDA_XMLStoreFactory.cpp,Makefile.in:
+	added possibility to use gzip/bzip compressed aida/xml files via boost_iostream
+	src/XMLStream.cpp: added debug printout when errors during write
+	examples/*: added a few examples to use the new gzip/bzip compression
+	examples/convertTupleToCSV.cpp: added example from Guy Barrand to convert a tuple to a CSV file
+	tests/runTests.py.in: added new examples and tests, added handling of possible args to tests
+
 2011-04-09 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	configure: incorporated patch for gfortran from issue ID: 3172767
 	examples/samplingFromHistogram.cpp: added new example to show sampling from IHistogram1D (code from Guy)
@@ -7,7 +19,7 @@
 	examples/Makefile.in: update MACOSX_DEPLOYMENT_TARGET to 10.5 to build properly on 10.6
 	tests/Makefile.in: add logs to cleanup, add a few tests including one from commandline
 	ReadMe: update for latest version (1.0.18)
-	Tagged iAIDA-1.0.18 (rev )------------------------------------------
+	Tagged iAIDA-1.0.18 (rev 161) ------------------------------------------
 
 2009-06-10 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	AIDAGracePlotter/Layout.cpp, AIDAGracePlotter/Plotter.cpp: fix compiler problems
