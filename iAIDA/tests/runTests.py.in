@@ -20,6 +20,13 @@
 #  License along with iAIDA.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#########################################################
+#
+# Warning: this python file is generated from the .py.in file here
+#          DO NOT EDIT -- any change will be lost at the next "configure" call !!!
+# 
+#########################################################
+
 
 import sys, os
 
@@ -32,14 +39,17 @@ class iAIDATester(object):
         
         self.tstDir = os.path.normpath( os.path.dirname( os.path.normpath(sys.argv[0]) ) )
 
-        self.examples = ['exaH1', 'exaH2', 'exaH3', 'exaTree',
+        self.examples = ['exaH1', 'exaH2', 'exaH3', 'exaTree', 'exaTreeReader', 'exaTuple', 'exaTupleRead',
                          'storeRoot', 'readRoot', 'storeRootTup', 'readRootTup',
                          'storeHbk', 'readHbk', 'storeHbkTup', 'readHbkTup', 'storeHbkCWN', 'readHbkCWN',
+                         'convertTupleToCSV'
                          ]
 
         self.tests    = ['testAIDAmem',
                          'testHistoName',
                          'plottingHistograms']
+
+        self.testArgs = { 'convertTupleToCSV' : 'exatup.aida xml 100' } 
 
         self.results  = { 'ok'     : 0,
                           'fail'   : 0,
@@ -56,9 +66,13 @@ class iAIDATester(object):
 
         ret = 0
         if os.path.exists(entry):
+            if self.testArgs.has_key(entry) : cmd += ' '+self.testArgs[entry]
             ret = os.system(cmd)
             if ret == 0:
-                print entry, " ... OK"
+                if self.testArgs.has_key(entry) : 
+                    print entry, self.testArgs[entry], " ... OK"
+                else: 
+                    print entry, " ... OK"
                 os.system('rm '+logFile)
                 self.results['ok'] += 1
             else:
