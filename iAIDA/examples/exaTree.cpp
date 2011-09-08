@@ -22,7 +22,8 @@ int main( int, char** )
   boost::shared_ptr<AIDA::ITreeFactory> tf( af->createTreeFactory() ); 
   bool readOnly = false;
   bool createNew = true;
-  boost::shared_ptr<AIDA::ITree> tree(tf->create("exaTree.aida","XML",readOnly,createNew)); 
+  std::string options = "gzip";
+  boost::shared_ptr<AIDA::ITree> tree(tf->create("exaTree.aida","XML",readOnly,createNew, options)); 
   boost::shared_ptr<AIDA::IHistogramFactory> factory( af->createHistogramFactory(*tree) );
 
   // Creating a histogram managed by the tree (cannot be smart pointers) 
@@ -43,8 +44,13 @@ int main( int, char** )
     h2p->fill( x+5, 1. );
     h3p->fill( x*2, 1. );
     h4p->fill( x/2, 1. );
-    p1.fill( x, -10., 0.5 );
-    p1.fill( x,  10., 0.5 );
+  }
+
+  for ( int i = 0; i < 1000; ++i ) {
+     double x =  50. * static_cast<double>( std::rand() ) / RAND_MAX;
+     double y = 100. * static_cast<double>( std::rand() ) / RAND_MAX;
+    p1.fill( x, y);
+    p1.fill( x, y);
   }
 
   {
@@ -99,20 +105,42 @@ int main( int, char** )
   std::cout << "write tree contents to disk " << std::endl; 
   tree->commit(); 
 
-  std::cout << "going to create file for copy " << std::endl; 
+  std::cout << "\ngoing to create file for bzip copy " << std::endl; 
   // test copy to another tree 
-  boost::shared_ptr<AIDA::ITree> tree2(tf->create("exaTreeCopy.aida","XML",false,true)); 
-
+  bool readOnly2  = false;
+  bool createNew2 = true;
+  std::string options2 = "bzip"; // this is now default in iAIDA
+  boost::shared_ptr<AIDA::ITree> tree2(tf->create("exaTreeCopyBzip.aida","XML",readOnly2, createNew2, options2)); 
   // create histogram factory
   boost::shared_ptr<AIDA::IHistogramFactory> factory2( af->createHistogramFactory(*tree2) );
-  AIDA::IHistogram1D * h1Cp = factory2->createCopy("h1Copy",h1);
+  factory2->createCopy("1",h1);
+  factory2->createCopy("2",*h2p);
+  factory2->createCopy("7",*h3p);
+  factory2->createCopy("10",*h4p);
+  factory2->createCopy("Example profile.",p1);
   tree2->commit(); 
   tree2->close(); 
+
+  std::cout << "\ngoing to create file for uncompressed copy " << std::endl; 
+  // test copy to another tree 
+  bool readOnly3  = false;
+  bool createNew3 = true;
+  std::string options3 = "uncompress"; 
+  boost::shared_ptr<AIDA::ITree> tree3(tf->create("exaTreeCopyUC.aida","XML",readOnly3, createNew3, options3)); 
+  // create histogram factory
+  boost::shared_ptr<AIDA::IHistogramFactory> factory3( af->createHistogramFactory(*tree3) );
+  factory3->createCopy("1",h1);
+  factory3->createCopy("2",*h2p);
+  factory3->createCopy("7",*h3p);
+  factory3->createCopy("10",*h4p);
+  factory3->createCopy("Example profile.",p1);
+  tree3->commit(); 
+  tree3->close(); 
 
   std::cout << "closing the tree " << std::endl; 
   tree->close(); 
 
-  std::cout << "Done " << std::endl; 
+  std::cout << "Done!\n" << std::endl; 
   
   return 0;
 }

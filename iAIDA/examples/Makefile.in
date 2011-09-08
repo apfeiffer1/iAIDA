@@ -49,7 +49,11 @@ SRCS = \
 	exaH1.cpp \
 	exaH2.cpp \
 	exaH3.cpp \
-	exaTree.cpp 
+	exaTree.cpp \
+	exaTreeReader.cpp \
+	exaTuple.cpp \
+	exaTupleRead.cpp \
+	convertTupleToCSV.cpp \
 
 OS=$(shell uname)
 
