@@ -68,8 +68,9 @@ platforms:
 Mac OS X (10.4) with gcc 4.0.1
 Mac OS X (10.5) with gcc 4.0.1
 Mac OS X (10.6) with gcc 4.2.1
+Mac OS X (10.7) with gcc 4.2.1
 Scientific Linux 4. (SLC4) with gcc 3.4.6
-Scientific Linux 5. (SLC4) with gcc 3.4.6, gcc 4.3.1
+Scientific Linux 5. (SLC5) with gcc 3.4.6, gcc 4.3.1
 SuSE 10.2 with gcc 4.1.2 (gfortran)
 
 As of version 0.1.4 the package optionally can store and read
@@ -89,6 +90,11 @@ wherever you install Fink software). Simply use the configure
 option to tell the package where xmgrace is installed:
 
 ./configure --prefix=../install/ --with-grace=/sw
+
+If you install it via the MacPorts tools, you will have it in
+/opt/local/, so use this command instead to tell where it is:
+
+./configure --prefix=../install/ --with-grace=/opt/local
 
 
 
