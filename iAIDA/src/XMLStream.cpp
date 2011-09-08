@@ -34,6 +34,9 @@ namespace DataXML
   typedef const std::vector<DataObject>& const_ref_obj_vec_t;
 
 
+// ==========================================================================================
+// Input
+// ==========================================================================================
 
 InputXMLStream::InputXMLStream()
 {
@@ -142,6 +145,10 @@ void InputXMLStream::setDefaultStream(std::istream& is)
   m_def_stream = &is;
 }
 
+// ==========================================================================================
+// Output
+// ==========================================================================================
+
 OutputXMLStream::OutputXMLStream() 
 {
   m_def_stream = &std::cout;
@@ -182,6 +189,15 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
       {      
         for(it1 = attr.begin(); it1!=attr.end(); ++it1)
           os << " " << it1->first << "=\"" << it1->second << "\"";
+          if ( !os.good() || os.fail() || os.bad() || os.eof() ) {
+             std::cerr << "FATAL: Error during write !!" << std::endl;
+             std::cerr << " got :" << std::endl;
+             std::cerr << "     good" << os.good() << std::endl;
+             std::cerr << "     fail" << os.fail() << std::endl;
+             std::cerr << "     bad " << os.bad () << std::endl;
+             std::cerr << "     eof " << os.eof () << std::endl;
+             return false;
+          }
       }
 
     if(!os) return false;
@@ -208,18 +224,6 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
     } 
   return !os ? false : true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
