@@ -23,6 +23,9 @@ BOOST_INC = -I@BOOST_INC_DIR@
 EXPAT_INC = -I@EXPAT_INC_DIR@
 EXPAT_LIB = -L@EXPAT_LIB_DIR@
 
+HAVE_BOOST = @HAVE_BOOST@
+BOOST_LIB_DIR = @BOOST_LIB_DIR@
+
 HAVE_GRACE = @HAVE_GRACE@
 GRACE_INC = -I@GRACE_INC_DIR@
 GRACE_LIB = -L@GRACE_LIB_DIR@ -lgrace_np
@@ -48,7 +51,6 @@ LIBS += -L../lib -liAIDA
 # general tests, not specific for an I/O system
 SRCS = $F \
 	testAIDAmem.cpp \
-	
 
 # the tests which are root-specific:
 ROOT_TEST_SRCS = testHistoName.cpp \
@@ -67,6 +69,10 @@ ifeq (${OS}, Linux)
   SHLIBFLAGS = -shared
   LDFLAGS = -pthread -ldl 
   LIBS += ${LIB64} -lexpat -lz 
+  BOOST_LIB = ${BOOST_LIB_DIR}/libboost_iostreams.so.5
+  ifeq (${ARCH}, x86_64)
+    BOOST_LIB = ${BOOST_LIB_DIR}/../lib64/libboost_iostreams.so.5
+  endif
 endif
 ifeq (${OS}, Darwin)
   CXX = g++
@@ -86,6 +92,11 @@ SRCS     += plottingHistograms.cpp
 SRCS     += plot.cpp
 INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
+endif
+
+ifdef HAVE_BOOST
+CXX_FLAGS += -DHAVE_BOOST
+LIBS     += ${BOOST_LIB} 
 endif
 
 ifdef HAVE_ROOT

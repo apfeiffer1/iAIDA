@@ -146,7 +146,7 @@ clean:
 	@echo "Cleaning in src"
 	@rm -f *.${OBJEXT} libiAIDA.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT} lib
 	@find . -name \*.${OBJEXT} -exec rm {} \;
-	
+
 lib: ${OBJS}
 	${SHLIB}libiAIDA.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 	@test -e ../lib || mkdir -p ../lib
