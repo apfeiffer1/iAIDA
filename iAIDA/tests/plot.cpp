@@ -1,6 +1,7 @@
+
 #include "AIDA/AIDA.h"
-//#include "globals.hh"
 #include <iostream>
+#include <assert.h>
 using namespace std;
 
 int main(){
