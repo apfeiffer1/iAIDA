@@ -22,7 +22,6 @@
 #include "AIDA_StoreXML.h"
 
 
-
 #ifdef XML_STORE_NO_EXCEPTIONS_TO_USER
 #include <exception>
 #include <iostream>

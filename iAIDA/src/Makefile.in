@@ -1,6 +1,7 @@
 
 AIDA_INC  = -I@AIDA_INC_DIR@ 
 BOOST_INC = -I@BOOST_INC_DIR@ -I../@BOOST_INC_DIR@
+HAVE_BOOST = @HAVE_BOOST@
 
 EXPAT_DIR = @EXPAT_DIR@
 EXPAT_INC = -I${EXPAT_DIR}/include -I../${EXPAT_DIR}/include
@@ -36,6 +37,7 @@ OS=$(shell uname)
 ifeq (${OS}, Linux)
   ARCH=$(shell uname -m)
   GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
+  BOOST_LIB = -lboost_iostreams
   CXX = g++
   OBJEXT =o
   SHLIB=${CXX} -o 
@@ -54,6 +56,7 @@ ifeq (${OS}, Linux)
 endif
 ifeq (${OS}, Darwin)
   GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
+  BOOST_LIB = -lboost_iostreams
   CXX = g++
   OBJEXT =o
   SHLIB=${CXX} -o 
@@ -68,6 +71,7 @@ ifeq (${OS}, Darwin)
 endif
 ifeq (${OS}, CYGWIN_NT-5.1)
   GRACE_LIB = -L${GRACE_DIR}/lib/libgrace_np.lib
+  BOOST_LIB = -L${BOOST_DIR}/lib/libboost_iostreams.lib
   INCLUDES += -Ic:/Program\ Files/Microsoft\ Visual\ Studio\ .NET\ 2003/Vc7/PlatformSDK/Include
   CXX = cl
   CPP=cl
@@ -93,6 +97,11 @@ CXX_FLAGS += -DHAVE_GRACE
 SRCS     += $(wildcard AIDAGracePlotter/*.cpp)
 INCLUDES += ${GRACE_INC}
 LIBS     += ${GRACE_LIB} 
+endif
+
+ifdef HAVE_BOOST
+CXX_FLAGS += -DHAVE_BOOST
+LIBS     += ${BOOST_LIB} 
 endif
 
 ifdef HAVE_ROOT
@@ -136,7 +145,8 @@ all: lib
 clean:
 	@echo "Cleaning in src"
 	@rm -f *.${OBJEXT} libiAIDA.${SHLIBEXT} *.lreg AIDA_HBook/*.${OBJEXT} AIDA_ROOT/*.${OBJEXT} lib
-
+	@find . -name \*.${OBJEXT} -exec rm {} \;
+	
 lib: ${OBJS}
 	${SHLIB}libiAIDA.${SHLIBEXT} ${SHLIBFLAGS} ${LDFLAGS} ${CXX_FLAGS} ${CXXFLAGS} ${INCLUDES} ${OBJS} ${LIBS} 
 	@test -e ../lib || mkdir -p ../lib

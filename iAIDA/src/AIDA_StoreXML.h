@@ -45,7 +45,7 @@ namespace DataXML {
 namespace iAIDA {
   namespace AIDA_MemoryStore { 
     class MemoryBackingStore; 
-  }
+  } // end ns AIDA_MemoryStore
 
   namespace AIDA_XMLStore {
 
@@ -139,7 +139,7 @@ private:
 
 };
 
-  }
-}
+  } // end ns AIDA_XMLStore
+} // end ns iAIDA
 
 #endif /* ifndef IAIDA_StoreXML */

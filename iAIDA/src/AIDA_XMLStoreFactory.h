@@ -46,7 +46,7 @@ public:
   bool destroyStore( AIDA::Dev::IStore* store );
 };
 
-  }
-}
+  } // end ns AIDA_XMLStore
+} // end ns iAIDA
 
 #endif /* ifndef IAIDA_XMLSTOREFACTORY */
