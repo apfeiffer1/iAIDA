@@ -129,7 +129,7 @@ class Configuration(object):
         if self.boostDir :
             self.boostDir = os.path.abspath(self.boostDir)
             self.boostIncDir = os.path.join(self.boostDir, "include")
-            vDir = os.listdir(self.boostIncDir)[0]
+            vDir = self.boostIncDir
             self.boostIncDir = os.path.join(self.boostIncDir, vDir)
             self.boostLibDir = os.path.join(self.boostDir, "lib")
             if not os.path.exists(os.path.join(self.boostIncDir, "boost", "shared_ptr.hpp") ) :

@@ -26,10 +26,10 @@ int main( int, char** )
   boost::shared_ptr<AIDA::IHistogramFactory> factory( af->createHistogramFactory(*tree) );
 
   // Creating a histogram managed by the tree (cannot be smart pointers) 
-  AIDA::IHistogram1D * h1p = factory->createHistogram1D("1", "Example histogram.", 50, 0, 50);
-  AIDA::IHistogram1D * h2p = factory->createHistogram1D("2", "Example histogram.", 50, 0, 50);
-  AIDA::IHistogram1D * h3p = factory->createHistogram1D("7", "Example histogram.", 50, 0, 50);
-  AIDA::IHistogram1D * h4p = factory->createHistogram1D("10", "Example histogram.", 50, 0, 50);
+  AIDA::IHistogram1D * h1p = factory->createHistogram1D("1", "Example histogram.", 20, 0, 50);
+  AIDA::IHistogram1D * h2p = factory->createHistogram1D("2", "Example histogram.", 20, 0, 50);
+  AIDA::IHistogram1D * h3p = factory->createHistogram1D("7", "Example histogram.", 20, 0, 50);
+  AIDA::IHistogram1D * h4p = factory->createHistogram1D("10", "Example histogram.", 20, 0, 50);
   AIDA::IProfile1D *  p1p = factory->createProfile1D( "Example profile.", 50, 0, 50 );
 
   AIDA::IHistogram1D & h1 = *h1p;

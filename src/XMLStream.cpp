@@ -161,13 +161,11 @@ bool OutputXMLStream::write(const DataObject& obj) const
 
 bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
 {
-  if(obj.getText()!="") os << obj.getText();
- 
-  else 
-  {
+  if ( obj.getText() != "" ) {
+    os << obj.getText();
+  } else {
 
-    if(obj.name() == "")
-    {
+    if ( obj.name() == "" ) {
       os << std::endl << "No element name!";
       return false;
     };
@@ -178,34 +176,32 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
 
     const_ref_attr_map_t attr = obj.attributes();
 
-    if(!attr.empty())
-      {      
-        for(it1 = attr.begin(); it1!=attr.end(); ++it1)
-          os << " " << it1->first << "=\"" << it1->second << "\"";
+    if ( ! attr.empty() ) {
+      for(it1 = attr.begin(); it1 != attr.end(); ++it1) {
+	os << " " << it1->first << "=\"";
+	os << it1->second << "\"";
       }
+    }
 
-    if(!os) return false;
+    if ( ! os.good() ) return false;
 
     const_ref_obj_vec_t child = obj.children();
 
-    if(child.empty()) 
+    if ( child.empty() ) { 
       os << "/>";
-    else
-      {
-        os << ">";
+    } else {
+      os << ">";
 
-        obj_vec_t::const_iterator it2;
+      obj_vec_t::const_iterator it2;
 
-        for(it2 = child.begin(); it2!=child.end(); ++it2)
-          {
-            os << std::endl;
-
-            if(!write(*it2,os)) return false;
-          }
-
-        os << std::endl << "</" << obj.name() << ">";
+      for(it2 = child.begin(); it2!=child.end(); ++it2) {
+	os << std::endl;
+	if ( ! write(*it2,os) ) return false;
       }
-    } 
+
+      os << std::endl << "</" << obj.name() << ">";
+    }
+  } 
   return !os ? false : true;
 }
 

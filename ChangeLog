@@ -1,3 +1,14 @@
+2012-08-14 Andreas Pfeiffer (apfeiffer1@gmail.com) 
+	working on branches/iAIDA-1.0-branch:
+	configure: fix recognition of boost include dir if user specified path is given
+	src/AIDA_ROOT/FunctionConverter(.h,.cpp): fixed issue with moved boost headers
+	for Boost versions >= 1.47.0 -- issue #3552592 (opened at 2012-07-31 06:41)
+	https://sourceforge.net/tracker/?func=detail&atid=1126469&aid=3552592&group_id=248554
+	(also reported by macports issue: http://trac.macports.org/ticket/32555)
+	src/XMLStream.cpp, tests/Makefile.in, examples/exaTree.cpp: small cleanups
+        ReadMe: update for latest version (1.0.19)
+	Tagged iAIDA-1.0.19 (rev )------------------------------------------
+	
 2011-04-09 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	configure: incorporated patch for gfortran from issue ID: 3172767
 	examples/samplingFromHistogram.cpp: added new example to show sampling from IHistogram1D (code from Guy)

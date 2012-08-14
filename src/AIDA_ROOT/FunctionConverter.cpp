@@ -64,43 +64,83 @@ static int n_func_instance = 0;
 //
 
 double function_adapter0(double *x, double *p) {
-  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::instance();
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
+   iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter1(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<1> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder1::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter2(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<2> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder2::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter3(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<3> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder3::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter4(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<4> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder4::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter5(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<5> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder5::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter6(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<6> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder6::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter7(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<7> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder7::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter8(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<8> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder8::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
 double function_adapter9(double *x, double *p) {
+#if BOOST_VERSION >= 104700
+  iAIDA::AIDA_RootConverter::FuncAdapter<0> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
   iAIDA::AIDA_RootConverter::FuncAdapter<9> & theFunctionAdapter =  iAIDA::AIDA_RootConverter::FuncAdapterHolder9::instance();
+#endif
   return theFunctionAdapter(x,p); 
 }
   
@@ -136,43 +176,83 @@ TF1 *  iAIDA::AIDA_RootConverter::FunctionConverter::toRoot(AIDA::IFunction & fu
   }
   switch(n_func_instance) {  
   case 0 : 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::instance();
+#endif
     pFunc = function_adapter0; 
     break; 
   case 1 : 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder1::instance();
+#endif
     pFunc = function_adapter1; 
     break; 
   case 2: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder2::instance();
+#endif
     pFunc = function_adapter2; 
     break; 
   case 3: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder3::instance();
+#endif
     pFunc = function_adapter3; 
     break; 
   case 4: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder4::instance();
+#endif
     pFunc = function_adapter4; 
     break; 
   case 5: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder5::instance();
+#endif
     pFunc = function_adapter5;
     break; 
   case 6: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder6::instance();
+#endif
     pFunc = function_adapter6; 
     break; 
   case 7: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder7::instance();
+#endif
     pFunc = function_adapter7; 
     break; 
   case 8: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder8::instance();
+#endif
     pFunc = function_adapter8; 
     break; 
   case 9: 
+#if BOOST_VERSION >= 104700
+    theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder0::get_mutable_instance();
+#else
     theFunctionAdapter =  &iAIDA::AIDA_RootConverter::FuncAdapterHolder9::instance();
+#endif
     pFunc = function_adapter9; 
     break; 
   default : 

@@ -25,7 +25,7 @@ The iAIDA package needs the following packages already installed
 (with their "development" packages as well):
 e2fsprogs (version 1.39-21 tested)
 expat (version 1.95.8 tested)
-Boost (version 1.33.1 tested)
+Boost (version 1.47.0 tested, (parts of) 1.33.0 included)
 optionally: xmgrace (versions 5.1.22 tested)
 optionally: cernlib (version 2005 tested)
 optionally: root (version 5.17.02 tested)
@@ -42,8 +42,8 @@ of any modern linux installation, so there is no local copy.
 To install the package into /usr/local (assuming that the other 
 packages are installed there too):
 
-tar zxf iAIDA-1.0.18.tgz
-cd iAIDA-1.0.18
+tar zxf iAIDA-1.0.19.tgz
+cd iAIDA-1.0.19
 ./configure --prefix=/usr/local
 make
 make install
@@ -68,8 +68,9 @@ platforms:
 Mac OS X (10.4) with gcc 4.0.1
 Mac OS X (10.5) with gcc 4.0.1
 Mac OS X (10.6) with gcc 4.2.1
+Mac OS X (10.7) with gcc 4.2.1
 Scientific Linux 4. (SLC4) with gcc 3.4.6
-Scientific Linux 5. (SLC4) with gcc 3.4.6, gcc 4.3.1
+Scientific Linux 5. (SLC4) with gcc 3.4.6, gcc 4.3.1, gcc 4.5.6, gcc 4.6.2
 SuSE 10.2 with gcc 4.1.2 (gfortran)
 
 As of version 0.1.4 the package optionally can store and read

@@ -51,7 +51,8 @@ SRCS = $F \
 	
 
 # the tests which are root-specific:
-ROOT_TEST_SRCS = testHistoName.cpp \
+ROOT_TEST_SRCS =  testHistoName.cpp \
+	
 
 OS=$(shell uname)
 

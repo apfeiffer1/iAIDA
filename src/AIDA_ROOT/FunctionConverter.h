@@ -57,7 +57,14 @@
 
 #include <string>
 #include <vector>
+
+#include "boost/version.hpp"
+
+#if BOOST_VERSION >= 104700
+#include "boost/serialization/singleton.hpp"
+#else
 #include "boost/pool/detail/singleton.hpp"
+#endif
 
 class TF1; 
 
@@ -135,6 +142,18 @@ template <int I>
 
  // make function adapters a singleton 
 #define MAX_FUNC_ADAPTER 10
+#if BOOST_VERSION >= 104700
+typedef boost::serialization::singleton<FuncAdapter<0> > FuncAdapterHolder0;
+typedef boost::serialization::singleton<FuncAdapter<1> > FuncAdapterHolder1;
+typedef boost::serialization::singleton<FuncAdapter<2> > FuncAdapterHolder2;
+typedef boost::serialization::singleton<FuncAdapter<3> > FuncAdapterHolder3;
+typedef boost::serialization::singleton<FuncAdapter<4> > FuncAdapterHolder4;
+typedef boost::serialization::singleton<FuncAdapter<5> > FuncAdapterHolder5;
+typedef boost::serialization::singleton<FuncAdapter<6> > FuncAdapterHolder6;
+typedef boost::serialization::singleton<FuncAdapter<7> > FuncAdapterHolder7;
+typedef boost::serialization::singleton<FuncAdapter<8> > FuncAdapterHolder8;
+typedef boost::serialization::singleton<FuncAdapter<9> > FuncAdapterHolder9;
+#else
 typedef boost::details::pool::singleton_default<FuncAdapter<0> > FuncAdapterHolder0;
 typedef boost::details::pool::singleton_default<FuncAdapter<1> > FuncAdapterHolder1;
 typedef boost::details::pool::singleton_default<FuncAdapter<2> > FuncAdapterHolder2;
@@ -145,6 +164,7 @@ typedef boost::details::pool::singleton_default<FuncAdapter<6> > FuncAdapterHold
 typedef boost::details::pool::singleton_default<FuncAdapter<7> > FuncAdapterHolder7;
 typedef boost::details::pool::singleton_default<FuncAdapter<8> > FuncAdapterHolder8;
 typedef boost::details::pool::singleton_default<FuncAdapter<9> > FuncAdapterHolder9;
+#endif
 
  // class holding the adapters (needts to be a singleton) 
 
