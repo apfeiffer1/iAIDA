@@ -61,7 +61,6 @@ ifeq (${OS}, Linux)
   ifeq (${ARCH}, x86_64)
     LIB64 = -L/usr/lib64
   endif
-  CXX = g++
   OBJEXT=o
   SHLIBEXT=so
   CXX_FLAGS = -fPIC -pthread -g 
@@ -70,7 +69,6 @@ ifeq (${OS}, Linux)
   LIBS += ${LIB64} -lexpat -lz 
 endif
 ifeq (${OS}, Darwin)
-  CXX = g++
   OBJEXT=o
   SHLIBEXT=dylib
   CXX_FLAGS = -fPIC -g 

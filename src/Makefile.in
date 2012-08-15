@@ -36,7 +36,6 @@ OS=$(shell uname)
 ifeq (${OS}, Linux)
   ARCH=$(shell uname -m)
   GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
-  CXX = g++
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =so
@@ -54,7 +53,6 @@ ifeq (${OS}, Linux)
 endif
 ifeq (${OS}, Darwin)
   GRACE_LIB = -L${GRACE_DIR}/lib -lgrace_np
-  CXX = g++
   OBJEXT =o
   SHLIB=${CXX} -o 
   SHLIBEXT =dylib
