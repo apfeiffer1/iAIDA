@@ -26,7 +26,13 @@
 #ifndef AIDA_PLUGIN_AIDA_PLUGINLOADER_H
 #define AIDA_PLUGIN_AIDA_PLUGINLOADER_H 1
 
+#include "boost/version.hpp"
+
+#if BOOST_VERSION >= 104700
+#include "boost/serialization/singleton.hpp"
+#else
 #include "boost/pool/detail/singleton.hpp"
+#endif
 
 namespace AIDA_Plugin
 { 
@@ -60,7 +66,12 @@ private:
 // make a class a singleton 
 
 //typedef Loki::SingletonHolder<AIDA_PluginLoader> AIDA_PluginManager;
+
+#if BOOST_VERSION >= 104700
+typedef boost::serialization::singleton<AIDA_PluginLoader> AIDA_PluginManager;
+#else
 typedef boost::details::pool::singleton_default<AIDA_PluginLoader> AIDA_PluginManager;
+#endif
 
 } // end namespace AIDA_Plugin
 #endif 
