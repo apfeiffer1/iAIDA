@@ -1,3 +1,11 @@
+2012-08-15 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	working on branches/iAIDA-1.0-branch:
+	include/AIDA_Plugin/AIDA_PluginLoader.h: fixed issue with boost header
+	(see 1.0.19 below) somehow I missed that file when fixing the others. :(
+	Makefile.in: removed unneccessary setting of CXX for unixes
+	ChangeLog, ReadMe: update for latest version (1.0.20)
+	Tagged iAIDA-1.0.20 (rev 175) ----------------------------------------
+	
 2012-08-14 Andreas Pfeiffer (apfeiffer1@gmail.com) 
 	working on branches/iAIDA-1.0-branch:
 	configure: fix recognition of boost include dir if user specified path is given
@@ -7,7 +15,7 @@
 	(also reported by macports issue: http://trac.macports.org/ticket/32555)
 	src/XMLStream.cpp, tests/Makefile.in, examples/exaTree.cpp: small cleanups
         ReadMe: update for latest version (1.0.19)
-	Tagged iAIDA-1.0.19 (rev )------------------------------------------
+	Tagged iAIDA-1.0.19 (rev 173)------------------------------------------
 	
 2011-04-09 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	configure: incorporated patch for gfortran from issue ID: 3172767
