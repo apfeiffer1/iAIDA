@@ -1,5 +1,6 @@
 #include "AIDA/AIDA.h"
 //#include "globals.hh"
+#include <cassert>
 #include <iostream>
 using namespace std;
 
