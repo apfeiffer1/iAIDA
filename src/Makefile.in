@@ -60,7 +60,7 @@ ifeq (${OS}, Darwin)
   CXX_FLAGS = -fPIC -g -DBADENDS 
   LDFLAGS = -lm -lc
   export MACOSX_DEPLOYMENT_TARGET=10.5
-  SHLIBFLAGS = -dynamiclib -single_module -undefined dynamic_lookup
+  SHLIBFLAGS = -dynamiclib -install_name @PREFIX_DIR@/lib/libiAIDA.${SHLIBEXT} -single_module -undefined dynamic_lookup
   LIBS = -L${EXPAT_DIR}/lib  -lexpat -L${ZLIB_DIR}/lib 
   INSTALL_CMD=cp
 endif
