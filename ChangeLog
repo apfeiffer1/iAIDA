@@ -1,4 +1,11 @@
-2012-05-15 Andreas Pfeiffer (apfeiffer1@gmail.com)
+2012-08-15 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	working on branches/iAIDA-1.0-branch:
+	src/Makefile.in: added -install_name option to SHLIBFLAGS
+        ChangeLog, ReadMe: update for latest version (1.0.22)
+	Tagged iAIDA-1.0.22 (rev 183) ------------------------------------------
+	
+
+2012-08-15 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	working on branches/iAIDA-1.0-branch:
 	tests/plot.cpp: fix missing include for cassert to enable build on macports
 	ChangeLog, ReadMe: update for latest version (1.0.21)
