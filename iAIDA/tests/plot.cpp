@@ -29,14 +29,14 @@ int main(){
   AIDA::IPlotterFactory* plotterFactory;
   AIDA::IPlotter* plotter;
 
-	analysisFactory = AIDA_createAnalysisFactory();
-	treeFactory = analysisFactory->createTreeFactory();
+  analysisFactory = AIDA_createAnalysisFactory();
+  treeFactory = analysisFactory->createTreeFactory();
   inputTree = treeFactory->create("testem14.XML","XML", true);
-	assert (inputTree);
+  assert (inputTree);
 	
-	AIDA::ITree *memTree = treeFactory->create("mem","memory");
-	
-	inputTree->ls();
+  AIDA::ITree *memTree = treeFactory->create("mem","memory");
+  
+  inputTree->ls();
   tupleInput = dynamic_cast<AIDA::ITuple*>(inputTree->find("10"));
 
   assert(tupleInput);
@@ -45,12 +45,12 @@ int main(){
   // in order to have a tuple of primaries or a tuple for secondaries.
   // these tuple will be filtered agin in order to have a tuple per particle to be plotted
   
-	histoFactory = analysisFactory->createHistogramFactory( *memTree );
+  histoFactory = analysisFactory->createHistogramFactory( *memTree );
   AIDA::IHistogram1D* histoEn = histoFactory->createHistogram1D("10", "Energy", 10000 ,0, 1000);
   AIDA::IHistogram1D* histoX = histoFactory->createHistogram1D("11", "X Direction", 1000 ,-1.001, 1.001);
   AIDA::IHistogram1D* histoY = histoFactory->createHistogram1D("12", "Y Direction", 1000 ,-1.001, 1.001);
   AIDA::IHistogram1D* histoZ = histoFactory->createHistogram1D("13", "Z Direction", 1000 ,-1.001, 1.001);
-	std::cout << "Histos booked" << std::endl;
+  std::cout << "Histos booked" << std::endl;
 
   tupleFilter = tupleFactory->createFilter("(ParentTrackId ==  0) && (ParticleType == 0)");
   tupleFilter->initialize(*tupleInput);

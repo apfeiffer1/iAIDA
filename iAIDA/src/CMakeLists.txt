@@ -1,6 +1,8 @@
 
 ## iAIDA/src 
 
+include_directories( ${PROJECT_BINARY_DIR} ${extIncDirs}  )
+
 # build the lib here
 file(GLOB srcFilesAIDA "*.cpp")
 
@@ -9,12 +11,17 @@ if ( ROOT_FOUND )
 	message ( "... added files for root ")
 endif ( ROOT_FOUND )
 
-if ( Grace_FOUND )
-   file	(GLOB srcFilesPlot "AIDA_GracePlotter/*.cpp")
+if ( GRACE_FOUND )
+   file	(GLOB srcFilesPlot "AIDAGracePlotter/*.cpp")
 	message ( "... added files for Grace plotter ")
-endif ( Grace_FOUND )
+endif ( GRACE_FOUND )
 
-set( srcFiles ${srcFilesAIDA} ${srcFilesROOT} ${srcFilesPlot} )
+if ( CERNLIB_FOUND )
+   file	(GLOB srcFilesHbook "AIDAHBook/*.cpp")
+	message ( "... added files for HBook ")
+endif ( CERNLIB_FOUND )
+
+set( srcFiles ${srcFilesAIDA} ${srcFilesROOT} ${srcFilesPlot} ${srcFilesHbook} )
 add_library(iAIDA SHARED ${srcFiles})
 target_link_libraries( iAIDA ${EXTERNAL_LIBS})
 

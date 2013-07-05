@@ -50,5 +50,10 @@ else()
   if(NOT ROOT_FIND_QUIETLY)
     message(STATUS "Found ROOT ${ROOT_VERSION} in ${ROOTSYS}")
   endif()
+
+  INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIR} )
+  SET(optLibs ${optLibs} ${ROOT_LIBRARIES})
+
+
 endif()
 

@@ -53,7 +53,7 @@
 
 
 
-#include "GracePlotter/FillStyle.h"
+#include "AIDAGracePlotter/FillStyle.h"
 #include "AIDA_FillStyle.h"
 #include <iostream>
 

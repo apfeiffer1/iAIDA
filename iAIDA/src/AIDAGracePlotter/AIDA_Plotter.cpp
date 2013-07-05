@@ -54,7 +54,7 @@
 
 
 #include "AIDA_Plotter.h"
-#include "GracePlotter/Plotter.h"
+#include "AIDAGracePlotter/Plotter.h"
 #include "AIDA_TitleStyle.h"
 #include "AIDA_PlotterRegion.h"
 

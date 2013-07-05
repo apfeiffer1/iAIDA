@@ -213,7 +213,9 @@ Grace& Grace::theInstance(int xsize, int ysize)
 bool Grace::start()
 {
   if (isRunning()) return false;
-  int flag = GraceOpenVA("xmgrace", 2048, 
+  
+  const std::string xmgrace("xmgrace");
+  int flag = GraceOpenVA(const_cast<char*>(xmgrace.c_str()), 2048, 
 			 "-noask", "-barebones", "-nosafe", "-free",
 			 NULL);
   if (flag == -1 || !GraceIsOpen()) {
@@ -225,17 +227,12 @@ bool Grace::start()
   return ok;
 }
 
-
-
-
 bool Grace::stop()
 {
   if (GraceIsOpen()) GraceClose();
   ok = false;
   return true;
 }
-
-
 
 void Grace::hackRawGraceCommand(const std::string& cmd)
 {

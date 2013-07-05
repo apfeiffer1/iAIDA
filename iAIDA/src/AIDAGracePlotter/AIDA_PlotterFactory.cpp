@@ -67,15 +67,15 @@
 #include "AIDA_TitleStyle.h"
 
 // concrete implementations
-#include "GracePlotter/Plotter.h"
-#include "GracePlotter/AxisStyle.h"
-#include "GracePlotter/Style.h"
-#include "GracePlotter/LineStyle.h"
-#include "GracePlotter/FillStyle.h"
-#include "GracePlotter/MarkerStyle.h"
-#include "GracePlotter/TextStyle.h"
-#include "GracePlotter/PlotStyle.h"
-#include "GracePlotter/TitleStyle.h"
+#include "AIDAGracePlotter/Plotter.h"
+#include "AIDAGracePlotter/AxisStyle.h"
+#include "AIDAGracePlotter/Style.h"
+#include "AIDAGracePlotter/LineStyle.h"
+#include "AIDAGracePlotter/FillStyle.h"
+#include "AIDAGracePlotter/MarkerStyle.h"
+#include "AIDAGracePlotter/TextStyle.h"
+#include "AIDAGracePlotter/PlotStyle.h"
+#include "AIDAGracePlotter/TitleStyle.h"
 
 
 

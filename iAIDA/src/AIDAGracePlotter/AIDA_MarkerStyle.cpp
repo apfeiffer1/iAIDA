@@ -54,7 +54,7 @@
 
 
 #include "AIDA_MarkerStyle.h"
-#include "GracePlotter/MarkerStyle.h"
+#include "AIDAGracePlotter/MarkerStyle.h"
 
 #include <iostream>
 

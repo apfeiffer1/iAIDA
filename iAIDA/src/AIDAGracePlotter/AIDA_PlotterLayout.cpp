@@ -54,7 +54,7 @@
 
 
 #include "AIDA_PlotterLayout.h"
-#include "GracePlotter/Layout.h"
+#include "AIDAGracePlotter/Layout.h"
 
 #include <iostream>
 

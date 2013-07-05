@@ -56,7 +56,7 @@
 #include "AIDA_AxisStyle.h"
 #include "AIDA_TextStyle.h"
 #include "AIDA_LineStyle.h"
-#include "GracePlotter/AxisStyle.h"
+#include "AIDAGracePlotter/AxisStyle.h"
 
 
 

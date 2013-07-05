@@ -59,7 +59,7 @@
 #include "AIDA_InfoStyle.h"
 #include "AIDA_TitleStyle.h"
 #include "AIDA_DataStyle.h"
-#include "GracePlotter/Style.h"
+#include "AIDAGracePlotter/Style.h"
 
 #include <iostream>
 

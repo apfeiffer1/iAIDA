@@ -55,7 +55,7 @@
 
 #include "AIDA_InfoStyle.h"
 #include "AIDA_TextStyle.h"
-#include "GracePlotter/LegendBoxStyle.h"
+#include "AIDAGracePlotter/LegendBoxStyle.h"
 
 #include <iostream>
 

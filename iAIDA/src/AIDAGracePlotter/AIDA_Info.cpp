@@ -57,7 +57,7 @@
 #include "AIDA_MarkerStyle.h"
 #include "AIDA_LineStyle.h"
 #include "AIDA_FillStyle.h"
-#include "GracePlotter/LegendBox.h"
+#include "AIDAGracePlotter/LegendBox.h"
 
 #include <iostream>
 

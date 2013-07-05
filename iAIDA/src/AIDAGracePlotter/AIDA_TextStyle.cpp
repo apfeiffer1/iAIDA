@@ -54,7 +54,7 @@
 
 
 #include "AIDA_TextStyle.h"
-#include "GracePlotter/TextStyle.h"
+#include "AIDAGracePlotter/TextStyle.h"
 #include <iostream>
 
 

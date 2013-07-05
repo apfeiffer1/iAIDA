@@ -55,7 +55,7 @@
 
 #include "AIDA_TitleStyle.h"
 #include "AIDA_TextStyle.h"
-#include "GracePlotter/TitleStyle.h"
+#include "AIDAGracePlotter/TitleStyle.h"
 
 #include <iostream>
 

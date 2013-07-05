@@ -54,7 +54,7 @@
 
 
 #include "AIDA_LineStyle.h"
-#include "GracePlotter/LineStyle.h"
+#include "AIDAGracePlotter/LineStyle.h"
 
 #include <iostream>
 
