@@ -41,9 +41,9 @@
 
 #include "TH1D.h" 
 
-namespace AIDA_ROOT {
+class AIDA::IAxis; // from AIDA
 
-  class AIDA::IAxis; // from AIDA
+namespace AIDA_ROOT {
 
   /**
    * common interface to 1D Histogram and Profile

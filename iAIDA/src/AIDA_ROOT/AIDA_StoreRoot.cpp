@@ -211,7 +211,7 @@ iAIDA::AIDA_RootStore::AIDA_StoreRoot::copyAndWrite( const AIDA::IManagedObject&
   const AIDA::Dev::IDevManagedObject& object = dynamic_cast< const AIDA::Dev::IDevManagedObject& >( dataObject );
   const std::string& type = object.userLevelClassType();
   if ( ! iAIDA::AIDA_RootStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
-    return false;
+    return 0;
   }
 
 

@@ -140,7 +140,7 @@ int main( int, char** )
   std::cout << "closing the tree " << std::endl; 
   tree->close(); 
 
-  std::cout << "Done!\n" << std::endl; 
-  
+  std::cout << "That's it !" << std::endl;
+
   return 0;
 }

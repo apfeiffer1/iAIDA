@@ -29,13 +29,12 @@
 #include "TH1D.h" 
 #include "AIDA_Annotation/AIDA_Annotation.h"
 
+class AIDA::IAxis; // from AIDA
 
 namespace AIDA_ROOT {
 
   static const std::string nameKey = "Name";
   static const std::string titleKey = "Title";   
-
-  class AIDA::IAxis; // from AIDA
 
   /**
    * internal wrapper to TH1 matching IHistogram and IProfile interfaces

@@ -113,5 +113,8 @@ int main( int, char** )
    std::cout << "\nresults from reading files: " << r1 << " " << r2 << " " << r3 << std::endl;
    if (r1+r2+r3 == 0) std::cout << "All OK."<< std::endl;
    std::cout << "\n================================================================================\n" << std::endl;
+
+   std::cout << "That's it !" << std::endl;
+
 }
 

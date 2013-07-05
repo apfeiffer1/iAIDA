@@ -113,15 +113,20 @@ bool process_file(AIDA::IAnalysisFactory& aAIDA,
 #include <fstream>
 
 int main(int argc,char* argv[]) {
+
+  std::string file("exatup.aida");
+  std::string format("xml");
+  std::string tuple("100");          
   if(argc!=4) {
-    std::cout << "main : three arguments expected :"
+      std::cout << "main : three arguments expected :"
               << " <file>, <format>, <tuple path>"
+              << " -- but none given. Will assume: 'exatup.aida xml 100' "
               << std::endl;
-    return 1;
+  } else { // override defaults from args
+      file   = std::string(argv[1]);
+      format = std::string(argv[2]);
+      tuple  = std::string(argv[3]);
   }
-  std::string file(argv[1]);
-  std::string format(argv[2]);
-  std::string tuple(argv[3]);
   AIDA::IAnalysisFactory* aida = AIDA_createAnalysisFactory();
   if(!aida) {
     std::cout << "main : AIDA not found." << std::endl;
@@ -132,13 +137,20 @@ int main(int argc,char* argv[]) {
     std::cout << "main : can't open out.csv." << std::endl;
     return 1;
   }
-  if(!process_file(*aida,file,format,tuple,out)){
+
+  bool result = process_file(*aida,file,format,tuple,out);
+  if(!result){
     std::cout << "main :"
               << " read_file " << file << " failed."
               << std::endl;
   }
   out.close();
   delete aida;
-  std::cout << "main : exit..." << std::endl;
+
+  if (!result) {
+      return -1;
+  }
+
+  std::cout << "That's it !" << std::endl;
   return 0;
 }

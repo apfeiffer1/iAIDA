@@ -102,5 +102,8 @@ int main(){
   plotter->hide(); 
   
   inputTree->close();
+  
+  std::cout << "Test run OK." << std::endl;
+
 }
 

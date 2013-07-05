@@ -97,6 +97,8 @@ int main( int, char** )
     tree->close();
 
     std::cout << "Successfull end." << std::endl;
+    std::cout << "Test run OK." << std::endl;
+
     return 0;
   }
   catch ( std::exception & e ) {

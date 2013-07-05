@@ -47,6 +47,8 @@ int main() {
   delete tree;
   delete analysisFactory;
 
+  std::cout << "Test run OK." << std::endl;
+  
 }
 
 

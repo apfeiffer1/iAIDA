@@ -128,5 +128,6 @@ int main( int, char** )
   ExaH1 exH1;
   exH1.doIt();
   std::cout << "That's it !" << std::endl;
+
   return 0;
 }

@@ -101,5 +101,7 @@ int main( int, char** )
     std::cout << "Test failed." << std::endl;
     return 1;
   }
+  std::cout << "That's it !" << std::endl;
+
   return 0;
 }

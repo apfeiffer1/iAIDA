@@ -70,5 +70,7 @@ int main( int, char** )
   tree->commit();
   tree->close();
 
+  std::cout << "That's it !" << std::endl;
+
   return 0;
 }

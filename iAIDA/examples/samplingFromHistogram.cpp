@@ -150,5 +150,7 @@ int main(int argc,char* argv[]) {
 
    delete af;
 
+   std::cout << "That's it !" << std::endl;
+
    return EXIT_SUCCESS;
 }

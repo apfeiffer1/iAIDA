@@ -73,21 +73,21 @@ namespace Util
 
     typename urimap_t::iterator pos = m_urimap.find(id);
 
-    if(pos != m_urimap.end())
-      if(replace)
-	m_urimap.erase(pos);
-      else
-	return false;
-
+    if (pos != m_urimap.end()) {
+        if(replace) {
+		    m_urimap.erase(pos);
+        } else {
+		    return false;
+	    }
+	}
     std::pair<typename urimap_t::iterator,bool> status;
 
     status = m_urimap.insert(make_pair(id,make_pair(uri,opt)));
 
-    if(!status.second)
-      {
-	ERROR_MSG("std::map find/insert problem");
-	return false;
-      }
+    if(!status.second) {
+	    ERROR_MSG("std::map find/insert problem");
+	    return false;
+    }
 
     return true;
   }
@@ -106,10 +106,11 @@ namespace Util
   {
     typename urimap_t::const_iterator pos = m_urimap.find(id);
    
-    if(pos != m_urimap.end())
+    if(pos != m_urimap.end()) {
       return pos->second.first;
-    else
+    } else {
       return std::string("");
+    }
   }
 
   template<class IRes, class ID, class OPT>

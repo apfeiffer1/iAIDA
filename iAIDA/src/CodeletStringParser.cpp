@@ -82,54 +82,53 @@ namespace fml
 
       auto_location = v[2];
 
-      if(auto_location == "catalogue")
-	if(v.size() != 3) 
-	  return false;
-	else
-	  {
-	  clear();
-	  typenameId = auto_typenameId;
-	  location = auto_location;
-	  return true;
+      if(auto_location == "catalogue") {
+	      if(v.size() != 3) {
+	          return false;
+	      } else {
+	          clear();
+	          typenameId = auto_typenameId;
+	          location = auto_location;
+	          return true;
+          }
 	  }
       
-      if(auto_location == "file")
-	if(v.size() != 4)
-	  return false;
-	else
-	  {
-	    clear();
-	    typenameId = auto_typenameId;
-	    location = auto_location;
-	    locationPath = v[3];
+      if(auto_location == "file") {
+	      if(v.size() != 4) {
+	          return false;
+	      } else {
+	          clear();
+	          typenameId = auto_typenameId;
+	          location = auto_location;
+	          locationPath = v[3];
 	    
-	    std::string::size_type extpos = locationPath.find_last_of('.');
+	          std::string::size_type extpos = locationPath.find_last_of('.');
 	    
-	    if(extpos != std::string::npos)
-	      implementationType = locationPath.substr(extpos+1);
-	    
-	    return true;
-	  }
+	          if(extpos != std::string::npos) {
+	              implementationType = locationPath.substr(extpos+1);
+	          }
+	          return true;
+	      }
+      }
       
-      if(auto_location == "verbatim")
-	if(v.size() != 4)
-	  return false;
-      else
-	{
-	  clear();
+      if(auto_location == "verbatim") {
+	      if(v.size() != 4) {
+	          return false;
+          } else {
+	          clear();
 
-	  typenameId = auto_typenameId;
-	  location = auto_location;
-	  implementationType = v[3];
-
-	  std::string::size_type begIdx = s.find_first_of('\n');
-
-	  if(begIdx != std::string::npos)
-	    implementationBody = s.substr(begIdx);
-
-	  return true;
-	}
-
+	          typenameId = auto_typenameId;
+	          location = auto_location;
+	          implementationType = v[3];
+              
+	          std::string::size_type begIdx = s.find_first_of('\n');
+              
+	          if(begIdx != std::string::npos) {
+	            implementationBody = s.substr(begIdx);
+              }
+	          return true;
+	      }
+      }
       return false;
     }
     
