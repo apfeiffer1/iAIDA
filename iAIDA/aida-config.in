@@ -52,6 +52,8 @@ where the optional <options> can be one of the following:
 
        --platform=<platform> : use <platform> for Platform string, overrides automatic determination
 
+       --implementation : prints out which implementation we are
+
 """
 
 # --------------------------------------------------------------------------------
@@ -60,7 +62,7 @@ class AIDA_Configurator :
 
     def __init__(self, platf="") :
 
-        self.iaidaVersion   = "iAIDA-1.0.0"
+        self.iaidaVersion   = "iAIDA-1.1.0"
         self.aidaVersion = "3.2.1"
 
         self.versionPython = "2.4.2"
@@ -251,7 +253,15 @@ class AIDA_Configurator :
         print "AIDA version ", self.aidaVersStr
 
         return
+        
+    # --------------------------------------------------------------------------------
 
+    def showImp(self) :
+        
+        print "implementation: iAIDA", self.iaidaVersion, 'implementing AIDA interfaces version ', aidaVersion
+
+        return
+        
 # ================================================================================
 
 if __name__ == "__main__" :
@@ -263,14 +273,15 @@ if __name__ == "__main__" :
     import getopt
     try:
         optlist, args = getopt.getopt(sys.argv[1:], "?hviIcClLr:R:", 
-                                 ['help', 'version', 'includes', 'cflags', 'libs', 'runtime=', 'platform='])
+                                 ['help', 'version', 'includes', 'cflags', 'libs', 'runtime=', 'platform=', 'implementation'])
 
         plat = None
         run  = None
         inc  = False
         lib  = False
         ver  = False
-
+        imp  = False
+        
         for o, a in optlist:
             if o in ("-?", "-h", "--help"):
                 usage()
@@ -287,6 +298,8 @@ if __name__ == "__main__" :
                 lib = True
             elif o in ("-r", '-R', "--runtime",):
                 run = a
+            elif o in ("--implementation",):
+                imp = True
             else:
                 print "\nunknown option:",o,"\n"
                 usage()
@@ -301,7 +314,8 @@ if __name__ == "__main__" :
                 conf.showLibs()
             if run :
                 conf.showRuntime(run)
-
+            if imp:
+                conf.showImp()
     except :
         raise 
 
