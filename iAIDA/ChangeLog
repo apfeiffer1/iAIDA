@@ -1,3 +1,11 @@
+
+2013-07-05 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	updated build process to use cmake. Added CMakeLists.txt in top-level, src/, examples, and test/
+	subdirs, added cmake/FindROOT.cmake and cmake/FindGrace.cmake (both found on the web)
+	removed Makefile.in in all dirs, configure 
+	fixed some build issues on Mac OS X 10.8 (Mountain Lion)
+	added '--implementation' flag for aida-config (seems to be required by Geant-4 these days.
+
 2011-09-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
     If Boost iostream libs are found on the system, enable their use so we can 
 	use the gzip and bzlib2 compression (the latter is the default now). The 
