@@ -13,9 +13,11 @@ if(NOT CERNLIB_CONFIG_EXECUTABLE)
   set(CERNLIB_FOUND FALSE)
 else()    
   set(CERNLIB_FOUND TRUE)
+  add_definitions(-DHAVE_CERN=TRUE)
 
+  # find the dynamic/shared version of the CERN libs:
   execute_process(
-    COMMAND ${CERNLIB_CONFIG_EXECUTABLE} kernlib
+    COMMAND ${CERNLIB_CONFIG_EXECUTABLE} -dy kernlib packlib mathlib
     OUTPUT_VARIABLE CERNLIB_LIBRARIES
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
@@ -23,7 +25,7 @@ else()
   mark_as_advanced(CERNLIB_CONFIG_EXECUTABLE)
 
   if(NOT CERNLIB_FIND_QUIETLY)
-    message(STATUS "Found CERNLIB ")
+    message(STATUS "Found CERNLIB - libs are: " ${CERNLIB_LIBRARIES})
   endif()
 
   SET(optLibs ${optLibs} ${CERNLIB_LIBRARIES})

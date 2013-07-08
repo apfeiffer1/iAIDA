@@ -14,6 +14,7 @@ if(NOT ROOT_CONFIG_EXECUTABLE)
   set(ROOT_FOUND FALSE)
 else()    
   set(ROOT_FOUND TRUE)
+  add_definitions(-DHAVE_ROOT=TRUE)
 
   execute_process(
     COMMAND ${ROOT_CONFIG_EXECUTABLE} --prefix 

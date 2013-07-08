@@ -17,13 +17,13 @@ if ( GRACE_FOUND )
 endif ( GRACE_FOUND )
 
 if ( CERNLIB_FOUND )
-   file	(GLOB srcFilesHbook "AIDAHBook/*.cpp")
+   file	(GLOB srcFilesHbook "AIDA_HBook/*.cpp")
 	message ( "... added files for HBook ")
 endif ( CERNLIB_FOUND )
 
 set( srcFiles ${srcFilesAIDA} ${srcFilesROOT} ${srcFilesPlot} ${srcFilesHbook} )
 add_library(iAIDA SHARED ${srcFiles})
-target_link_libraries( iAIDA ${EXTERNAL_LIBS})
+target_link_libraries( iAIDA ${EXTERNAL_LIBS} ${EXTERNAL_LIBS} -ldl)
 
 INSTALL(TARGETS iAIDA
   LIBRARY DESTINATION lib

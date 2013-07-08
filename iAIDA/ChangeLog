@@ -1,4 +1,8 @@
 
+2013-07-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	removed CERNLIB from list of optional sources as Ubuntu's version does not have the 
+	(essential here) functions to restore internals of HBOOK 1D and 2D histograms (hbf1al_/hbf2al_)
+
 2013-07-05 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	updated build process to use cmake. Added CMakeLists.txt in top-level, src/, examples, and test/
 	subdirs, added cmake/FindROOT.cmake and cmake/FindGrace.cmake (both found on the web)

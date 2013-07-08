@@ -1,4 +1,5 @@
 
+# iAIDA/examples
 
 macro (setup exeName testString)
 	add_executable( ${exeName} ${exeName}.cpp)
@@ -17,7 +18,10 @@ endforeach()
 
 message ("... examples set up")
 
+set_property(TEST exaTupleRead  APPEND PROPERTY DEPENDS exaTuple)
+set_property(TEST exaTreeReader APPEND PROPERTY DEPENDS exaTree)
 set_property(TEST convertTupleToCSV APPEND PROPERTY DEPENDS exaTuple)
+
 set_property(TEST readRoot APPEND PROPERTY DEPENDS storeRoot)
 
 foreach(_what Hbk HbkCWN HbkTup Root RootTup )

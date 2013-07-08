@@ -316,6 +316,10 @@ if __name__ == "__main__" :
                 conf.showRuntime(run)
             if imp:
                 conf.showImp()
+                
+    except getopt.GetoptError, e:
+        sys.stderr.write( "Warning: " + str(e) + " -- ignored.\n")
+        pass
     except :
         raise 
 
