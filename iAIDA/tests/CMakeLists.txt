@@ -8,11 +8,13 @@ macro (setup exeName testString)
 	set_tests_properties ( ${exeName} PROPERTIES PASS_REGULAR_EXPRESSION ${testString} )
 endmacro (setup)
 
-file(GLOB testFiles *.cpp)
-foreach(_test ${testFiles})
-	get_filename_component( Basename ${_test} NAME_WE )
-	setup(${Basename} "OK")
-	# message ("set up test for " ${Basename})
-endforeach()
+# generic tests
+setup( "testAIDAMem" "OK")
+setup( "testHistoName" "OK")
+
+if (GRACE_FOUND)
+  setup ( "plot" "OK")
+  setup ( "plottingHistograms" "OK")
+endif (GRACE_FOUND)
 
 message ("... examples set up")
