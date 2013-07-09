@@ -89,13 +89,10 @@ public:
   DataObject(std::string name);
 
   /// @name name handling
-                                                        //@{
   std::string name() const;  
   void setName(std::string name);
-                                                        //@}
 
   /// @name shortcuts for attribute handling
-                                                        //@{
   /// append new attribute at end, false if name already exists
   bool appendAttribute(std::string attr_name, std::string attr_val);
 
@@ -107,11 +104,9 @@ public:
 
   /// return "" if not found
   std::string getAttributeValue(std::string attr_name) const;
-                                                        //@}
 
   /// @name shortcuts for children handling
 
-                                                        //@{
   /// append child objects at end (vector::push_back())
   void appendChild(const DataObject& elem);
 
@@ -131,34 +126,22 @@ public:
   DataObject* lastChild();
   const DataObject* lastChild() const;
 
-                                                        //@}
-
 
   /// @name shortcuts for text handling
-                                                        //@{
   /// append PCDATA text as a child object
   void appendChildText(std::string text);
 
   /// get PCDATA, if 'this' is not text object return ""
   std::string getText() const;
-                                                        //@}
-
 
   /// @name direct manipulation of childern tree via STL vector
-                                                        //@{
   std::vector<DataObject>& children(); 
   const std::vector<DataObject>& children() const;
-                                                        //@}
-
-
-
 
   /// @name direct manipulation of attributes via STL map
-                                                        //@{
   
   std::map<std::string,std::string>& attributes();
   const std::map<std::string,std::string>& attributes() const;
-                                                        //@}
 
   static const DataObject& the_void_object();
 
@@ -188,7 +171,7 @@ std::string to_string(T val)
   std::ostringstream buf;
   buf << val;
 #ifndef BADENDS
-  buf << std::ends;
+  // buf << std::ends;
 #endif
   std::string ret = buf.str();
   return ret;

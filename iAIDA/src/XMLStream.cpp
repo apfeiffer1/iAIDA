@@ -168,16 +168,14 @@ bool OutputXMLStream::write(const DataObject& obj) const
 
 bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
 {
-  if(obj.getText()!="") os << obj.getText();
- 
-  else 
-  {
+  if (obj.getText() != "") {
+     os << obj.getText();
+  } else {
 
-    if(obj.name() == "")
-    {
+    if (obj.name() == "") {
       os << std::endl << "No element name!";
       return false;
-    };
+    }
 
     os << "<" << obj.name();
 
@@ -185,9 +183,8 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
 
     const_ref_attr_map_t attr = obj.attributes();
 
-    if(!attr.empty())
-      {      
-        for(it1 = attr.begin(); it1!=attr.end(); ++it1)
+    if (!attr.empty()) {      
+        for(it1 = attr.begin(); it1!=attr.end(); ++it1) {
           os << " " << it1->first << "=\"" << it1->second << "\"";
           if ( !os.good() || os.fail() || os.bad() || os.eof() ) {
              std::cerr << "FATAL: Error during write !!" << std::endl;
@@ -197,31 +194,30 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
              std::cerr << "     bad " << os.bad () << std::endl;
              std::cerr << "     eof " << os.eof () << std::endl;
              return false;
-          }
-      }
+          } // end if ios.good ...
+       } // end for
+    } // end if !attr.empty 
 
-    if(!os) return false;
+    if (!os) return false;
 
     const_ref_obj_vec_t child = obj.children();
 
-    if(child.empty()) 
+    if(child.empty()) {
       os << "/>";
-    else
-      {
-        os << ">";
+    } else {
+         os << ">";
 
-        obj_vec_t::const_iterator it2;
+         obj_vec_t::const_iterator it2;
 
-        for(it2 = child.begin(); it2!=child.end(); ++it2)
-          {
-            os << std::endl;
-
-            if(!write(*it2,os)) return false;
-          }
-
+         for(it2 = child.begin(); it2!=child.end(); ++it2) {
+               os << std::endl;
+               if (!write(*it2,os)) return false;
+         }
         os << std::endl << "</" << obj.name() << ">";
-      }
-    } 
+     } // end else
+  
+  } // end else obj.getText == ""
+  
   return !os ? false : true;
 }
 
@@ -241,112 +237,3 @@ void OutputXMLStream::setDefaultStream(std::ostream& os)
 
 } // namespace
 
-
-/* ---------------- GARBAGE ------------------- */
-
-# if 0
-
-// old implementation of read, stream buffering unsatisfactory
-bool DataObject::read(std::istream& is)
-{
-  XML_Parser p = XML_ParserCreate(NULL);
-
-  if(!p) return false;
-
-  XML_SetElementHandler(p,DataXML_StartElementHandler,DataXML_EndElementHandler);
-
-  DataObjectTreeCreator object_tree;
-  
-  XML_SetUserData(p, &object_tree);
-
-  const int BUF_SIZE = 300;
-
-  char buf[BUF_SIZE+1];
-
-  // PENDING: repetitive read-in of XML chunks
-  // DataObjectTreeCreator must tell when 1st, top-level tag was processed
-  // DataObjectTreeCreator must tell what is the name of top-level tag
-  // based on this we read-in from stream until </name> found or /> found
-
-  is.read(buf,BUF_SIZE);
-
-  int buf_len = is.gcount();
-
-  buf[buf_len] = 0; // terminate C-string (not required by expat)
-
-  XML_Parse(p, buf, buf_len, 1);
-
-  *this = *object_tree.root();
-
-  return true;
-} 
-
-/* better implementation of read, stream buffering satisfactory but slow */
-
-bool DataObject::read(std::istream& is)
-{
-  XML_Parser p = XML_ParserCreate(NULL);
-
-  if(!p) return false;
-
-  XML_SetElementHandler(p,
-			DataXML_StartElementHandler,
-			DataXML_EndElementHandler);
-
-  DataObjectTreeCreator object_tree;
-  
-  XML_SetUserData(p, &object_tree);
-
-  const int BUF_SIZE = 300;
-
-  char buf[BUF_SIZE+1];
-
-  int pars_OK = 1;
-
-  do
-    {
-      // well, we never read beyond terminating >
-      // this implementation is not very efficient but very simple.
-      // faster implementation would require to seek for terminating
-      // tag once the root element name is known (carefully with "/>")
-
-      is.get(buf,BUF_SIZE, '>');
-
-      int buf_len = is.gcount(); // max buf_len == BUF_SIZE-1
-
-      is.get(buf[buf_len]);
-      pars_OK = XML_Parse(p, buf, buf_len+1, object_tree.finished());
-
-      /* DEBUG:
-            buf[buf_len+1] = 0;
-            cout << endl << "*" << buf << "*";
-      */
-    }
-  while(!object_tree.finished() && pars_OK);
-
-  if(!pars_OK)
-    {
-      cout << "XML parser error: " << XML_ErrorString(XML_GetErrorCode(p));
-      return false;
-    }
-  
-  *this = *object_tree.root();
-
-  return true;
-}
-
-// suggestion for better performance
-
-// /*look for "<L" (L=letter) or "<_"*/
-// [1] read-in until ">"
-// process by parser
-// if root element known goto [2]
-// else
-// repeat [1]
-// [2] if finished - return
-// read-in until "root-name>"
-// goto [2]
-// read-in knows about buffering and checks with parser if any errors read so 
-// far
-
-# endif

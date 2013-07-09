@@ -64,6 +64,7 @@
 //-ap #include "AIDA_Plugin/AIDA_PluginLoader.h"
 //-ap #include "AIDA_Plugin/AIDA_PluginType.h"
 
+#include <boost/algorithm/string.hpp>
 
 #include "DataXML/DataObject.h"
 // for compressing
@@ -122,19 +123,22 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::AIDA_StoreXML( const std::string& name,
 
 
   // parse option ( default is now compress files) 
-  m_compressLevel = BZIPCOMPRESSION; 
+  m_compressLevel = ZIPCOMPRESSION; 
   if (!options.empty() ) { 
 
     // transform to lower case string
     std::string opt = options; 
     std::transform( opt.begin(), opt.end(), opt.begin(), tolower); 
 
-    if (opt.find("uncompress") != std::string::npos )
-      m_compressLevel = UNCOMPRESSION; 
-    if (opt.find("bzip") != std::string::npos ) 
-      m_compressLevel = BZIPCOMPRESSION; 
-    if (opt.find("gzip") != std::string::npos )
-      m_compressLevel = GZIPCOMPRESSION; 
+    if (opt.find("uncompress") != std::string::npos ) {
+       m_compressLevel = UNCOMPRESSION; 
+    }
+    if (opt.find("bzip") != std::string::npos ) {
+       m_compressLevel = BZIPCOMPRESSION; 
+    }
+    if (opt.find("gzip") != std::string::npos ) {
+       m_compressLevel = GZIPCOMPRESSION; 
+    }
   }
   // std::cout << "++> request for compression level " << m_compressLevel << std::endl;
 
@@ -171,7 +175,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::writeObject( const AIDA::IManagedObject& da
     dynamic_cast< AIDA::Dev::IDevManagedObject* >( &( const_cast<AIDA::IManagedObject&>( dataObject ) ) );
   if ( ! object ) return false;
 
-  
   const std::string& type = object->userLevelClassType();
   /* 
   if ( ! iAIDA::AIDA_XMLStore::SupportedAIDATypes::supportedTypes().isTypeSupported( type ) ) {
@@ -179,7 +182,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::writeObject( const AIDA::IManagedObject& da
   }
   */
   //object->setUpToDate( false );
-
 
   m_objectTypes[ path ] = type;
   m_objectRefs[ path ] = object;
@@ -740,27 +742,42 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::resetTuple( AIDA::Dev::ITupleHeader& header
    // get type 
    const std::string&  type = object->userLevelClassType();
    std::string name = object->name(); 
+   
    // extract directory path from full path 
-
+   std::vector<std::string> pathItems;
+   boost::split( pathItems, path, boost::is_any_of( "/" ), boost::token_compress_on);
+   
    // check for first "/" staring from the end 
-   std::string dirPath = path; 
-   std::string lastItem = "";
+   std::string dirPath = ""; 
+   std::string lastItem = pathItems[pathItems.size()-1]; // last item of path
+   for (size_t index = 0; index < pathItems.size()-2; index++) {
+      dirPath += pathItems[index];
+   }
+
+   std::cout << "writeToXML> found path, dirPath, lastItem, name " 
+             << "'" << path     << "'" << " "
+             << "'" << dirPath  << "'" << " "
+             << "'" << lastItem << "'" << " " 
+             << "'" << name     << "'" << " " 
+             << std::endl;
+
+/* old 
    int iiii = 0; 
    for ( int iChar = path.size()-1; iChar >= 0; --iChar ) {
      const char& c = path[iChar];
      if ( c == '/' ) {
        if (iChar > 0) 
- 	dirPath = path.substr(0,iChar); 
+ 	       dirPath = path.substr(0,iChar); 
        else 
- 	dirPath = path.substr(0,1);    // case of "/" 
+ 	       dirPath = path.substr(0,1);    // case of "/" 
 
        if (iChar < static_cast<int>(path.size()-1) ) 
- 	lastItem = path.substr(iChar+1,path.size()); 
+ 	       lastItem = path.substr(iChar+1,path.size()); 
        iiii = iChar;
        break;     
      }
-
    }
+*/
 
    if (lastItem != name) {
    //    std::cerr << "Path and name: " << lastItem << " n= " << name << " path = " << path << std::endl; 
@@ -769,7 +786,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::resetTuple( AIDA::Dev::ITupleHeader& header
      // avoid to write empty names
      if (name == "") name = lastItem;
    }
-
 
    //  std::string::size_type idx = path.rfind(name);
    //if ( idx != std::string::npos && idx == path.length() - name.length() ) 
@@ -890,7 +906,7 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::commit()
          stream = out;
          if ( !stream ) std::cout << "ERROR !!! ";
          std::cout << "++> created bzip2 compressed boost_iostream" << std::endl;
-     } else {
+     } else {  // default ZIPCOMPRESSION for backward compatibility
         stream = new ogzstream(m_name.c_str());    
         std::cout << "++> created ogzstream" << std::endl;
      }
@@ -923,8 +939,8 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::writeAll() {
       AIDA::Dev::IDevManagedObject* object = iObj->second;
       // why sometimes I have an empty objects entered ???
       if (object) { 
-	std::string path = iObj->first;
-	writeToXML(object,path);
+	      std::string path = iObj->first;
+	      writeToXML(object, path);
       } 
     }
     // flush all to the file 

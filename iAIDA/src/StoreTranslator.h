@@ -142,8 +142,6 @@ private:
 
   /// private member data 
 
-
-
   /// main  store XML element (<aida> element)  
   DataXML::DataObject m_element;
 
