@@ -165,9 +165,9 @@ iAIDA::AIDA_Tuple_native::CompiledExpressionManager::createFilterExpression( con
     std::ostringstream osSymbol;
     int nFilter = std::rand(); 
     osSymbol << filterSymbolPrefix << nFilter << "_" << nMax;
-#ifndef BADENDS
-    osSymbol << std::ends;
-#endif
+// #ifndef BADENDS
+//     osSymbol << std::ends;
+// #endif
     symbolName = osSymbol.str();
   }
 
@@ -244,9 +244,9 @@ iAIDA::AIDA_Tuple_native::CompiledExpressionManager::createEvaluatorExpression( 
     // LM : count all filters not just for same expressions
     int nEval = std::rand();
     osSymbol << evaluatorSymbolPrefix << nEval << "_" << nMax;
-#ifndef BADENDS
-    osSymbol << std::ends;
-#endif
+// #ifndef BADENDS
+//     osSymbol << std::ends;
+// #endif
     symbolName = osSymbol.str();
   }
 

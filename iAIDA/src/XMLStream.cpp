@@ -33,7 +33,7 @@ namespace DataXML
   typedef const std::map<std::string,std::string>& const_ref_attr_map_t;
   typedef const std::vector<DataObject>& const_ref_obj_vec_t;
 
-
+    
 // ==========================================================================================
 // Input
 // ==========================================================================================
@@ -173,8 +173,8 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
   } else {
 
     if (obj.name() == "") {
-      os << std::endl << "No element name!";
-      return false;
+        os << std::endl << "OutputXMLStream::write> No element name found for text " << obj.getText() << std::endl;
+        return false;
     }
 
     os << "<" << obj.name();
@@ -206,21 +206,18 @@ bool OutputXMLStream::write(const DataObject& obj, std::ostream& os) const
       os << "/>";
     } else {
          os << ">";
-
          obj_vec_t::const_iterator it2;
 
          for(it2 = child.begin(); it2!=child.end(); ++it2) {
-               os << std::endl;
-               if (!write(*it2,os)) return false;
+                os << std::endl; // close previous line
+                if (!write(*it2,os)) return false;
          }
         os << std::endl << "</" << obj.name() << ">";
-     } // end else
-  
+     } // end else (if child.empty)
   } // end else obj.getText == ""
   
   return !os ? false : true;
 }
-
 
 
 std::ostream& OutputXMLStream::getDefaultStream() const

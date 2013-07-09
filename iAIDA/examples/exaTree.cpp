@@ -20,7 +20,7 @@ int main( int, char** ) {
   boost::shared_ptr<AIDA::ITreeFactory> tf( af->createTreeFactory() ); 
   bool readOnly = false;
   bool createNew = true;
-  std::string options = ""; // default: zip compression
+  std::string options = ""; // use default: zip compression
   boost::shared_ptr<AIDA::ITree> tree(tf->create("exaTree.aida","XML",readOnly,createNew, options)); 
   boost::shared_ptr<AIDA::IHistogramFactory> factory( af->createHistogramFactory(*tree) );
 
@@ -29,7 +29,7 @@ int main( int, char** ) {
   AIDA::IHistogram1D * h2p = factory->createHistogram1D("2", "Example histogram.", 50, 0, 50);
   AIDA::IHistogram1D * h3p = factory->createHistogram1D("7", "Example histogram.", 50, 0, 50);
   AIDA::IHistogram1D * h4p = factory->createHistogram1D("10", "Example histogram.", 50, 0, 50);
-  AIDA::IProfile1D   * p1p = factory->createProfile1D  ("42", "Example profile.", 50, 0, 50 );
+  AIDA::IProfile1D   * p1p = factory->createProfile1D  ("Example profile.", 50, 0, 50 );
 
   AIDA::IHistogram1D & h1 = *h1p;
   AIDA::IProfile1D & p1 = *p1p;
@@ -47,8 +47,8 @@ int main( int, char** ) {
   for ( int i = 0; i < 1000; ++i ) {
      double x =  50. * static_cast<double>( std::rand() ) / RAND_MAX;
      double y = 100. * static_cast<double>( std::rand() ) / RAND_MAX;
-    p1.fill( x, y);
-    p1.fill( x, y);
+     p1.fill( x, y);
+     p1.fill( x, y);
   }
 
   {
@@ -67,6 +67,7 @@ int main( int, char** ) {
     }
   }
   std::cout << std::endl;
+
   {
     // Printing some statistical values of the profile
     std::cout << "Mean : " << p1.mean() << std::endl;
@@ -88,9 +89,9 @@ int main( int, char** ) {
   std::cout << std::endl << "Current annotation items/values : " << std::endl;
   const AIDA::IAnnotation& annotation = h1.annotation();
   for ( int annotationIndex = 0; annotationIndex < annotation.size(); ++annotationIndex ) {
-    std::string key = annotation.key( annotationIndex );
-    std::cout << annotation.key( annotationIndex ) << " : "
-	      << annotation.value( annotationIndex ) << std::endl;
+      std::string key = annotation.key( annotationIndex );
+      std::cout << annotation.key( annotationIndex ) << " : "
+                << annotation.value( annotationIndex ) << std::endl;
   }
 
   std::cout << "tree listing : " << std::endl; 
@@ -117,7 +118,7 @@ int main( int, char** ) {
   factory2->createCopy("7",*h3p);
   factory2->createCopy("10",*h4p);
   factory2->createCopy("Example profile.",p1);
-  tree2->commit(); 
+  tree2->commit();
   tree2->close(); 
   }
 
@@ -135,7 +136,7 @@ int main( int, char** ) {
   factory2->createCopy("7",*h3p);
   factory2->createCopy("10",*h4p);
   factory2->createCopy("Example profile.",p1);
-  tree2->commit(); 
+  tree2->commit();
   tree2->close(); 
   }
 
@@ -153,7 +154,7 @@ int main( int, char** ) {
   factory3->createCopy("7",*h3p);
   factory3->createCopy("10",*h4p);
   factory3->createCopy("Example profile.",p1);
-  tree3->commit(); 
+  tree3->commit();
   tree3->close(); 
   }
   std::cout << "closing the tree " << std::endl; 

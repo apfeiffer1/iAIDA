@@ -10,12 +10,15 @@ macro (setup exeName testString)
 endmacro (setup)
 
 # generic examples
-file(GLOB testFiles exa*.cpp)
-foreach(_test ${testFiles})
-	get_filename_component( Basename ${_test} NAME_WE )
-	setup(${Basename} "That's it")
-endforeach()
 setup( convertTupleToCSV "That's it")
+
+setup( exaH1 "That's it")
+setup( exaH2 "That's it")
+setup( exaH3 "That's it")
+setup( exaTree "That's it")
+setup( exaTreeReader "All OK" )
+setup( exaTuple "That's it")
+setup( exaTupleRead "That's it")
 
 set_property(TEST exaTupleRead  APPEND PROPERTY DEPENDS exaTuple)
 set_property(TEST exaTreeReader APPEND PROPERTY DEPENDS exaTree)

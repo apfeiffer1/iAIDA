@@ -40,9 +40,9 @@ iAIDA::AIDA_Histogram_native::AnnotationNumberFormater::formatInteger( int numbe
 {
   std::ostringstream os;
   os << number;
-#ifndef BADENDS
-  os << std::ends;
-#endif
+// #ifndef BADENDS
+//   os << std::ends;
+// #endif
   return os.str();
 }
 
@@ -70,9 +70,9 @@ iAIDA::AIDA_Histogram_native::AnnotationNumberFormater::formatDouble( double num
   };
 
   os << number;
-#ifndef BADENDS
-  os << std::ends;
-#endif
+// #ifndef BADENDS
+//   os << std::ends;
+// #endif
   return os.str();
 }
 

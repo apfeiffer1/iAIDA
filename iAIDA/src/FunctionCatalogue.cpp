@@ -82,9 +82,9 @@ namespace fml
     {
       std::ostringstream buf;
       Util::list_plugin<FunctionRegistry>(buf);
-#ifndef BADENDS
-      buf << std::ends;
-#endif
+// #ifndef BADENDS
+//       buf << std::ends;
+// #endif
       std::string plug_list = buf.str();
 
       std::vector<std::string> list_buf = tokenize(plug_list,"\n");

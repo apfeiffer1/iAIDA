@@ -77,6 +77,11 @@ gzstreambuf * gzstreambuf::close() {
 }
 
 int gzstreambuf::underflow() { // used for input buffer only
+
+    // - eback() returns the beginning pointer for the input sequence
+    // - gptr()  returns the next pointer for the input sequence
+    // - egptr() returns the end pointer for the input sequence
+
     if ( gptr() && ( gptr() < egptr()))
         return * reinterpret_cast<unsigned char *>( gptr());
 

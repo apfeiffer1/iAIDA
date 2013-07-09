@@ -68,15 +68,15 @@
 
 #include "DataXML/DataObject.h"
 // for compressing
-#include "gzstream.h"
-// for gzip and bzip2 compressing via boost
+// #include "gzstream.h"
+
+// for gzip and bzip2 compressing via boost :
 #include <fstream>
 #include <iostream>
-
 #include <boost/iostreams/device/file.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
-// #include <boost/iostreams/filter/zlib.hpp>
+#include <boost/iostreams/filter/zlib.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filter/bzip2.hpp>
 
@@ -100,7 +100,7 @@ static std::string defaultFuncPluginType = "AIDA_Function_Native";
 
 
 /* create the XML store
- *   - read always all the object - if file does not exists nothing 
+ *   - read always all the object - if file does not exists nothing
  *       will be found 
  *   - always write again in a new file at commit all the objects    
  *     so createNew has no influence
@@ -123,7 +123,7 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::AIDA_StoreXML( const std::string& name,
 
 
   // parse option ( default is now compress files) 
-  m_compressLevel = ZIPCOMPRESSION; 
+  m_compressLevel = ZIPCOMPRESSION;
   if (!options.empty() ) { 
 
     // transform to lower case string
@@ -140,6 +140,7 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::AIDA_StoreXML( const std::string& name,
        m_compressLevel = GZIPCOMPRESSION; 
     }
   }
+  
   // std::cout << "++> request for compression level " << m_compressLevel << std::endl;
 
   // read all object from file 
@@ -754,13 +755,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::resetTuple( AIDA::Dev::ITupleHeader& header
       dirPath += pathItems[index];
    }
 
-   std::cout << "writeToXML> found path, dirPath, lastItem, name " 
-             << "'" << path     << "'" << " "
-             << "'" << dirPath  << "'" << " "
-             << "'" << lastItem << "'" << " " 
-             << "'" << name     << "'" << " " 
-             << std::endl;
-
 /* old 
    int iiii = 0; 
    for ( int iChar = path.size()-1; iChar >= 0; --iChar ) {
@@ -873,6 +867,19 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::resetTuple( AIDA::Dev::ITupleHeader& header
 
 // ----- actual I/O follows here -----
 
+
+namespace bio = boost::iostreams;
+
+namespace helper {
+    static bio::zlib_params par = bio::zlib_params(bio::zlib::default_compression,
+                                                   bio::zlib::deflated,
+                                                   bio::zlib::default_window_bits,
+                                                   bio::zlib::default_mem_level,
+                                                   bio::zlib::default_strategy,   // huffman_only;  // filtered; // default_strategy;
+                                                   true);
+};
+
+
 bool
 iAIDA::AIDA_XMLStore::AIDA_StoreXML::commit()
 {
@@ -889,7 +896,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::commit()
 
   bool m_compress = m_compressLevel;
 
-  namespace bio = boost::iostreams;
 
   if (m_compress) { 
      if  (m_compressLevel == GZIPCOMPRESSION) { 
@@ -897,20 +903,26 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::commit()
          out->push(bio::gzip_compressor());
          out->push(bio::file_sink(m_name));
          stream = out;
-         if ( !stream ) std::cout << "ERROR !!! ";
+         if ( !stream ) std::cout << "ERROR when trying to create gzip compressed boost_iostream !!! ";
          std::cout << "++> created gzip compressed boost_iostream" << std::endl;
      } else if  (m_compressLevel == BZIPCOMPRESSION) { 
          bio::filtering_ostream * out = new bio::filtering_ostream();
          out->push(bio::bzip2_compressor());
          out->push(bio::file_sink(m_name));     
          stream = out;
-         if ( !stream ) std::cout << "ERROR !!! ";
+         if ( !stream ) std::cout << "ERROR when trying to create bzip2 compressed boost_iostream !!! ";
          std::cout << "++> created bzip2 compressed boost_iostream" << std::endl;
      } else {  // default ZIPCOMPRESSION for backward compatibility
-        stream = new ogzstream(m_name.c_str());    
-        std::cout << "++> created ogzstream" << std::endl;
+         // stream = new ogzstream(m_name.c_str());
+         // std::cout << "++> created ogzstream" << std::endl;
+         bio::filtering_ostream * out = new bio::filtering_ostream();
+         out->push( bio::zlib_compressor( helper::par ) );
+         out->push( bio::file_sink(m_name) );
+         stream = out;
+         if ( !stream ) std::cout << "ERROR when trying to create zlib compressed boost_iostream !!! ";
+         std::cout << "++> created zlib compressed boost_iostream" << std::endl;
      }
-  } 
+  }
   else { 
     stream = new std::ofstream(m_name.c_str());
   }
@@ -961,7 +973,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::close()
 }
 
 
-
 // read all objects from the file and load then in memory creating new Managed 
 // Objects
 
@@ -988,8 +999,11 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::readAllObjects( )
          in->push(bio::bzip2_decompressor());
          in->push(bio::file_source(m_name));
          zinputStream = in;
-     } else {
-        zinputStream = new igzstream(m_name.c_str() );
+     } else { // default zlib compression
+         bio::filtering_istream * in = new bio::filtering_istream();
+         in->push( bio::zlib_decompressor( helper::par ) );
+         in->push( bio::file_source(m_name) );
+         zinputStream = in;
      }
   } else { 
     zinputStream = new std::ifstream(m_name.c_str()); 
@@ -1005,9 +1019,6 @@ iAIDA::AIDA_XMLStore::AIDA_StoreXML::readAllObjects( )
     return false; 
   }
   translator = new iAIDA::AIDA_XMLStore::StoreTranslator(*zinputStream); 
-
-  //-ap #endif
-
 
   // get the root element of the store parent to all objects (aida element) 
   DataXML::DataObject rootElement; 

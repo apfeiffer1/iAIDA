@@ -77,7 +77,7 @@ namespace iAIDA {
     const int     Translator::SCI_PRECISION          = 8;
     const std::string Translator::XML_VERSION        = "1.0";
     const std::string Translator::ENCODING_TYPE      = "ISO-8859-1";
-    const std::string Translator::PACKAGE            = "pi";
+    const std::string Translator::PACKAGE            = "iAIDA";
     const std::string Translator::PACKAGE_VERSION    = "1";   // set by hand 
 
   }
@@ -492,9 +492,9 @@ std::string iAIDA::AIDA_XMLStore::Translator::toString(int number) const
   // specialisation for integers
   std::ostringstream buf;
   buf << number;
-#ifndef BADENDS
-  buf << std::ends;
-#endif
+//#ifndef BADENDS
+//  buf << std::ends;
+//#endif
   std::string ret = buf.str();
   return ret;
 }

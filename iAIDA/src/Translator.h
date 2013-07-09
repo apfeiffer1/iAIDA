@@ -216,9 +216,9 @@ std::string iAIDA::AIDA_XMLStore::Translator::toString(FP number) const
   buf.setf(std::ios::scientific);
   buf.precision(iAIDA::AIDA_XMLStore::Translator::SCI_PRECISION);
   buf << number;
-#ifndef BADENDS
-  buf << std::ends;
-#endif
+//#ifndef BADENDS
+//  buf << std::ends;
+//#endif
   std::string ret = buf.str();
   return ret;
 }

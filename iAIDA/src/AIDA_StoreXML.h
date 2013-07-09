@@ -134,7 +134,7 @@ private:
   std::string funcPluginType; 
   std::string dpsPluginType; 
 
-  enum { UNCOMPRESSION, GZIPCOMPRESSION, BZIPCOMPRESSION, ZIPCOMPRESSION };
+  enum { UNCOMPRESSION=0, GZIPCOMPRESSION, BZIPCOMPRESSION, ZIPCOMPRESSION };
 
 
 };
