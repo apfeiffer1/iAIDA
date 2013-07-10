@@ -258,7 +258,7 @@ class AIDA_Configurator :
 
     def showImp(self) :
         
-        print "implementation: iAIDA", self.iaidaVersion, 'implementing AIDA interfaces version ', aidaVersion
+        print "implementation: iAIDA", self.iaidaVersion, 'implementing AIDA interfaces version ', self.aidaVersion
 
         return
         
