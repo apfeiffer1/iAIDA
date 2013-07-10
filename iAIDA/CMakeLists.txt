@@ -22,14 +22,23 @@ find_package ( ZLIB  REQUIRED )
 set(extIncDirs ${Boost_INCLUDE_DIR} "${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/include" "${PROJECT_SOURCE_DIR}/src" )
 set(extLibs    ${Boost_LIBRARIES} ${EXPAT_LIBRARIES} ${ZLIB_LIBRARIES} )
 
-# copy AIDA includes if no AIDA_DIR is specified
-file(GLOB aidaHeaders "${PROJECT_SOURCE_DIR}/ext/AIDA/*.h")
-file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/AIDA/)
-foreach(_hdr ${aidaHeaders} )
-	get_filename_component( Basename ${_hdr} NAME_WE )
-   	configure_file(${_hdr} ${PROJECT_BINARY_DIR}/AIDA/${Basename}.h COPYONLY)
-endforeach()
-message("... AIDA headers copied locally")
+# we need the AIDA package
+configure_file(${PROJECT_SOURCE_DIR}/cmake/FindAIDA.cmake ${PROJECT_BINARY_DIR}/Modules/FindAIDA.cmake COPYONLY)
+include(${PROJECT_BINARY_DIR}/Modules/FindAIDA.cmake)
+
+# ... copy the local AIDA includes if no AIDA is found
+if ( NOT AIDA_FOUND )
+  file(GLOB aidaHeaders "${PROJECT_SOURCE_DIR}/ext/AIDA/*.h")
+  file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/AIDA/)
+  foreach(_hdr ${aidaHeaders} )
+  	get_filename_component( Basename ${_hdr} NAME_WE )
+     	configure_file(${_hdr} ${PROJECT_BINARY_DIR}/AIDA/${Basename}.h COPYONLY)
+  endforeach()
+  message("... AIDA installation not found ... copied headers locally")
+else() # add include dirs from central installation:
+   include_directories( ${AIDA_INCLUDE_DIR}  )
+endif ( NOT AIDA_FOUND )
+
 
 # and check for optional ones. These add their own params to the overall include dir and the optLibs variables:
 foreach(_pkg ROOT Grace)
