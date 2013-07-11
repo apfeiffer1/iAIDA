@@ -1,42 +1,52 @@
 
-iAIDA is a library implementing the AIDA (http://aida.freehep.org)
+Overview
+--------
+
+iAIDA is a library implementing the AIDA (<http://aida.freehep.org>)
 Abstract Interfaces for Data Analysis. The implementation is in
 C++, at some later stage a binding to Python will follow.
 
-iAIDA is based on the (now discontinued) PI (http://cern.ch/pi)
-package. The main aim of iAIDA is to be easy to configure but
-keep the flexibility of PI in terms of providing means to use
-several of the most common I/O formats used in High Energy and
-Nuclear Physics (HENP), such as HBOOK, ROOT and the AIDA native
-compressed XML format.
+iAIDA is based on the (now discontinued) PI (<http://cern.ch/pi>)
+package developed at CERN. The main aim of iAIDA is to be easy to 
+configure but keep the flexibility of PI in terms of providing 
+means to use several of the most common I/O formats used in High 
+Energy and Nuclear Physics (HENP), such as HBOOK, ROOT and the 
+AIDA native (compressed) XML format.
 
-For more information please consult: http://iaida.dynalias.net
+For more information please consult: <http://iaida.dynalias.net>
 
-The remainder of the file deals with the installation. As of 
-version 1.1.0 iAIDA is build using cmake and needs the following
+Installation
+------------
+
+As of version 1.1.0 iAIDA is build using CMake. It needs the following
 packages installed on your system:
+
  - Boost (specifically the serialization and iostream libraries)
    (version 1.53.0 tested, should at least be 1.49.0)
  - expat (version 2.0.1 tested)
  - zlib  (version 1.2.5 tested)
 
-Also AIDA (version 3.2.1) is needed, and if you have it installed, 
-the package will use your installed version, otherwise it uses (and 
-installs) a local copy from inside the package.
+Also AIDA (version 3.2.1) is needed, if you have it installed, the 
+package will use your installed version, otherwise it uses (and installs) 
+a local copy from inside the package.
 
-Optionally, iAIDA will build added functionality if the following
+Optionally, iAIDA will provide added functionality if the following
 packages are installed and found on your system:
- - ROOT - will enable storing/reading using root I/O
- - Grace - will enable and build the AIDA Grace Plotter package
- - HBook (from CERNlib) - will enable storing/reading hbook files
+
+ - ROOT (<http://root.cern.ch>) for storing/reading histograms and tuples using root I/O
+ - Grace (<http://plasma-gate.weizmann.ac.il/Grace/>) for plotting using the AIDA Grace Plotter package [1]
+
+[1] you will need to rebuild Grace from scratch and compile with the 
+-fPIC option to get a shared library, the static lib coming with most
+linux packaging managers will not work.
 
 To build and install the whole package in the default location used 
 by cmake (usually /usr/local/), you should unpack the package and 
 then do the build in a separate directory ("out of source build" 
 of cmake):
 
-	tar zxf iAIDA-1.1.0.tgz
-	cd iAIDA-1.1.0
+	tar zxf iAIDA-1.1.2.tgz
+	cd iAIDA-1.1.2
 	mkdir build
 	cd build
 	cmake ..
@@ -49,7 +59,20 @@ step above like this:
 
 	cmake -DCMAKE_INSTALL_PREFIX:PATH=/your/path/to/the/install/area/ ..
 
-This will then create the lib/bin/include directories for the installation
-in /your/path/to/the/install/area/
+(note the space between the install path and the ".."). This will then 
+create the lib/bin/include directories for the installation in the given
+install path: /your/path/to/the/install/area/
 
+If you want to install the binaries of the examples and tests, you can add
+"-DIAIDA_INSTALL_EXAMPLES=ON" to the cmake command, they will then get installed 
+into <installPrefix>/libexec/iAIDA/.
+
+Bleeding edge
+-------------
+
+You can find the sources of iAIDA now on github at:
+
+	https://github.com/apfeiffer1/iAIDA.git
+	
+Happy cloning and forking ! :)
 

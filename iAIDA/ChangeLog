@@ -1,4 +1,19 @@
 
+2013-07-11 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	added installation of sources (to share/doc/iAIDA) and binaries of examples/tests 
+	(on request only, to libexec/iAIDA). silenced output from cmake for non-DEBUG builds.
+	added a simple example to show the content (summary) of an .aida file
+	fixed permissions for .cpp and .h files (Thanks Mojca!)
+	fixed missing self. in implementation printout of aida-config
+	in adia-config.in: use dir found by cmake for AIDA installation, and install_include_dir from cmake for local installation
+	Tagged iAIDA-1.1.2 ------------------------------------------
+
+2013-07-10 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	added recognition of installed AIDA, do not use local version in this case.
+	moved to use boost-zlib compression filter, updated examples return values.
+	removed usage of std::ends in value to string conversion
+	Tagged iAIDA-1.1.1 ------------------------------------------
+
 2013-07-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	removed CERNLIB from list of optional sources as Ubuntu's version does not have the 
 	(essential here) functions to restore internals of HBOOK 1D and 2D histograms (hbf1al_/hbf2al_)
@@ -9,6 +24,7 @@
 	removed Makefile.in in all dirs, configure 
 	fixed some build issues on Mac OS X 10.8 (Mountain Lion)
 	added '--implementation' flag for aida-config (seems to be required by Geant-4 these days.
+	Tagged iAIDA-1.1.0 ------------------------------------------
 
 2011-09-08 Andreas Pfeiffer (apfeiffer1@gmail.com)
     If Boost iostream libs are found on the system, enable their use so we can 
