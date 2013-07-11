@@ -62,8 +62,8 @@ class AIDA_Configurator :
 
     def __init__(self, platf="") :
 
-        self.iaidaVersion   = "iAIDA-1.1.2"
-        self.aidaVersion = "3.2.1"
+        self.iaidaVersion = "iAIDA-1.1.2"
+        self.aidaVersion  = "3.2.1"
 
         self.versionPython = "2.4.2"
         self.versionBoost  = "1.33.1"
@@ -76,6 +76,9 @@ class AIDA_Configurator :
 
         self.haveF77  = None
         self.haveGfor = None
+
+        self.cmake_AIDA_dir = "@AIDA_INCLUDE_DIR@"
+        self.cmake_install_dir = "@INSTALL_INCLUDE_DIR@"
 
         self.setup()
 
@@ -115,6 +118,11 @@ class AIDA_Configurator :
         self.aidaVersStr    =  str(self.aidaVersion)
         self.aidaDefaultDir =  self.aidaTopDir + "/" + self.aidaVersion + "/share/src/cpp"
         self.aidaDefaultDir = os.path.realpath( self.aidaDefaultDir )
+        if not os.path.exists( os.path.join(self.aidaDefaultDir, 'AIDA', 'AIDA.h') ):
+            if self.cmake_AIDA_dir:
+                self.aidaDefaultDir = self.cmake_AIDA_dir
+            if not os.path.exists( os.path.join(self.aidaDefaultDir, 'AIDA', 'AIDA.h') ):
+                self.aidaDefaultDir = self.cmake_install_dir
 
         if not os.path.exists( self.aidaDefaultDir ) :
            self.aidaDefaultDir =  self.aidaTopDir
