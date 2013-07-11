@@ -1,7 +1,23 @@
 
+# top level CMakeLists.txt file for iAIDA
+# 
+# to be used in a non-source build area like this:
+#
+# mkdir build && cd build
+# cmake  ..
+# 
+# possible other options for the cmake command:
+# 		-DCMAKE_INSTALL_PREFIX=/path/to/install  	# to install in a specific location
+#       -DCMAKE_BUILD_TYPE=DEBUG      				# to switch on some debug messages
+#       -DIAIDA_INSTALL_EXAMPLES=ON   				# to install the binaries of the examples/tests into <installPrefix>/libexec/iAIDA/
+#
+# Copyright (C) Andreas Pfeiffer (apfeiffer1@gmail.com) 2013
+
 cmake_minimum_required (VERSION 2.6)
 
 project (iAIDA CXX)
+
+include(GNUInstallDirs)
 
 foreach(_pkg ROOT)
   configure_file(${PROJECT_SOURCE_DIR}/cmake/Find${_pkg}.cmake ${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake COPYONLY)
@@ -34,7 +50,11 @@ if ( NOT AIDA_FOUND )
   	get_filename_component( Basename ${_hdr} NAME_WE )
      	configure_file(${_hdr} ${PROJECT_BINARY_DIR}/AIDA/${Basename}.h COPYONLY)
   endforeach()
-  message("... AIDA installation not found ... copied headers locally")
+  message("... AIDA installation not found ... using local headers")
+
+  # add the header files to the installation, if AIDA is not already installed:
+  install(FILES    ${aidaHeaders} DESTINATION include/AIDA)
+
 else() # add include dirs from central installation:
    include_directories( ${AIDA_INCLUDE_DIR}  )
 endif ( NOT AIDA_FOUND )
@@ -54,6 +74,10 @@ configure_file(${PROJECT_SOURCE_DIR}/aida-config.in ${PROJECT_BINARY_DIR}/bin/ai
 include_directories( ${PROJECT_BINARY_DIR} ${extIncDirs}  )
 set(EXTERNAL_LIBS ${extLibs} ${optLibs} )
 
+IF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
+    message("... build type is DEBUG") 
+ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
+
 # add the subdirs where we need to run make:
 foreach(_dir src tests examples)
     add_subdirectory( ${_dir} )
@@ -61,4 +85,4 @@ endforeach()
 
 # installation
 install(PROGRAMS ${PROJECT_BINARY_DIR}/bin/aida-config DESTINATION bin)
-install(FILES    ${aidaHeaders} DESTINATION include/AIDA)
+install(DIRECTORY include src examples tests DESTINATION ${CMAKE_INSTALL_DOCDIR} )

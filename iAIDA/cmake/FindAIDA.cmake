@@ -30,7 +30,7 @@ else()
      set( AIDA_INCLUDE_DIR ${AIDA_PATH})
    
      if(NOT AIDA_FIND_QUIETLY)
-       message(STATUS "Found AIDA - installed in: " ${AIDA_INCLUDE_DIR})
+       message(STATUS "Found AIDA: " ${AIDA_INCLUDE_DIR})
      endif()
    
    else()    

@@ -9,12 +9,29 @@ macro (setup exeName testString)
 endmacro (setup)
 
 # generic tests
-setup( "testAIDAMem" "OK")
-setup( "testHistoName" "OK")
+set( tstFiles 	testAIDAMem
+				testHistoName
+   )
+foreach(exa_ ${tstFiles} )	
+	setup( ${exa_} "OK")
+endforeach()
+
+set( allTests ${tstFiles} )
 
 if (GRACE_FOUND)
   setup ( "plot" "OK")
   setup ( "plottingHistograms" "OK")
+
+  set( allTests ${allTests} plot plottingHistogram )
+
 endif (GRACE_FOUND)
 
-message ("... examples set up")
+IF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
+    message("... tests set up") 
+ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
+
+if ( ${IAIDA_INSTALL_EXAMPLES} MATCHES ON)
+  foreach(tst_ ${tstFiles} )	
+    install(PROGRAMS ${PROJECT_BINARY_DIR}/tests/${tst_} DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/iAIDA )
+  endforeach()
+endif ( ${IAIDA_INSTALL_EXAMPLES} MATCHES ON)

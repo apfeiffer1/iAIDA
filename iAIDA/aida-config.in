@@ -62,7 +62,7 @@ class AIDA_Configurator :
 
     def __init__(self, platf="") :
 
-        self.iaidaVersion   = "iAIDA-1.1.0"
+        self.iaidaVersion   = "iAIDA-1.1.2"
         self.aidaVersion = "3.2.1"
 
         self.versionPython = "2.4.2"
