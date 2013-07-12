@@ -41,6 +41,8 @@ if (ROOT_FOUND)
 
   set( exaFilesRoot 	storeRoot
 						readRoot
+						storeRootTup
+						readRootTup
      )
   foreach(exa_ ${exaFilesRoot} )	
 	setup( ${exa_} "That's it")
