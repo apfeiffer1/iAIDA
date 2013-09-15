@@ -11,9 +11,7 @@ endmacro (setup)
 
 # generic examples
 
-set ( exaFiles 	convertTupleToCSV 
-				showAidaFile
-				exaH1         
+set ( exaFiles 	exaH1         
 				exaH2         
 				exaH3         
 				exaTree       
@@ -31,8 +29,6 @@ set_tests_properties ( exaTreeReader PROPERTIES PASS_REGULAR_EXPRESSION "All OK"
 
 set_property(TEST exaTupleRead      APPEND PROPERTY DEPENDS exaTuple)
 set_property(TEST exaTreeReader     APPEND PROPERTY DEPENDS exaTree)
-set_property(TEST convertTupleToCSV APPEND PROPERTY DEPENDS exaTuple)
-set_property(TEST showAidaFile      APPEND PROPERTY DEPENDS exaTree)
 
 set( allExamples ${exaFiles} )
 

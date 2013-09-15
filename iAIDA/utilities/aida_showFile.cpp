@@ -79,16 +79,6 @@ int main( int argc, char** argv ) {
   // show the tree
    tree->ls(); 
 
-//   bool recursive = true;
-//   std::vector<std::string> objectNames = tree->listObjectNames("/", recursive);
-//   std::vector<std::string> objectTypes = tree->listObjectTypes("/", recursive);
-//   
-//   std::vector<std::string>::const_iterator objNItr = objectNames.begin();
-//   std::vector<std::string>::const_iterator objTItr = objectTypes.begin();
-//   for (; objNItr != objectNames.end(); objNItr++ , objTItr++) {
-//      std::cout << " name " << *objNItr << "\t of type " << *objTItr << std::endl;
-//   }
-
    tree->close(); 
 
    std::cout << "That's it !" << std::endl;

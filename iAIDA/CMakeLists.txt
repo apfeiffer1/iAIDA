@@ -10,6 +10,9 @@
 # 		-DCMAKE_INSTALL_PREFIX=/path/to/install  	# to install in a specific location
 #       -DCMAKE_BUILD_TYPE=DEBUG      				# to switch on some debug messages
 #       -DIAIDA_INSTALL_EXAMPLES=ON   				# to install the binaries of the examples/tests into <installPrefix>/libexec/iAIDA/
+#       -DIAIDA_QUIETLY=ON							# limit messages 
+#       -DIAIDA_DO_NOT_USE_ROOT=ON					# do not use optional ROOT  package, even if found on system
+#       -DIAIDA_DO_NOT_USE_Grace=ON					# do not use optional Grace package, even if found on system
 #
 # Copyright (C) Andreas Pfeiffer (apfeiffer1@gmail.com) 2013
 
@@ -18,11 +21,6 @@ cmake_minimum_required (VERSION 2.6)
 project (iAIDA CXX)
 
 include(GNUInstallDirs)
-
-foreach(_pkg ROOT)
-  configure_file(${PROJECT_SOURCE_DIR}/cmake/Find${_pkg}.cmake ${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake COPYONLY)
-  include(${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake)
-endforeach()
 
 # iAIDA top level CMakeLists.txt 
 
@@ -61,10 +59,18 @@ endif ( NOT AIDA_FOUND )
 
 
 # and check for optional ones. These add their own params to the overall include dir and the optLibs variables:
+# but first check if the user has forbidden the use of any of these (e.g. for licensing reasons)
 foreach(_pkg ROOT Grace)
-  configure_file(${PROJECT_SOURCE_DIR}/cmake/Find${_pkg}.cmake ${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake COPYONLY)
-  include(${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake)
-endforeach()
+  if ( NOT IAIDA_DO_NOT_USE${_pkg} )
+    configure_file(${PROJECT_SOURCE_DIR}/cmake/Find${_pkg}.cmake ${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake COPYONLY)
+    include(${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake)
+  else ()
+	if ( CMAKE_BUILD_TYPE MATCHES DEBUG ) 
+	   message( "... user request to ignore use of optional package "+${_pkg} )
+	endif ( CMAKE_BUILD_TYPE MATCHES DEBUG ) 
+  endif ( NOT IAIDA_DO_NOT_USE${_pkg} )
+endforeach()  # check optional packages
+
 
 # set up aida-config
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin/)
@@ -79,7 +85,7 @@ IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
 ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
 
 # add the subdirs where we need to run make:
-foreach(_dir src tests examples)
+foreach(_dir src tests examples utilities)
     add_subdirectory( ${_dir} )
 endforeach()
 
