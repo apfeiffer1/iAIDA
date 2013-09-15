@@ -9,7 +9,7 @@ macro (setup exeName testString)
 endmacro (setup)
 
 # generic tests
-set( tstFiles 	testAIDAmem
+set( tstFiles 	testAIDAMemoryTree
 				testHistoName
 				writeHistos
 				writeTuple
