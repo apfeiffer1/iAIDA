@@ -1,0 +1,32 @@
+
+# Installation instructions for Scientific Linux (CERN) 5
+
+## Preparations and packages to be installed
+
+On a "plain" SL-5 and SLC-5 installation, you will need to install the following packages before installing iAIDA:
+
+	sudo yum install -y git cmake28.x86_64 gcc-c++.x86_64 glibc-devel.x86_64
+	sudo yum install -y expat.x86_64 expat-devel.x86_64
+	sudo yum install -y boost141-devel.x86_64 boost141-serialization.x86_64 boost141-iostreams.x86_64
+
+The packages are either in the standard `slc5` repository or in the `scl5-updates` repository.
+
+Once this is done, you need to fix a few symbolic links for the boost 1.41 libraries and include files. 
+To do so do:
+
+	cd /usr/lib64/; 
+	sudo ln -s libboost_serialization.so.5 libboost_serialization.so
+	sudo ln -s libboost_iostreams.so.5 libboost_iostreams.so
+	cd /usr/include/; sudo ln -s boost141/boost boost
+	
+
+## Modifications to the `cmake` command
+	
+You will need to use the newer version of `cmake` (`cmake28`) and add the "-DBoost_NO_BOOST_CMAKE=ON" option to circumvent a bug in the boost cmake files[1]. So the configuration command will look like (replace `/your/path/to/install` with an appropriate path or remove the option altogether if you want a "standard" install into `/usr/local/`):
+
+	cmake28 -DBoost_NO_BOOST_CMAKE=ON  -DCMAKE_INSTALL_PREFIX:PATH=/your/path/to/install  ..	
+
+After this, it's the usual `make`, `make install` (and `make test` in between the two if you want) to build and install iAIDA.
+
+
+[1]  see: http://stackoverflow.com/questions/9948375/cmake-find-package-succeeds-but-returns-wrong-path

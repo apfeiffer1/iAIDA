@@ -1,0 +1,24 @@
+
+# Installation instructions for Scientific Linux (CERN) 6
+
+## Preparations and packages to be installed
+
+On a "plain" SL-6 and SLC-6 installation, you will need to install the following packages before installing iAIDA:
+
+	sudo yum install -y git cmake28.x86_64 gcc-c++.x86_64 glibc-devel.x86_64
+	sudo yum install -y expat.x86_64 expat-devel.x86_64
+	sudo yum install -y boost-devel.x86_64 boost-serialization.x86_64 boost-iostreams.x86_64
+
+The packages are either in the standard `slc6` repository or in the `scl6-updates` repository.
+	
+
+## Modifications to the `cmake` command
+	
+You will need to use the newer version of `cmake` (`cmake28`) , so the configuration command will look like (replace `/your/path/to/install` with an appropriate path or remove the option altogether if you want a "standard" install into `/usr/local/`):
+
+	cmake28 -DCMAKE_INSTALL_PREFIX:PATH=/your/path/to/install  ..	
+
+After this, it's the usual `make`, `make install` (and `make test` in between the two if you want) to build and install iAIDA.
+
+
+[1]  see: http://stackoverflow.com/questions/9948375/cmake-find-package-succeeds-but-returns-wrong-path
