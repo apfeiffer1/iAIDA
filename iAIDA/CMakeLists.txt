@@ -30,7 +30,7 @@ endforeach()
 ENABLE_TESTING()
 
 # set up the required packages
-find_package ( Boost 1.46 COMPONENTS serialization iostreams REQUIRED )
+find_package ( Boost 1.41 COMPONENTS serialization iostreams REQUIRED )
 find_package ( EXPAT REQUIRED )
 find_package ( ZLIB  REQUIRED )
 

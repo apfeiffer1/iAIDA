@@ -9,7 +9,7 @@ macro (setup exeName testString)
 endmacro (setup)
 
 # generic tests
-set( tstFiles 	testAIDAMem
+set( tstFiles 	testAIDAmem
 				testHistoName
    )
 foreach(exa_ ${tstFiles} )	
