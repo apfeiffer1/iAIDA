@@ -11,6 +11,10 @@ On a "plain" SL-6 and SLC-6 installation, you will need to install the following
 
 The packages are either in the standard `slc6` repository or in the `scl6-updates` repository.
 	
+You may get an error at build time that one of the boost libraries is not found in `/usr/lib64/lib64/...`, the solution to this is to do the following:
+
+	sudo mkdir /usr/lib64/lib64; cd /usr/lib64/lib64; sudo ln -s ../libboost* .
+	
 
 ## Modifications to the `cmake` command
 	
