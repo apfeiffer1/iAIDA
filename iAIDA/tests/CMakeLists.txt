@@ -13,6 +13,7 @@ set( tstFiles 	testAIDAMemoryTree
 				testHistoName
 				writeHistos
 				writeTuple
+				writeClouds
    )
 foreach(exa_ ${tstFiles} )	
 	setup( ${exa_} "OK")
@@ -25,7 +26,6 @@ if (GRACE_FOUND)
   setup ( "plottingHistograms" "OK")
 
   set( allTests ${allTests} plot plottingHistogram )
-
 endif (GRACE_FOUND)
 
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
