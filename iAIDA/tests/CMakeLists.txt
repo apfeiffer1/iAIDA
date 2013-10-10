@@ -16,7 +16,7 @@ set( tstFiles 	testAIDAMemoryTree
 				writeClouds
    )
 foreach(exa_ ${tstFiles} )	
-	setup( ${exa_} "OK")
+	setup( ${exa_} "(OK)|(That's it !)")
 endforeach()
 
 set( allTests ${tstFiles} )
