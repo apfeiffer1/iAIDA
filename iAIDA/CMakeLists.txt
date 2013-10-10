@@ -10,7 +10,6 @@
 # 		-DCMAKE_INSTALL_PREFIX=/path/to/install  	# to install in a specific location
 #       -DCMAKE_BUILD_TYPE=DEBUG      				# to switch on some debug messages
 #       -DIAIDA_INSTALL_EXAMPLES=ON   				# to install the binaries of the examples/tests into <installPrefix>/libexec/iAIDA/
-#       -DIAIDA_QUIETLY=ON							# limit messages 
 #       -DIAIDA_DO_NOT_USE_ROOT=ON					# do not use optional ROOT  package, even if found on system
 #       -DIAIDA_DO_NOT_USE_Grace=ON					# do not use optional Grace package, even if found on system
 #
@@ -61,14 +60,15 @@ endif ( NOT AIDA_FOUND )
 # and check for optional ones. These add their own params to the overall include dir and the optLibs variables:
 # but first check if the user has forbidden the use of any of these (e.g. for licensing reasons)
 foreach(_pkg ROOT Grace)
-  if ( NOT IAIDA_DO_NOT_USE${_pkg} )
+  if ( NOT IAIDA_DO_NOT_USE_${_pkg} )
     configure_file(${PROJECT_SOURCE_DIR}/cmake/Find${_pkg}.cmake ${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake COPYONLY)
     include(${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake)
   else ()
+    message( "... user request to ignore use of optional package "+${_pkg} )
 	if ( CMAKE_BUILD_TYPE MATCHES DEBUG ) 
 	   message( "... user request to ignore use of optional package "+${_pkg} )
 	endif ( CMAKE_BUILD_TYPE MATCHES DEBUG ) 
-  endif ( NOT IAIDA_DO_NOT_USE${_pkg} )
+  endif ( NOT IAIDA_DO_NOT_USE_${_pkg} )
 endforeach()  # check optional packages
 
 
