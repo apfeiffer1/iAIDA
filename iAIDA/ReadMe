@@ -22,7 +22,7 @@ As of version 1.1.0 iAIDA is build using CMake. It needs the following
 packages installed on your system:
 
  - Boost (specifically the serialization and iostream libraries)
-   (version 1.53.0 tested, should at least be 1.49.0)
+   (version 1.53.0 tested, should at least be 1.41.0)
  - expat (version 2.0.1 tested)
  - zlib  (version 1.2.5 tested)
 
