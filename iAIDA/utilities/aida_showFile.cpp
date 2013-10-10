@@ -59,9 +59,9 @@ std::string findFileType(std::string fileName) {
 
 int main( int argc, char** argv ) {
    
-   std::string fileName("exaTree.aida");
+   std::string fileName("../examples/exaTree.aida");
    if (argc < 2) {
-      std::cerr << "No file name given. Will use 'exaTree.aida' as default." << std::endl;
+      std::cerr << "No file name given. Will use '" << fileName << "' as default." << std::endl;
    } else {
       fileName = argv[1];
    }

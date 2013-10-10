@@ -23,7 +23,6 @@ endforeach()
 
 set( allutilities ${utilFiles} )
 
-
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG) 
     message("... utilities set up") 
 ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG) 

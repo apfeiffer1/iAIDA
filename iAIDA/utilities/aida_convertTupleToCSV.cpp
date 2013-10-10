@@ -114,13 +114,13 @@ bool process_file(AIDA::IAnalysisFactory& aAIDA,
 
 int main(int argc,char* argv[]) {
 
-  std::string file("exatup.aida");
+  std::string file("../examples/exatup.aida");
   std::string format("xml");
   std::string tuple("100");          
   if(argc!=4) {
       std::cout << "main : three arguments expected :"
               << " <file>, <format>, <tuple path>"
-              << " -- but none given. Will assume: 'exatup.aida xml 100' "
+              << " -- but none given. Will assume: '" << file << " "<< format << " " << tuple <<"' "
               << std::endl;
   } else { // override defaults from args
       file   = std::string(argv[1]);
