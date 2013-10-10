@@ -39,9 +39,13 @@ int main( int, char** ) {
   AIDA::IHistogram1D * h1p = factory->createHistogram1D("1", "Example histogram 1 (gauss)", 50, 0, 50);
   AIDA::IHistogram1D * h2p = factory->createHistogram1D("2", "Example histogram 2 (flat)", 50, 0, 50);
 
-  AIDA::IHistogram2D * h10p = factory->createHistogram2D("10", "Example histogram 3 (gauss)", 20, 0, 100, 20, 0, 100);
+  AIDA::IHistogram2D * h10p = factory->createHistogram2D("10", "Example histogram 2d (gauss)", 20, 0, 100, 20, 0, 100);
+
+  AIDA::IHistogram3D * h3dp = factory->createHistogram3D("13", "Example histogram 3d (gauss)", 10, 0, 100, 10, 0, 100, 10, 0, 100);
 
   AIDA::IProfile1D   * p1p = factory->createProfile1D  ("Example profile (gauss)", 50, 0, 50 );
+
+  AIDA::IProfile2D   * p2p = factory->createProfile2D  ("Example 2D profile (gauss)", 10, 0, 50, 10, 0, 50 );
 
   AIDA::IHistogram1D & h1 = *h1p;
   AIDA::IProfile1D & p1 = *p1p;
@@ -51,9 +55,12 @@ int main( int, char** ) {
   for ( int i = 0; i < 1000; ++i ) {
      double x = var_nor();
      double y = var_nor();
-     h1p->fill ( x+25, 1. );   // shift to center of histo 
-     h10p->fill( x+25, y+50 );   // shift distrib to inside histo
-     p1p->fill ( x+20, y+30 );   // shift distrib to inside histo
+     double z = var_nor();
+     h1p->fill ( x+25, 1. );           // shift to center of histo 
+     h10p->fill( x+25, y+50 );         // shift distrib to inside histo
+     h3dp->fill( x+25, y+50, z+30 );   // shift distrib to inside histo
+     p1p->fill ( x+20, y+30 );         // shift distrib to inside histo
+     p2p->fill ( x+25, y+20, z+50 );   // shift distrib to inside histo
   }
   
   // flat
