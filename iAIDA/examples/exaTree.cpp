@@ -110,7 +110,7 @@ int main( int, char** ) {
   bool readOnly2  = false;
   bool createNew2 = true;
   std::string options2 = "gzip"; // this is now default in iAIDA
-  boost::shared_ptr<AIDA::ITree> tree2(tf->create("exaTreeCopyGzip.aida","XML",readOnly2, createNew2, options2)); 
+  boost::shared_ptr<AIDA::ITree> tree2(tf->create("exaTreeCopyGzip.xml.gz","XML",readOnly2, createNew2, options2)); 
   // create histogram factory
   boost::shared_ptr<AIDA::IHistogramFactory> factory2( af->createHistogramFactory(*tree2) );
   factory2->createCopy("1",h1);
@@ -128,7 +128,7 @@ int main( int, char** ) {
   bool readOnly2  = false;
   bool createNew2 = true;
   std::string options2 = "bzip"; // this is now default in iAIDA
-  boost::shared_ptr<AIDA::ITree> tree2(tf->create("exaTreeCopyBzip.aida","XML",readOnly2, createNew2, options2)); 
+  boost::shared_ptr<AIDA::ITree> tree2(tf->create("exaTreeCopyBzip.xml.bz2","XML",readOnly2, createNew2, options2)); 
   // create histogram factory
   boost::shared_ptr<AIDA::IHistogramFactory> factory2( af->createHistogramFactory(*tree2) );
   factory2->createCopy("1",h1);
@@ -146,7 +146,7 @@ int main( int, char** ) {
   bool readOnly3  = false;
   bool createNew3 = true;
   std::string options3 = "uncompress"; 
-  boost::shared_ptr<AIDA::ITree> tree3(tf->create("exaTreeCopyUC.aida","XML",readOnly3, createNew3, options3)); 
+  boost::shared_ptr<AIDA::ITree> tree3(tf->create("exaTreeCopyUC.xml","XML",readOnly3, createNew3, options3)); 
   // create histogram factory
   boost::shared_ptr<AIDA::IHistogramFactory> factory3( af->createHistogramFactory(*tree3) );
   factory3->createCopy("1",h1);

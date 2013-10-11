@@ -108,9 +108,9 @@ int main( int, char** )
 {
     std::cout << "\n================================================================================\n" << std::endl;
     int r1 = readAndShow("exaTree.aida", "zlib");
-    int r2 = readAndShow("exaTreeCopyGzip.aida", "gzip");
-    int r3 = readAndShow("exaTreeCopyBzip.aida", "bzip");
-    int r4 = readAndShow("exaTreeCopyUC.aida", "uncompress");
+    int r2 = readAndShow("exaTreeCopyGzip.xml.gz", "gzip");
+    int r3 = readAndShow("exaTreeCopyBzip.xml.bz2", "bzip");
+    int r4 = readAndShow("exaTreeCopyUC.xml", "uncompress");
    std::cout << "\nresults from reading files: "
              << r1 << " "
              << r2 << " "
