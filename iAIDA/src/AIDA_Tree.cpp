@@ -110,8 +110,13 @@ iAIDA::aida_tree::AIDA_Tree::copyAndAdd( AIDA::IManagedObject * object,
 
   // Check if it is a tuple and if the store can copy tuples
   AIDA::Dev::IDevManagedObject* devObject = dynamic_cast< AIDA::Dev::IDevManagedObject* >( object );
-  if ( ! devObject ) return false;
-  if ( devObject->userLevelClassType() == "ITuple" && ! ( m_store->canCopyTuples() ) ) return false;
+  if ( ! devObject ) {
+     return false;
+  }
+  if ( devObject->userLevelClassType() == "ITuple" && ! ( m_store->canCopyTuples() ) ) {
+     std::cout << "ERROR: store can not copy tuple to " << path << std::endl;
+     return false;
+   }
 
   std::string dir = absolutePath( path ) + "/";
   // Check here if the target is an existing directory. If this is the case, append the object name.
@@ -413,14 +418,14 @@ iAIDA::aida_tree::AIDA_Tree::cp( const std::string & oldPath,
     mkdirs( dir );
     for ( unsigned int i = 0; i < objectNames.size(); ++i ) {
       if ( objectTypes[i] == "dir" ) {
-	mkdirs( dir + objectNames[i] );
+	      mkdirs( dir + objectNames[i] );
       }
     }
 
     // Copy and add the new objects under the new structure.
     for ( unsigned int i = 0; i < objectNames.size(); ++i ) {
       if ( objectTypes[i] != "dir" ) {
-	AIDA::IManagedObject* object = find( oldDir + objectNames[i] );
+	      AIDA::IManagedObject* object = find( oldDir + objectNames[i] );
         if ( object ) copyAndAdd( object, dir + objectNames[i] );
       }
     }
@@ -452,9 +457,14 @@ iAIDA::aida_tree::AIDA_Tree::mount( const std::string & path,
 					    const std::string & treePath )
 {
   AIDA::Dev::IDevTree * daughterTree = dynamic_cast< AIDA::Dev::IDevTree * >( &tree );
-  if ( daughterTree->isMounted() ) return false;
+  if ( daughterTree->isMounted() ) {
+     return false;
+  }
 
-  if ( path.size() == 0 ) return false;
+  if ( path.size() == 0 ) {
+     return false;
+  }
+
   std::list< std::string > pathNames = tree_path_parser.formNames( path );
   if( pathNames.size() == 0 || ( pathNames.size() == 1 && pathNames.front() == "." ) ) return false;
   std::list< std::string > dirNames = tree_path_parser.formNames( absolutePath( path ) );
@@ -463,6 +473,7 @@ iAIDA::aida_tree::AIDA_Tree::mount( const std::string & path,
   std::list< std::string > targetNames = tree_path_parser.formNames( treePath );
   std::string targetTreePath = "/";
   if (targetNames.size() > 0 ) targetTreePath = tree_path_parser.formPath( targetNames ) + "/";
+
   return m_rootDir->mount( targetTreePath, daughterTree, dirNames, m_mountPoints );
 }
 
