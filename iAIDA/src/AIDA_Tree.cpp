@@ -114,7 +114,7 @@ iAIDA::aida_tree::AIDA_Tree::copyAndAdd( AIDA::IManagedObject * object,
      return false;
   }
   if ( devObject->userLevelClassType() == "ITuple" && ! ( m_store->canCopyTuples() ) ) {
-     std::cout << "ERROR: store can not copy tuple to " << path << std::endl;
+     // std::cout << "WARNING: store can not intrinsically copy tuple to " << path << std::endl;
      return false;
    }
 
