@@ -233,14 +233,14 @@ class AIDA_Configurator :
 
         # add only if it is already defined, otherwise [t]csh will choke :-(((
         if (os.environ.has_key("LD_LIBRARY_PATH") ) :
-            setLDpath += '${LD_LIBRARY_PATH}'            
+            setLDpath += '${LD_LIB'+'RARY_PATH}'      # split this to avoid (wrong) template expansion (to empty string)
         setLDpath += '";'
         print setLDpath
 
         if os.uname()[0] == 'Darwin' :    # special for Mac OS X
            # add only if it is already defined, otherwise [t]csh will choke :-(((
            if (os.environ.has_key("DYLD_LIBRARY_PATH") ) :
-              setDLDpath += '${DYLD_LIBRARY_PATH}'            
+              setDLDpath += '${DYLD_LIB'+'RARY_PATH}'      # split this to avoid (wrong) template expansion (to empty string)
            setDLDpath += '";'
            print setDLDpath
 
@@ -248,7 +248,7 @@ class AIDA_Configurator :
         setPyPath += self.iaidaRelDir + "/python:"
         # add only if it is already defined, otherwise [t]csh will choke :-(((
         if (os.environ.has_key("PYTHONPATH") ) :
-            setPyPath += '${PYTHONPATH}'
+            setPyPath += '${PYTHON'+'PATH}'      # split this to avoid (wrong) template expansion (to empty string)
         setPyPath += '";'
         print setPyPath
 
