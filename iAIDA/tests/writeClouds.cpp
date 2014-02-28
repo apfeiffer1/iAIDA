@@ -3,7 +3,11 @@
 #include <memory>
 
 #include <boost/random.hpp>
+#if BOOST_VERSION > 104100
 #include <boost/random/uniform_int_distribution.hpp>
+#else
+#include <boost/random/uniform_int.hpp>
+#endif
 #include <boost/random/normal_distribution.hpp>
 
 #include "AIDA/AIDA.h"
