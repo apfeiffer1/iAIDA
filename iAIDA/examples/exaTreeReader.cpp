@@ -95,7 +95,7 @@ int readAndShow(std::string fileName, std::string compression) {
 	      << annotation.value( annotationIndex ) << std::endl;
   }
 
-  std::cout << "\nclosing the tree " << std::endl; 
+  std::cout << "\nclosing the tree " << fileName << " using " << compression << std::endl; 
   tree->close(); 
 
   std::cout << "\nDone!" << std::endl; 
@@ -106,21 +106,20 @@ int readAndShow(std::string fileName, std::string compression) {
 
 int main( int, char** )
 {
-    std::cout << "\n================================================================================\n" << std::endl;
-    int r1 = readAndShow("exaTree.aida", "zlib");
-    int r2 = readAndShow("exaTreeCopyGzip.xml.gz", "gzip");
-    int r3 = readAndShow("exaTreeCopyBzip.xml.bz2", "bzip");
-    int r4 = readAndShow("exaTreeCopyUC.xml", "uncompress");
-   std::cout << "\nresults from reading files: "
-             << r1 << " "
-             << r2 << " "
-             << r3 << " "
-             << r3 << " "
-             << std::endl;
-   if (r1+r2+r3+r4 == 0) std::cout << "All OK."<< std::endl;
-   std::cout << "\n================================================================================\n" << std::endl;
-
-   std::cout << "That's it !" << std::endl;
-
+  std::cout << "\n================================================================================\n" << std::endl;
+  int r1 = readAndShow("exaTree.aida", "zlib");
+  int r2 = readAndShow("exaTreeCopyGzip.aida", "gzip");
+  int r3 = readAndShow("exaTreeCopyBzip.aida", "bzip");
+  int r4 = readAndShow("exaTreeCopyUC.aida", "uncompress");
+  std::cout << "\nresults from reading files: "
+	    << r1 << " "
+	    << r2 << " "
+	    << r3 << " "
+	    << r3 << " "
+	    << std::endl;
+  if (r1+r2+r3+r4 == 0) std::cout << "All OK."<< std::endl;
+  std::cout << "\n================================================================================\n" << std::endl;
+  
+  std::cout << "That's it !" << std::endl;
 }
 
