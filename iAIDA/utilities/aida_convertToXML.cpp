@@ -334,14 +334,17 @@ int main(int argc,char* argv[]) {
 
    std::string prgName = std::string(argv[0]);
 
-   std::string inFile("../exatup.aida");
+   std::string inFile("../examples/exatup.aida");
    std::string inType("xml");
-   std::string outFile("../exatup.xml");
+   std::string outFile("./exatup.xml");
    if ( argc != 4 ) {
       std::cout << prgName << ": three arguments expected : "
          << "<inputFile> <inputType> <outputFile> "
          << "-- but none given. Will assume: '" << inFile << " " << inType << " " << outFile <<"' "
          << std::endl;
+      if ( boost::filesystem::exists( outFile ) ) { // we're using the defaults, assume we're testing and remove the file
+          boost::filesystem::remove_all( outFile );
+      }
    } else { // override defaults from args
       inFile  = std::string(argv[1]);
       inType  = std::string(argv[2]);
@@ -373,7 +376,7 @@ int main(int argc,char* argv[]) {
          << std::endl;
    }
    
-   // std::cout << "That's it !" << std::endl;
+   std::cout << "That's it !" << std::endl;
    
    return 0;
 }
