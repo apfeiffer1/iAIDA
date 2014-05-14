@@ -42,7 +42,9 @@
 
 #include "TH2D.h" 
 
-class AIDA::IAxis; // from AIDA
+namespace AIDA {
+  class IAxis; // from AIDA                                                                                                                                          
+}
 
 namespace AIDA_ROOT {
 

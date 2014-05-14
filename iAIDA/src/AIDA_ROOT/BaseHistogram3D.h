@@ -41,7 +41,9 @@
 
 #include "TH3D.h" 
 
-class AIDA::IAxis; // from AIDA
+namespace AIDA {
+  class IAxis; // from AIDA                                                                                                                                          
+}
 
 namespace AIDA_ROOT {
 

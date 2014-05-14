@@ -29,7 +29,9 @@
 #include "TH1D.h" 
 #include "AIDA_Annotation/AIDA_Annotation.h"
 
-class AIDA::IAxis; // from AIDA
+namespace AIDA {
+  class IAxis; // from AIDA
+}
 
 namespace AIDA_ROOT {
 
