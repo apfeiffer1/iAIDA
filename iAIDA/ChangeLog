@@ -1,4 +1,18 @@
 
+2014-05-11 Andreas Pfeiffer (apfeiffer1@gmail.com)
+    fix build and compilation issues on Mavericks (OS X 10.9, LLVM version 5.1)
+    added flags IAIDA_DO_NOT_USE_ROOT and IAIDA_DO_NOT_USE_GRACE to not build/link to root and/or 
+    grace, even if they are installed on the system (and found automatically by cmake)
+    added utilities subdir, moved (and renamed) convToCSV and showFile from examples to utilities, 
+    added initial version of convToXML. cleanup in CMakeLists,
+    added copying of tuples, checking if existing input/output files (using boost, therefore updated 
+    boost requirements)
+    use proper extensions for files. .aida should be used for compressed xml for compatibility reasons
+    various fixes for tests, added more tests (using boost random)
+    moved boost version to require min of 1.41 (slc5/6); fix typo in name of test (case sensitive)
+    updated ReadMe, added ref to slc5/6 specific setup instructions
+	Tagged iAIDA-1.1.3 ------------------------------------------
+    
 2013-07-11 Andreas Pfeiffer (apfeiffer1@gmail.com)
 	added installation of sources (to share/doc/iAIDA) and binaries of examples/tests 
 	(on request only, to libexec/iAIDA). silenced output from cmake for non-DEBUG builds.
