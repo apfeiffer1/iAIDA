@@ -19,7 +19,7 @@
  */
 
 # ifndef IAIDA_AIDA_FITTER_FMLFitDataIteratorAdapter_h__included__
-# define IAIDA_AIDA_FITTER_FMLAFitDataIteratorAdapter_h__included__
+# define IAIDA_AIDA_FITTER_FMLFitDataIteratorAdapter_h__included__
 
 /**
  * \file Implementation for AIDA fitting component

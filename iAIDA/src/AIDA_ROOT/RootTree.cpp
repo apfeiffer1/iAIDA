@@ -224,8 +224,8 @@ iAIDA::AIDA_RootStore::RootTree::describeTreeType(int i, const std::string & typ
   }
   // for vectors (arrays)  
   else { 
-    unsigned int i1 = type.find("[");  
-    unsigned int i2 = type.find("]");
+    std::size_t i1 = type.find("[");  
+    std::size_t i2 = type.find("]");
     // found a vector type 
     if ( i1 != std::string::npos && i2 != std::string::npos && i1 < i2) {  
       if (type.find("float") != std::string::npos) { 
