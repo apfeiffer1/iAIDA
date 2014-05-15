@@ -10,8 +10,8 @@
 # 		-DCMAKE_INSTALL_PREFIX=/path/to/install  	# to install in a specific location
 #       -DCMAKE_BUILD_TYPE=DEBUG      				# to switch on some debug messages
 #       -DIAIDA_INSTALL_EXAMPLES=ON   				# to install the binaries of the examples/tests into <installPrefix>/libexec/iAIDA/
-#       -DIAIDA_DO_NOT_USE_ROOT=ON					# do not use optional ROOT  package, even if found on system
-#       -DIAIDA_DO_NOT_USE_Grace=ON					# do not use optional Grace package, even if found on system
+#       -DIAIDA_USE_ROOT=ON							# use optional ROOT  package, if found on system
+#       -DIAIDA_USE_Grace=ON						# use optional Grace package, if found on system
 #
 # Copyright (C) Andreas Pfeiffer (apfeiffer1@gmail.com) 2013
 
@@ -56,19 +56,21 @@ else() # add include dirs from central installation:
    include_directories( ${AIDA_INCLUDE_DIR}  )
 endif ( NOT AIDA_FOUND )
 
+set ( IAIDA_USE_ROOT  ON CACHE BOOL "Use root5 if found on system" )
+set ( IAIDA_USE_Grace ON CACHE BOOL "Use Grace if found on system" )
+set ( IAIDA_INSTALL_EXAMPLES ON CACHE BOOL "Install executables of the examples and tests in ${CMAKE_INSTALL_LIBEXECDIR}/iAIDA" )
 
 # and check for optional ones. These add their own params to the overall include dir and the optLibs variables:
 # but first check if the user has forbidden the use of any of these (e.g. for licensing reasons)
 foreach(_pkg ROOT Grace)
-  if ( NOT IAIDA_DO_NOT_USE_${_pkg} )
+  if ( IAIDA_USE_${_pkg} )
     configure_file(${PROJECT_SOURCE_DIR}/cmake/Find${_pkg}.cmake ${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake COPYONLY)
     include(${PROJECT_BINARY_DIR}/Modules/Find${_pkg}.cmake)
   else ()
-    message( "... user request to ignore use of optional package " + ${_pkg} )
 	if ( CMAKE_BUILD_TYPE MATCHES DEBUG ) 
 	   message( "... user request to ignore use of optional package " + ${_pkg} )
 	endif ( CMAKE_BUILD_TYPE MATCHES DEBUG ) 
-  endif ( NOT IAIDA_DO_NOT_USE_${_pkg} )
+  endif ( IAIDA_USE_${_pkg} )
 endforeach()  # check optional packages
 
 

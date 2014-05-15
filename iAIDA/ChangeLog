@@ -1,3 +1,8 @@
+2014-05-15 Andreas Pfeiffer (apfeiffer1@gmail.com)
+	change names (and logic) for flags to use (or not) root (IAIDA_USE_ROOT) and Grace (IAIDA_USE_Grace)
+	if they are found on the system. Add them to the set of variables which is shown in ccmake so users 
+	can more easily change them. Add IAIDA_INSTALL_EXAMPLES (to allow installing executables of the 
+	examples and tests in libexec/iAIDA) as well, so it shows up in ccmake.
 
 2014-05-11 Andreas Pfeiffer (apfeiffer1@gmail.com)
     fix build and compilation issues on Mavericks (OS X 10.9, LLVM version 5.1)
